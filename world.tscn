@@ -1,15 +1,37 @@
 [gd_scene format=3 uid="uid://cqarhjdschw61"]
 
 [ext_resource type="Texture2D" uid="uid://1wotvcqwjf7y" path="res://Assets/stlouis.png" id="1_036b0"]
+[ext_resource type="Script" uid="uid://dnxwujkvesuyq" path="res://Scripts/world.gd" id="1_gbfbk"]
 [ext_resource type="Script" uid="uid://dwcmiih07jwfd" path="res://Scripts/camera.gd" id="2_dwbse"]
 [ext_resource type="Script" uid="uid://c0eti6l0haml2" path="res://Scripts/becky.gd" id="2_tlwt5"]
 [ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="3_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/TestEnemy.tscn" id="5_036b0"]
+[ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
+[ext_resource type="Script" uid="uid://bg3fuwbfsrid0" path="res://Scripts/round_segment.gd" id="7_pkg7o"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
 
+[sub_resource type="Curve2D" id="Curve2D_036b0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1800, 505, 346.3205, 140.9667, -346.3205, -140.9667, 1312, 160, 330.77942, -68.08219, -330.77942, 68.08219, 510, 111, 0, 0, 0, 0, 92, 490)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_dwbse"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1800, 505, 293.76407, -99.924866, -293.76407, 99.924866, 1484, 790, 253.94438, 105.18407, -253.94438, -105.18407, 450, 777, 0, 0, 0, 0, 92, 490)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_pkg7o"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1800, 505, 36.814423, -5.2592034, -36.814423, 5.2592034, 1487, 329, 66.86701, -2.2539444, -66.86701, 2.2539444, 1262, 617, 81.14199, 3.005259, -81.14199, -3.005259, 1054, 263, 64.61307, 0.75131476, -64.61307, -0.75131476, 667, 656, 81.14199, 15.026295, -81.14199, -15.026295, 452, 263, 0, 0, 0, 0, 92, 490)
+}
+point_count = 7
+
 [node name="World" type="Node2D" unique_id=2120518854]
+script = ExtResource("1_gbfbk")
 
 [node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
 modulate = Color(0.62, 0.62, 0.62, 1)
@@ -45,3 +67,29 @@ position = Vector2(609, 76)
 
 [node name="TestEnemy3" parent="." unique_id=814571854 instance=ExtResource("5_036b0")]
 position = Vector2(593, 439)
+
+[node name="Paths" type="Node2D" parent="." unique_id=1384284802]
+
+[node name="HighPath" type="Path2D" parent="Paths" unique_id=70440228]
+curve = SubResource("Curve2D_036b0")
+
+[node name="LowPath" type="Path2D" parent="Paths" unique_id=1451626691]
+curve = SubResource("Curve2D_dwbse")
+
+[node name="WavyPath" type="Path2D" parent="Paths" unique_id=1245087611]
+curve = SubResource("Curve2D_pkg7o")
+
+[node name="Rounds" type="Node" parent="." unique_id=261985347]
+
+[node name="Round1" type="Node" parent="Rounds" unique_id=1623087036]
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round1" unique_id=1071763997 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 5
+seconds_between = 1.0
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Spawner" type="Node2D" parent="." unique_id=610224940]
+script = ExtResource("6_dwbse")

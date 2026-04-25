@@ -1,11 +1,11 @@
 extends Node2D
 class_name Becky
 
-const MAX_SPEED := 100.0
-const ACCEL := 500.0
+const MAX_SPEED := 200.0
+const ACCEL := 1000.0
 const SHOOT_COOLDOWN := 0.2
 const FLY_TRANSITION_TIME := 0.3
-const FLY_SPEEDUP := 4.0
+const FLY_SPEEDUP := 2.0
 
 var vel: Vector2 = Vector2.ZERO
 var shoot_dir: Vector2 = Vector2.ZERO
@@ -33,7 +33,7 @@ func _process(delta: float):
 	elif Input.is_action_pressed("shoot_left"):
 		shooting = true
 		shoot_dir.x = -1.0
-	elif shoot_dir.y != 0.0:
+	else:
 		shoot_dir.x = 0.0
 	
 	if Input.is_action_pressed("shoot_down"):
@@ -42,7 +42,7 @@ func _process(delta: float):
 	elif Input.is_action_pressed("shoot_up"):
 		shooting = true
 		shoot_dir.y = -1.0
-	elif shoot_dir.x != 0.0:
+	else:
 		shoot_dir.y = 0.0
 	
 	if shoot_cooldown > 0.0:

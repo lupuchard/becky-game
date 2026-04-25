@@ -8,9 +8,11 @@ radius = 13.0
 
 [node name="TestEnemy" type="StaticBody2D" unique_id=1629057451]
 script = ExtResource("1_5xdy1")
+max_speed = 50.0
+accel = 500.0
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 
-[node name="Bnuy" type="Sprite2D" parent="." unique_id=1715504409]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1715504409]
 position = Vector2(-1, -4)
 texture = ExtResource("2_83x8t")
 
