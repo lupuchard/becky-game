@@ -1,9 +1,13 @@
 extends StaticBody2D
 class_name Enemy
 
+const ARROW_MARGIN := 10
+
 signal died
 
 @onready var sprite: Sprite2D = $Sprite
+@onready var oob_arrow: Sprite2D = Sprite2D.new()
+@onready var camera: Camera2D = get_viewport().get_camera_2d()
 
 @export var health: float = 1.0
 @export var max_speed: float = 1.0
@@ -14,6 +18,7 @@ signal died
 @export var projectile_cooldown: float = 0.0
 
 @export var possible_paths: Array[Path2D]
+@export var drops: Dictionary[PackedScene, float] = {}
 
 var target: Node2D
 
@@ -41,6 +46,10 @@ func _ready():
 	
 	if projectile_damage > 0.0 and projectile_cooldown > 0.0:
 		target = get_tree().get_first_node_in_group("becky")
+	
+	oob_arrow.hide()
+	oob_arrow.texture = preload("res://Assets/arrow.png")
+	add_child(oob_arrow)
 
 func _process(delta: float):
 	if is_dead || path0 == null: return
@@ -62,8 +71,48 @@ func _process(delta: float):
 		if cooldown <= 0.0:
 			cooldown += projectile_cooldown
 			shoot_projectile()
+	
+	var bounds: Rect2 = camera.get_bounds()
+	if global_position.x > bounds.end.x:
+		oob_arrow.show()
+		if global_position.y > bounds.end.y:
+			oob_arrow.rotation = (PI / 4) * 3
+			oob_arrow.global_position = bounds.end + Vector2(-ARROW_MARGIN, -ARROW_MARGIN)
+		elif global_position.y < bounds.position.y:
+			oob_arrow.rotation = (PI / 4) * 1
+			oob_arrow.global_position = bounds.end + Vector2(-ARROW_MARGIN, ARROW_MARGIN)
+		else:
+			oob_arrow.rotation = (PI / 2) * 1
+			oob_arrow.position.y = 0.0
+			oob_arrow.global_position.x = bounds.end.x - ARROW_MARGIN
+	elif global_position.x < bounds.position.x:
+		oob_arrow.show()
+		if global_position.y > bounds.end.y:
+			oob_arrow.rotation = (PI / 4) * 5
+			oob_arrow.global_position = bounds.end + Vector2(-ARROW_MARGIN, -ARROW_MARGIN)
+		elif global_position.y < bounds.position.y:
+			oob_arrow.rotation = (PI / 4) * 7
+			oob_arrow.global_position = bounds.end + Vector2(-ARROW_MARGIN, ARROW_MARGIN)
+		else:
+			oob_arrow.rotation = (PI / 2) * 3
+			oob_arrow.position.y = 0.0
+			oob_arrow.global_position.x = bounds.position.x + ARROW_MARGIN
+	elif global_position.y > bounds.end.y:
+		oob_arrow.show()
+		oob_arrow.rotation = PI
+		oob_arrow.position.x = 0.0
+		oob_arrow.global_position.y = bounds.end.y - 20
+	elif global_position.y < bounds.position.y:
+		oob_arrow.rotation = 0
+		oob_arrow.show()
+		oob_arrow.position.x = 0.0
+		oob_arrow.global_position.y = bounds.position.y + 20
+	else:
+		oob_arrow.hide()
 
 func shoot_projectile():
+	if target.flying > 0.5:
+		return
 	var proj = Projectile.new()
 	proj.damage = projectile_damage
 	proj.velocity = (target.global_position - global_position).normalized() * 200.0
@@ -97,6 +146,8 @@ func take_damage(damage: float):
 		die()
 	else:
 		sprite.modulate = Color(1.0, 0.5, 0.5)
+		if damage_tween != null:
+			damage_tween.kill()
 		damage_tween = create_tween()
 		damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
 
@@ -105,6 +156,27 @@ func die():
 	collision_layer = 0
 	collision_mask = 0
 	sprite.modulate = Color(1.0, 0.0, 0.0)
+	
+	for drop in drops.keys():
+		var amount = drops[drop]
+		for i in range(0, floor(amount)):
+			spawn_drop(drop)
+		var remainder = fmod(amount, 1.0)
+		if remainder >= 0.01 and randf() < remainder:
+			spawn_drop(drop)
+	
+	if damage_tween != null:
+		damage_tween.kill()
 	damage_tween = create_tween()
 	damage_tween.tween_property(sprite, "modulate", Color(1.0, 0.0, 0.0, 0.0), 0.3)
+	damage_tween.finished.connect(func():
+		queue_free()
+	)
 	died.emit()
+	
+	is_dead = true
+
+func spawn_drop(drop_scene: PackedScene):
+	var drop = drop_scene.instantiate()
+	get_parent().add_child(drop)
+	drop.global_position = global_position

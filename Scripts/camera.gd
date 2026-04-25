@@ -6,9 +6,11 @@ const FLYING_FOG_DENSITY = 0.1
 @onready var fog = $Fog
 
 @export var becky: Becky
-@export var bounds: Vector2 = Vector2(2400, 1060)
+var bounds: Vector2
 
 func _ready():
+	add_to_group("camera")
+	bounds = $Bound.global_position
 	fog.visible = true
 
 func _process(_delta: float):
@@ -27,3 +29,10 @@ func _process(_delta: float):
 		0.0 + view_size.y / 2,
 		bounds.y - view_size.y / 2
 	)
+
+func get_bounds() -> Rect2:
+	var rect = get_viewport().get_visible_rect()
+	var size = rect.size / zoom
+	rect.position = global_position - size * 0.5
+	rect.size = size
+	return rect

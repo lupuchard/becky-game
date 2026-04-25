@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://r6wflmh8dtf0" path="res://Scripts/enemy.gd" id="1_5xdy1"]
 [ext_resource type="Texture2D" uid="uid://dp30yb0f2h37u" path="res://Assets/bnuy.png" id="2_83x8t"]
+[ext_resource type="PackedScene" uid="uid://byl0yy6wd3q73" path="res://Drops/Drop1.tscn" id="2_f4uvp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2l8sk"]
 radius = 29.017237
@@ -13,6 +14,9 @@ max_speed = 80.0
 accel = 800.0
 projectile_damage = 5.0
 projectile_cooldown = 1.6
+drops = Dictionary[PackedScene, float]({
+ExtResource("2_f4uvp"): 3.0
+})
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1715504409]

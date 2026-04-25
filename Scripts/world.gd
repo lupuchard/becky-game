@@ -13,6 +13,9 @@ class_name World
 @onready var game_over_panel: Control = $CanvasLayer/GameOverPanel
 @onready var retry_button: Button = $CanvasLayer/GameOverPanel/Container/Buttons/RetryButton
 
+@onready var resource1: Label = $CanvasLayer/Resources/Container/Resource1
+@onready var resource2: Label = $CanvasLayer/Resources/Container/Resource2
+
 func _ready():
 	spawner.set_round($Rounds/Round1)
 	retry_button.pressed.connect(reset)
@@ -25,6 +28,9 @@ func _process(_delta: float):
 	
 	if becky.health <= 0.0:
 		game_over()
+	
+	resource1.text = "Placeholder 1: " + str(becky.money[0])
+	resource2.text = "Placeholder 2: " + str(becky.money[1])
 
 func game_over():
 	game_over_panel.show()

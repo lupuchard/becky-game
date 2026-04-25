@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://c3456ef513ov" path="res://Assets/Fonts/Abaddon Bold.ttf" id="2_ioo17"]
 [ext_resource type="Script" uid="uid://c0eti6l0haml2" path="res://Scripts/becky.gd" id="2_tlwt5"]
 [ext_resource type="Script" uid="uid://b4s1wjwo5qmr7" path="res://Scripts/exit_button.gd" id="3_ic0uy"]
+[ext_resource type="FontFile" uid="uid://5mk2307ho1x8" path="res://Assets/Fonts/tinypixel.otf" id="3_k3n1d"]
 [ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="3_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/ShootEnemy.tscn" id="5_036b0"]
 [ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
@@ -16,23 +17,23 @@
 size = Vector2(2000, 1000)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ioo17"]
-radius = 32.01562
+radius = 16.0
 
 [sub_resource type="Curve2D" id="Curve2D_036b0"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1800, 505, 346.3205, 140.9667, -346.3205, -140.9667, 1312, 160, 330.77942, -68.08219, -330.77942, 68.08219, 510, 111, 0, 0, 0, 0, 92, 490)
+"points": PackedVector2Array(0, 0, 0, 0, 1194, 342, 157.1205, 43.066704, -157.1205, -43.066704, 971, 74, 158.07942, -35.08219, -158.07942, 35.08219, 321, 73, 0, 0, 0, 0, 52, 318)
 }
 point_count = 4
 
 [sub_resource type="Curve2D" id="Curve2D_dwbse"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1800, 505, 293.76407, -99.924866, -293.76407, 99.924866, 1484, 790, 253.94438, 105.18407, -253.94438, -105.18407, 450, 777, 0, 0, 0, 0, 92, 490)
+"points": PackedVector2Array(0, 0, 0, 0, 1194, 342, 133.4335, -54.47032, -133.4335, 54.47032, 895, 549, 136.58902, 56.42374, -136.58902, -56.42374, 281, 546, 0, 0, 0, 0, 52, 318)
 }
 point_count = 4
 
 [sub_resource type="Curve2D" id="Curve2D_pkg7o"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1800, 505, 36.814423, -5.2592034, -36.814423, 5.2592034, 1487, 329, 66.86701, -2.2539444, -66.86701, 2.2539444, 1262, 617, 81.14199, 3.005259, -81.14199, -3.005259, 1054, 263, 64.61307, 0.75131476, -64.61307, -0.75131476, 667, 656, 81.14199, 15.026295, -81.14199, -15.026295, 452, 263, 0, 0, 0, 0, 92, 490)
+"points": PackedVector2Array(0, 0, 0, 0, 1195, 342, 36.814423, -5.2592034, -36.814423, 5.2592034, 979, 197, 66.86701, -2.2539444, -66.86701, 2.2539444, 813, 381, 81.14199, 3.005259, -81.14199, -3.005259, 621, 167, 64.61307, 0.75131476, -64.61307, -0.75131476, 425, 382, 81.14199, 15.026295, -81.14199, -15.026295, 292, 150, 0, 0, 0, 0, 52, 318)
 }
 point_count = 7
 
@@ -56,9 +57,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -100.0
-offset_top = 12.0
+offset_top = 7.0
 offset_right = 100.0
-offset_bottom = 32.0
+offset_bottom = 27.0
 grow_horizontal = 2
 max_value = 1.0
 step = 0.001
@@ -73,9 +74,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -100.0
-offset_top = 12.0
+offset_top = 7.0
 offset_right = 100.0
-offset_bottom = 32.0
+offset_bottom = 27.0
 grow_horizontal = 2
 max_value = 1.0
 step = 0.001
@@ -89,9 +90,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -100.0
-offset_top = 14.0
+offset_top = 9.0
 offset_right = 100.0
-offset_bottom = 37.0
+offset_bottom = 32.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_ioo17")
 text = "Round 1"
@@ -116,9 +117,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -100.0
-offset_top = -43.0
+offset_top = -27.0
 offset_right = 100.0
-offset_bottom = -23.0
+offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 0
 max_value = 1.0
@@ -133,13 +134,45 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -100.0
-offset_top = -40.0
+offset_top = -24.0
 offset_right = 100.0
-offset_bottom = -17.0
+offset_bottom = -1.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_ioo17")
 text = "Health"
 horizontal_alignment = 1
+
+[node name="Resources" type="Control" parent="CanvasLayer" unique_id=1680572757]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 106.0
+offset_top = 11.0
+offset_right = 146.0
+offset_bottom = 51.0
+grow_horizontal = 2
+
+[node name="Container" type="VBoxContainer" parent="CanvasLayer/Resources" unique_id=509027080]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 66.0
+offset_bottom = 41.0
+
+[node name="Resource1" type="Label" parent="CanvasLayer/Resources/Container" unique_id=625136031]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.53333336, 1, 1)
+theme_override_fonts/font = ExtResource("3_k3n1d")
+theme_override_font_sizes/font_size = 7
+text = "Placeholder 1: 0"
+
+[node name="Resource2" type="Label" parent="CanvasLayer/Resources/Container" unique_id=2056895715]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("3_k3n1d")
+theme_override_font_sizes/font_size = 7
+text = "Placeholder 2: 0"
 
 [node name="GameOverPanel" type="PanelContainer" parent="CanvasLayer" unique_id=407970296]
 visible = false
@@ -186,19 +219,21 @@ script = ExtResource("3_ic0uy")
 [node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
 modulate = Color(0.62, 0.62, 0.62, 1)
 z_index = -2
-position = Vector2(1027, 462)
-scale = Vector2(1.2, 1.2)
+position = Vector2(684, 308)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("1_036b0")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky")]
 position = Vector2(419, 243)
 script = ExtResource("2_dwbse")
 becky = NodePath("../Becky")
-bounds = Vector2(2000, 920)
 
 [node name="Fog" type="MeshInstance2D" parent="Camera2D" unique_id=899847312]
 modulate = Color(1, 1, 1, 0)
 mesh = SubResource("QuadMesh_036b0")
+
+[node name="Bound" type="Marker2D" parent="Camera2D" unique_id=51245580]
+position = Vector2(949, 375)
 
 [node name="Becky" type="Area2D" parent="." unique_id=2046443451]
 z_index = 1
@@ -206,7 +241,7 @@ position = Vector2(305, 179)
 script = ExtResource("2_tlwt5")
 
 [node name="Sprite" type="Sprite2D" parent="Becky" unique_id=2141613476]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_tlwt5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]

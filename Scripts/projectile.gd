@@ -8,7 +8,7 @@ var damage: float
 var lifespan: float
 
 func _ready():
-	collision_layer = 2 if enemy else 0
+	collision_layer = 1 if enemy else 0
 	collision_mask = 0 if enemy else 2
 	
 	var shape = CollisionShape2D.new()

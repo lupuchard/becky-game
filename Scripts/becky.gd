@@ -4,8 +4,8 @@ class_name Becky
 const MAX_HEALTH := 100.0
 const INV_COOLDOWN := 0.5
 
-const MAX_SPEED := 200.0
-const ACCEL := 1000.0
+const MAX_SPEED := 150.0
+const ACCEL := 700.0
 const SHOOT_COOLDOWN := 0.2
 const FLY_TRANSITION_TIME := 0.3
 const FLY_SPEEDUP := 2.0
@@ -20,6 +20,8 @@ var damage_tween: Tween
 var inv_cooldown := 0.0
 
 var flying = 0.0
+
+var money: Array[int] = [0, 0]
 
 func _ready():
 	add_to_group("becky")
@@ -110,5 +112,10 @@ func on_collision(body: Node2D):
 func take_damage(amount: float):
 	health -= amount
 	sprite.modulate = Color(1.0, 0.5, 0.5)
+	if damage_tween != null:
+		damage_tween.kill()
 	damage_tween = create_tween()
 	damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
+
+func collect(drop: Drop):
+	money[drop.money_type] += drop.amount
