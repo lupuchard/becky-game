@@ -1,14 +1,15 @@
 extends StaticBody2D
 class_name Projectile
 
+var enemy: bool = false
 var size: float
 var velocity: Vector2
 var damage: float
 var lifespan: float
 
 func _ready():
-	collision_layer = 0
-	collision_mask = 2
+	collision_layer = 2 if enemy else 0
+	collision_mask = 0 if enemy else 2
 	
 	var shape = CollisionShape2D.new()
 	shape.shape = CircleShape2D.new()
@@ -24,15 +25,16 @@ func _ready():
 func _process(delta: float):
 	lifespan -= delta
 	var collision = move_and_collide(velocity * delta)
-	if collision != null and collision.get_collider() is Enemy:
-		collision.get_collider().take_damage(damage)
-		die()
+	if collision != null:
+		on_collide(collision.get_collider())
 		
 	if lifespan < 0:
 		die()
 
-func on_collide():
-	pass
+func on_collide(collider: Object):
+	if !enemy and collider is Enemy:
+		collider.take_damage(damage)
+		die()
 
 func die():
 	queue_free()

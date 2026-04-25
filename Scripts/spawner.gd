@@ -8,27 +8,44 @@ var current_segments: Array[RoundSegment]
 var current_segment_spawned: Array[int]
 var current_segment_times: Array[float]
 
+var round_total_enemies: int = 0
+var round_dead_enemies: int = 0
+var round_total_time: float = 0.0
+var round_current_time: float = 0.0
+
 func _ready():
 	pass
 
 func set_round(new_round: Node):
 	round_segments.clear()
 	current_segments.clear()
+	current_segment_spawned.clear()
 	current_segment_times.clear()
+	next_segment = 0
 	
+	round_total_enemies = 0
+	round_dead_enemies = 0
+	var times: Array[float] = [0.0]
+	var prev_simultaneous = false
 	for child in new_round.get_children():
 		if child is RoundSegment:
 			round_segments.push_back(child)
+			round_total_enemies += child.amount
+			if prev_simultaneous:
+				times.push_back(child.seconds_between * child.amount)
+			else:
+				times[times.size() - 1] += child.seconds_between * child.amount
+			prev_simultaneous = child.simultaneous
+	round_total_time = times.max()
+	round_current_time = 0.0
 	
-	if round_segments.size() > 0:
-		current_segments.push_back(round_segments[0])
-		current_segment_spawned.push_back(0)
-		current_segment_times.push_back(0)
-		next_segment = 1
+	push_next_segment()
 
 func _process(delta: float):
 	if round_segments.size() == 0:
 		return
+	
+	round_current_time += delta
 	
 	for i in range(current_segments.size() - 1, -1, -1):
 		if current_segment_spawned[i] >= current_segments[i].amount:
@@ -58,7 +75,7 @@ func push_next_segment():
 	current_segments.push_back(round_segments[next_segment])
 	current_segment_spawned.push_back(0)
 	current_segment_times.push_back(0)
-	next_segment = 1
+	next_segment += 1
 	
 	if current_segments.back().simultaneous:
 		push_next_segment()
@@ -68,6 +85,9 @@ func spawn_from(segment: RoundSegment):
 	var new_enemy: Enemy = segment.enemy.instantiate()
 	new_enemy.possible_paths = segment.paths
 	get_parent().add_child(new_enemy)
+	new_enemy.died.connect(func():
+		round_dead_enemies += 1
+	)
 
 func end_round():
 	round_segments.clear()

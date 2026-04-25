@@ -15,6 +15,10 @@ run/main_scene="uid://cqarhjdschw61"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://Assets/icon.svg"
 
+[gui]
+
+theme/custom_font="uid://c3456ef513ov"
+
 [input]
 
 move_left={

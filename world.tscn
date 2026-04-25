@@ -3,14 +3,20 @@
 [ext_resource type="Texture2D" uid="uid://1wotvcqwjf7y" path="res://Assets/stlouis.png" id="1_036b0"]
 [ext_resource type="Script" uid="uid://dnxwujkvesuyq" path="res://Scripts/world.gd" id="1_gbfbk"]
 [ext_resource type="Script" uid="uid://dwcmiih07jwfd" path="res://Scripts/camera.gd" id="2_dwbse"]
+[ext_resource type="FontFile" uid="uid://c3456ef513ov" path="res://Assets/Fonts/Abaddon Bold.ttf" id="2_ioo17"]
 [ext_resource type="Script" uid="uid://c0eti6l0haml2" path="res://Scripts/becky.gd" id="2_tlwt5"]
+[ext_resource type="Script" uid="uid://b4s1wjwo5qmr7" path="res://Scripts/exit_button.gd" id="3_ic0uy"]
 [ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="3_tlwt5"]
-[ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/TestEnemy.tscn" id="5_036b0"]
+[ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/ShootEnemy.tscn" id="5_036b0"]
 [ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
 [ext_resource type="Script" uid="uid://bg3fuwbfsrid0" path="res://Scripts/round_segment.gd" id="7_pkg7o"]
+[ext_resource type="PackedScene" uid="uid://d2ewupfw2b3wr" path="res://Enemies/FastEnemy.tscn" id="8_wse8f"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ioo17"]
+radius = 32.01562
 
 [sub_resource type="Curve2D" id="Curve2D_036b0"]
 _data = {
@@ -33,6 +39,150 @@ point_count = 7
 [node name="World" type="Node2D" unique_id=2120518854]
 script = ExtResource("1_gbfbk")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=825859611]
+
+[node name="RoundProgress" type="Control" parent="CanvasLayer" unique_id=880882148]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_vertical = 0
+
+[node name="TimeProgress" type="ProgressBar" parent="CanvasLayer/RoundProgress" unique_id=660649422]
+modulate = Color(1, 0, 0, 1)
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 12.0
+offset_right = 100.0
+offset_bottom = 32.0
+grow_horizontal = 2
+max_value = 1.0
+step = 0.001
+value = 0.79
+show_percentage = false
+
+[node name="KillProgress" type="ProgressBar" parent="CanvasLayer/RoundProgress" unique_id=1745523778]
+modulate = Color(0.25, 0.65, 1, 1)
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 12.0
+offset_right = 100.0
+offset_bottom = 32.0
+grow_horizontal = 2
+max_value = 1.0
+step = 0.001
+value = 0.39
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/RoundProgress" unique_id=1530507288]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 14.0
+offset_right = 100.0
+offset_bottom = 37.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_ioo17")
+text = "Round 1"
+horizontal_alignment = 1
+
+[node name="Status" type="Control" parent="CanvasLayer" unique_id=1962127259]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/Status" unique_id=877821296]
+modulate = Color(0, 1, 0, 1)
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -43.0
+offset_right = 100.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+step = 0.001
+value = 1.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/Status" unique_id=857483882]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = -40.0
+offset_right = 100.0
+offset_bottom = -17.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_ioo17")
+text = "Health"
+horizontal_alignment = 1
+
+[node name="GameOverPanel" type="PanelContainer" parent="CanvasLayer" unique_id=407970296]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Container" type="VBoxContainer" parent="CanvasLayer/GameOverPanel" unique_id=1347517114]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameOverPanel/Container" unique_id=1875484607]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOverPanel/Container/MarginContainer" unique_id=344090192]
+layout_mode = 2
+text = "You have died."
+
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer/GameOverPanel/Container" unique_id=1767961353]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="RetryButton" type="Button" parent="CanvasLayer/GameOverPanel/Container/Buttons" unique_id=21093111]
+layout_mode = 2
+text = "Retry"
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/GameOverPanel/Container/Buttons" unique_id=2024142376]
+layout_mode = 2
+text = "Exit"
+script = ExtResource("3_ic0uy")
+
 [node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
 modulate = Color(0.62, 0.62, 0.62, 1)
 z_index = -2
@@ -50,23 +200,17 @@ bounds = Vector2(2000, 920)
 modulate = Color(1, 1, 1, 0)
 mesh = SubResource("QuadMesh_036b0")
 
-[node name="Becky" type="Node2D" parent="." unique_id=2001525167]
+[node name="Becky" type="Area2D" parent="." unique_id=2046443451]
 z_index = 1
 position = Vector2(305, 179)
 script = ExtResource("2_tlwt5")
 
-[node name="Sprite2D" type="Sprite2D" parent="Becky" unique_id=2141613476]
+[node name="Sprite" type="Sprite2D" parent="Becky" unique_id=2141613476]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_tlwt5")
 
-[node name="TestEnemy" parent="." unique_id=1629057451 instance=ExtResource("5_036b0")]
-position = Vector2(297, 363)
-
-[node name="TestEnemy2" parent="." unique_id=194840758 instance=ExtResource("5_036b0")]
-position = Vector2(609, 76)
-
-[node name="TestEnemy3" parent="." unique_id=814571854 instance=ExtResource("5_036b0")]
-position = Vector2(593, 439)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
+shape = SubResource("CircleShape2D_ioo17")
 
 [node name="Paths" type="Node2D" parent="." unique_id=1384284802]
 
@@ -85,9 +229,26 @@ curve = SubResource("Curve2D_pkg7o")
 
 [node name="RoundSegment" type="Node" parent="Rounds/Round1" unique_id=1071763997 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
-enemy = ExtResource("5_036b0")
+enemy = ExtResource("8_wse8f")
 amount = 5
 seconds_between = 1.0
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round1" unique_id=1248640915 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 5
+seconds_between = 3.0
+simultaneous = true
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment3" type="Node" parent="Rounds/Round1" unique_id=978029227 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 20
+seconds_between = 1.5
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 

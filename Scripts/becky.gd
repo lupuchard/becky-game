@@ -1,5 +1,8 @@
-extends Node2D
+extends Area2D
 class_name Becky
+
+const MAX_HEALTH := 100.0
+const INV_COOLDOWN := 0.5
 
 const MAX_SPEED := 200.0
 const ACCEL := 1000.0
@@ -7,14 +10,21 @@ const SHOOT_COOLDOWN := 0.2
 const FLY_TRANSITION_TIME := 0.3
 const FLY_SPEEDUP := 2.0
 
-var vel: Vector2 = Vector2.ZERO
-var shoot_dir: Vector2 = Vector2.ZERO
-var shoot_cooldown: float = 0.0
+@onready var sprite = $Sprite
+
+var health := MAX_HEALTH
+var vel := Vector2.ZERO
+var shoot_dir := Vector2.ZERO
+var shoot_cooldown := 0.0
+var damage_tween: Tween
+var inv_cooldown := 0.0
 
 var flying = 0.0
 
 func _ready():
-	pass
+	add_to_group("becky")
+	collision_mask = 1 | 2
+	#body_entered.connect(on_collision)
 	
 func _event():
 	pass
@@ -50,6 +60,8 @@ func _process(delta: float):
 	if shooting and shoot_cooldown <= 0 and flying < 0.2:
 		shoot_cooldown += SHOOT_COOLDOWN
 		shoot(shoot_dir.normalized())
+	
+	inv_cooldown = max(inv_cooldown - delta, 0.0)
 
 func _physics_process(delta: float):
 	var max_speed = lerp(MAX_SPEED, MAX_SPEED * FLY_SPEEDUP, flying)
@@ -72,13 +84,31 @@ func _physics_process(delta: float):
 	if vel.length() > max_speed:
 		vel = vel.normalized() * max_speed
 	global_position += vel * delta
-
+	
+	for body in get_overlapping_bodies():
+		on_collision(body)
+	
 func shoot(direction: Vector2):
 	var proj = Projectile.new()
 	proj.damage = 0.5
 	proj.velocity = direction * 500.0
-	proj.lifespan = 60.0
+	proj.lifespan = 5.0
 	proj.size = 20
 	get_parent().add_child(proj)
 	proj.global_position = global_position
 	
+func on_collision(body: Node2D):
+	if flying >= 0.5: return
+	
+	if body is Enemy and inv_cooldown <= 0.0:
+		take_damage(body.contact_damage)
+		inv_cooldown = INV_COOLDOWN
+	elif body is Projectile:
+		take_damage(body.damage)
+		body.die()
+
+func take_damage(amount: float):
+	health -= amount
+	sprite.modulate = Color(1.0, 0.5, 0.5)
+	damage_tween = create_tween()
+	damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)

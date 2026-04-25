@@ -1,7 +1,43 @@
 extends Node2D
 class_name World
 
+@onready var becky: Becky = $Becky
 @onready var spawner: Spawner = $Spawner
+
+@onready var round_label: Label = $CanvasLayer/RoundProgress/Label
+@onready var time_progress: ProgressBar = $CanvasLayer/RoundProgress/TimeProgress
+@onready var kill_progress: ProgressBar = $CanvasLayer/RoundProgress/KillProgress
+
+@onready var health_bar: ProgressBar = $CanvasLayer/Status/HealthBar
+
+@onready var game_over_panel: Control = $CanvasLayer/GameOverPanel
+@onready var retry_button: Button = $CanvasLayer/GameOverPanel/Container/Buttons/RetryButton
 
 func _ready():
 	spawner.set_round($Rounds/Round1)
+	retry_button.pressed.connect(reset)
+	game_over_panel.hide()
+
+func _process(_delta: float):
+	time_progress.value = spawner.round_current_time / spawner.round_total_time
+	kill_progress.value = float(spawner.round_dead_enemies) / spawner.round_total_enemies
+	health_bar.value = becky.health / Becky.MAX_HEALTH
+	
+	if becky.health <= 0.0:
+		game_over()
+
+func game_over():
+	game_over_panel.show()
+	becky.process_mode = Node.PROCESS_MODE_DISABLED
+	becky.hide()
+
+func reset():
+	game_over_panel.hide()
+	becky.health = Becky.MAX_HEALTH
+	for child in get_children():
+		if child is Enemy or child is Projectile:
+			child.queue_free()
+	spawner.set_round($Rounds/Round1)
+	
+	becky.show()
+	becky.process_mode = Node.PROCESS_MODE_INHERIT
