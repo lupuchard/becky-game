@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cqarhjdschw61"]
+
+[ext_resource type="Texture2D" uid="uid://1wotvcqwjf7y" path="res://Assets/stlouis.png" id="1_036b0"]
+[ext_resource type="Script" uid="uid://dwcmiih07jwfd" path="res://Scripts/camera.gd" id="2_dwbse"]
+[ext_resource type="Script" uid="uid://c0eti6l0haml2" path="res://Scripts/becky.gd" id="2_tlwt5"]
+[ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="3_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/TestEnemy.tscn" id="5_036b0"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_036b0"]
+size = Vector2(2000, 1000)
+
+[node name="World" type="Node2D" unique_id=2120518854]
+
+[node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
+modulate = Color(0.62, 0.62, 0.62, 1)
+z_index = -2
+position = Vector2(1027, 462)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_036b0")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky")]
+position = Vector2(419, 243)
+script = ExtResource("2_dwbse")
+becky = NodePath("../Becky")
+bounds = Vector2(2000, 920)
+
+[node name="Fog" type="MeshInstance2D" parent="Camera2D" unique_id=899847312]
+modulate = Color(1, 1, 1, 0)
+mesh = SubResource("QuadMesh_036b0")
+
+[node name="Becky" type="Node2D" parent="." unique_id=2001525167]
+z_index = 1
+position = Vector2(305, 179)
+script = ExtResource("2_tlwt5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Becky" unique_id=2141613476]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_tlwt5")
+
+[node name="TestEnemy" parent="." unique_id=1629057451 instance=ExtResource("5_036b0")]
+position = Vector2(297, 363)
+
+[node name="TestEnemy2" parent="." unique_id=194840758 instance=ExtResource("5_036b0")]
+position = Vector2(609, 76)
+
+[node name="TestEnemy3" parent="." unique_id=814571854 instance=ExtResource("5_036b0")]
+position = Vector2(593, 439)

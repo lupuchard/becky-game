@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c11e4oti6gie5"]
+
+[ext_resource type="Script" uid="uid://r6wflmh8dtf0" path="res://Scripts/enemy.gd" id="1_5xdy1"]
+[ext_resource type="Texture2D" uid="uid://dp30yb0f2h37u" path="res://Assets/bnuy.png" id="2_83x8t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2l8sk"]
+radius = 13.0
+
+[node name="TestEnemy" type="StaticBody2D" unique_id=1629057451]
+script = ExtResource("1_5xdy1")
+metadata/_custom_type_script = "uid://r6wflmh8dtf0"
+
+[node name="Bnuy" type="Sprite2D" parent="." unique_id=1715504409]
+position = Vector2(-1, -4)
+texture = ExtResource("2_83x8t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1695961910]
+shape = SubResource("CircleShape2D_2l8sk")
