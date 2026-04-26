@@ -1,6 +1,8 @@
 extends Node2D
 class_name Spawner
 
+signal round_ended
+
 var round_segments: Array[RoundSegment]
 var next_segment: int = 0
 
@@ -87,6 +89,8 @@ func spawn_from(segment: RoundSegment):
 	get_parent().add_child(new_enemy)
 	new_enemy.died.connect(func():
 		round_dead_enemies += 1
+		if round_dead_enemies >= round_total_enemies:
+			round_ended.emit()
 	)
 
 func end_round():

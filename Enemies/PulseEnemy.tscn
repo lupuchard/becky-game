@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://ml5ey4n0wfht"]
+
+[ext_resource type="Script" uid="uid://colug18twxdsa" path="res://Enemies/pulse_enemy.gd" id="1_anp33"]
+[ext_resource type="Texture2D" uid="uid://dp30yb0f2h37u" path="res://Assets/bnuy.png" id="2_vg2fv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_88otr"]
+radius = 36.0
+
+[node name="PulseEnemy" type="StaticBody2D" unique_id=781218910]
+script = ExtResource("1_anp33")
+health = 10.0
+max_speed = 60.0
+accel = 600.0
+contact_damage = 20.0
+metadata/_custom_type_script = "uid://r6wflmh8dtf0"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1171308333]
+position = Vector2(-2, -14)
+scale = Vector2(3, 3)
+texture = ExtResource("2_vg2fv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2077609313]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_88otr")

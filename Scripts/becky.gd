@@ -11,6 +11,7 @@ const FLY_TRANSITION_TIME := 0.3
 const FLY_SPEEDUP := 2.0
 
 @onready var sprite = $Sprite
+@onready var small_area = $SmallArea
 
 var health := MAX_HEALTH
 var vel := Vector2.ZERO
@@ -23,13 +24,17 @@ var flying = 0.0
 
 var money: Array[int] = [0, 0]
 
+var cur_site: Site = null
+
 func _ready():
 	add_to_group("becky")
-	collision_mask = 1 | 2
-	#body_entered.connect(on_collision)
+	collision_mask = 1 | 2 | 3
+	area_entered.connect(on_enter_area)
+	area_exited.connect(on_exit_area)
 	
-func _event():
-	pass
+func _input(event: InputEvent):
+	if event.is_action_pressed("interact") and cur_site != null:
+		cur_site.interact()
 
 func _process(delta: float):
 	if Input.is_action_pressed("fly"):
@@ -37,6 +42,7 @@ func _process(delta: float):
 	else:
 		flying = move_toward(flying, 0.0, delta / FLY_TRANSITION_TIME)
 	scale = Vector2.ONE * lerp(1.0, 1.2, flying)
+	z_index = 3 if flying > 0.5 else 1
 	
 	var shooting = false
 	if Input.is_action_pressed("shoot_right"):
@@ -69,22 +75,27 @@ func _physics_process(delta: float):
 	var max_speed = lerp(MAX_SPEED, MAX_SPEED * FLY_SPEEDUP, flying)
 	var accel = lerp(ACCEL, ACCEL * FLY_SPEEDUP, flying)
 	
+	var target_vel: Vector2
 	if Input.is_action_pressed("move_right"):
-		vel.x = move_toward(vel.x, max_speed, accel * delta)
+		target_vel.x = 1.0
 	elif Input.is_action_pressed("move_left"):
-		vel.x = move_toward(vel.x, -max_speed, accel * delta)
+		target_vel.x = -1.0
 	else:
-		vel.x = move_toward(vel.x, 0, accel * delta)
+		target_vel.x = 0.0
 	
 	if Input.is_action_pressed("move_down"):
-		vel.y = move_toward(vel.y, max_speed, accel * delta)
+		target_vel.y = 1.0
 	elif Input.is_action_pressed("move_up"):
-		vel.y = move_toward(vel.y, -max_speed, accel * delta)
+		target_vel.y = -1.0
 	else:
-		vel.y = move_toward(vel.y, 0, accel * delta)
+		target_vel.y = 0.0
 	
-	if vel.length() > max_speed:
-		vel = vel.normalized() * max_speed
+	target_vel = target_vel.normalized() * max_speed
+	vel.x = move_toward(vel.x, target_vel.x, accel * delta)
+	vel.y = move_toward(vel.y, target_vel.y, accel * delta)
+	
+	#if vel.length() > max_speed:
+	#	vel = vel.normalized() * max_speed
 	global_position += vel * delta
 	
 	for body in get_overlapping_bodies():
@@ -119,3 +130,19 @@ func take_damage(amount: float):
 
 func collect(drop: Drop):
 	money[drop.money_type] += drop.amount
+
+func on_enter_area(area: Area2D):
+	if area is Site:
+		area.show_label()
+		cur_site = area
+
+func on_exit_area(area: Area2D):
+	if area is Site:
+		area.hide_label()
+		if cur_site == area:
+			cur_site = null
+
+func be_thrown(dir: Vector2):
+	if inv_cooldown <= 0.0:
+		vel += dir * 500.0
+		inv_cooldown = INV_COOLDOWN

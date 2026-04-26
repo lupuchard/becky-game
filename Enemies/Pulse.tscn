@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://b01xl3mvw2o3k"]
+
+[ext_resource type="Script" uid="uid://dmo0tp3fwu3dt" path="res://Scripts/pulse.gd" id="1_oku4y"]
+[ext_resource type="Material" uid="uid://duifxv5u5h4mo" path="res://Assets/ripple.tres" id="2_mry8q"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_qfur8"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8f3ql"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_av37a"]
+
+[node name="Pulse" type="Node2D" unique_id=301406739]
+script = ExtResource("1_oku4y")
+
+[node name="Ripple" type="MeshInstance2D" parent="." unique_id=1943167285]
+z_index = 2
+material = ExtResource("2_mry8q")
+position = Vector2(0, 1)
+mesh = SubResource("QuadMesh_qfur8")
+
+[node name="Inner" type="Area2D" parent="." unique_id=1218323769]
+
+[node name="Shape" type="CollisionShape2D" parent="Inner" unique_id=2136623676]
+scale = Vector2(0.1, 0.1)
+shape = SubResource("CircleShape2D_8f3ql")
+
+[node name="Outer" type="Area2D" parent="." unique_id=731435646]
+
+[node name="Shape" type="CollisionShape2D" parent="Outer" unique_id=1043490955]
+scale = Vector2(0.1, 0.1)
+shape = SubResource("CircleShape2D_av37a")

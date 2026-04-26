@@ -16,10 +16,20 @@ class_name World
 @onready var resource1: Label = $CanvasLayer/Resources/Container/Resource1
 @onready var resource2: Label = $CanvasLayer/Resources/Container/Resource2
 
+@onready var rounds: Node = $Rounds
+@onready var next_round_site: Site = $NextRound
+
+var current_round := 0
+var between_rounds := false
+
 func _ready():
 	spawner.set_round($Rounds/Round1)
 	retry_button.pressed.connect(reset)
 	game_over_panel.hide()
+	
+	next_round_site.disable()
+	next_round_site.interacted.connect(start_next_round)
+	spawner.round_ended.connect(on_round_ended)
 
 func _process(_delta: float):
 	time_progress.value = spawner.round_current_time / spawner.round_total_time
@@ -47,3 +57,16 @@ func reset():
 	
 	becky.show()
 	becky.process_mode = Node.PROCESS_MODE_INHERIT
+	current_round = 0
+	between_rounds = false
+	
+func on_round_ended():
+	next_round_site.enable()
+	between_rounds = true
+	current_round += 1
+
+func start_next_round():
+	if between_rounds and current_round < rounds.get_child_count():
+		spawner.set_round($Rounds.get_child(current_round))
+		next_round_site.disable()
+		

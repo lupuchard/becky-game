@@ -12,12 +12,18 @@
 [ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
 [ext_resource type="Script" uid="uid://bg3fuwbfsrid0" path="res://Scripts/round_segment.gd" id="7_pkg7o"]
 [ext_resource type="PackedScene" uid="uid://d2ewupfw2b3wr" path="res://Enemies/FastEnemy.tscn" id="8_wse8f"]
+[ext_resource type="PackedScene" uid="uid://ml5ey4n0wfht" path="res://Enemies/PulseEnemy.tscn" id="9_2u3nc"]
+[ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="13_2o6r5"]
+[ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ioo17"]
 radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hiqwa"]
+radius = 0.1
 
 [sub_resource type="Curve2D" id="Curve2D_036b0"]
 _data = {
@@ -33,9 +39,18 @@ point_count = 4
 
 [sub_resource type="Curve2D" id="Curve2D_pkg7o"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1195, 342, 36.814423, -5.2592034, -36.814423, 5.2592034, 979, 197, 66.86701, -2.2539444, -66.86701, 2.2539444, 813, 381, 81.14199, 3.005259, -81.14199, -3.005259, 621, 167, 64.61307, 0.75131476, -64.61307, -0.75131476, 425, 382, 81.14199, 15.026295, -81.14199, -15.026295, 292, 150, 0, 0, 0, 0, 52, 318)
+"points": PackedVector2Array(0, 0, 0, 0, 1194, 342, 36.814423, -5.2592034, -36.814423, 5.2592034, 979, 197, 66.86701, -2.2539444, -66.86701, 2.2539444, 813, 381, 81.14199, 3.005259, -81.14199, -3.005259, 621, 167, 64.61307, 0.75131476, -64.61307, -0.75131476, 425, 382, 81.14199, 15.026295, -81.14199, -15.026295, 292, 150, 0, 0, 0, 0, 52, 318)
 }
 point_count = 7
+
+[sub_resource type="Curve2D" id="Curve2D_70uel"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1194, 342, 133.4335, -54.47032, -133.4335, 54.47032, 818, 355, 136.58902, 56.42374, -136.58902, -56.42374, 359, 321, 0, 0, 0, 0, 52, 318)
+}
+point_count = 4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_70uel"]
+radius = 9.0
 
 [node name="World" type="Node2D" unique_id=2120518854]
 script = ExtResource("1_gbfbk")
@@ -247,6 +262,11 @@ texture = ExtResource("3_tlwt5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
 shape = SubResource("CircleShape2D_ioo17")
 
+[node name="SmallArea" type="Area2D" parent="Becky" unique_id=1702542664]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky/SmallArea" unique_id=1831621821]
+shape = SubResource("CircleShape2D_hiqwa")
+
 [node name="Paths" type="Node2D" parent="." unique_id=1384284802]
 
 [node name="HighPath" type="Path2D" parent="Paths" unique_id=70440228]
@@ -257,6 +277,9 @@ curve = SubResource("Curve2D_dwbse")
 
 [node name="WavyPath" type="Path2D" parent="Paths" unique_id=1245087611]
 curve = SubResource("Curve2D_pkg7o")
+
+[node name="ToCenterPath" type="Path2D" parent="Paths" unique_id=456466687]
+curve = SubResource("Curve2D_70uel")
 
 [node name="Rounds" type="Node" parent="." unique_id=261985347]
 
@@ -279,7 +302,17 @@ simultaneous = true
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="RoundSegment3" type="Node" parent="Rounds/Round1" unique_id=978029227 node_paths=PackedStringArray("paths")]
+[node name="Round2" type="Node" parent="Rounds" unique_id=113479319]
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round2" unique_id=978029227 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 2.0
+simultaneous = true
+paths = [NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round2" unique_id=1047106459 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("8_wse8f")
 amount = 20
@@ -289,3 +322,28 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
 [node name="Spawner" type="Node2D" parent="." unique_id=610224940]
 script = ExtResource("6_dwbse")
+
+[node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
+position = Vector2(1132, 323)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("13_70uel")
+
+[node name="Sprite2D" type="Sprite2D" parent="NextRound" unique_id=316956143]
+texture = ExtResource("13_2o6r5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextRound" unique_id=2037708612]
+shape = SubResource("CircleShape2D_70uel")
+
+[node name="Label" type="Label" parent="NextRound" unique_id=1621363490]
+visible = false
+offset_left = -39.0
+offset_top = -32.0
+offset_right = 42.0
+offset_bottom = -13.0
+theme_override_fonts/font = ExtResource("3_k3n1d")
+theme_override_font_sizes/font_size = 7
+text = "Press Enter to start
+ the next round"
+horizontal_alignment = 1
+vertical_alignment = 1
