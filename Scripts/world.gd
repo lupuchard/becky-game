@@ -1,6 +1,8 @@
 extends Node2D
 class_name World
 
+const MAX_LIVES := 5
+
 @onready var becky: Becky = $Becky
 @onready var spawner: Spawner = $Spawner
 
@@ -11,7 +13,11 @@ class_name World
 @onready var health_bar: ProgressBar = $CanvasLayer/Status/HealthBar
 
 @onready var game_over_panel: Control = $CanvasLayer/GameOverPanel
+@onready var game_over_panel_label: Label = $CanvasLayer/GameOverPanel/Container/MarginContainer/Label
 @onready var retry_button: Button = $CanvasLayer/GameOverPanel/Container/Buttons/RetryButton
+
+@onready var losing_indicator: Control = $CanvasLayer/LosingIndicator
+@onready var losing_indicator_label: Control = $CanvasLayer/LosingIndicator/Label
 
 @onready var resource1: Label = $CanvasLayer/Resources/Container/Resource1
 @onready var resource2: Label = $CanvasLayer/Resources/Container/Resource2
@@ -20,7 +26,9 @@ class_name World
 @onready var next_round_site: Site = $NextRound
 
 var current_round := 0
+var lives := 5
 var between_rounds := false
+var restore_health_tween: Tween
 
 func _ready():
 	spawner.set_round($Rounds/Round1)
@@ -30,6 +38,7 @@ func _ready():
 	next_round_site.disable()
 	next_round_site.interacted.connect(start_next_round)
 	spawner.round_ended.connect(on_round_ended)
+	spawner.enemy_reached_end.connect(on_enemy_reached_end)
 
 func _process(_delta: float):
 	time_progress.value = spawner.round_current_time / spawner.round_total_time
@@ -37,12 +46,16 @@ func _process(_delta: float):
 	health_bar.value = becky.health / Becky.MAX_HEALTH
 	
 	if becky.health <= 0.0:
-		game_over()
+		game_over("You have died :(")
 	
 	resource1.text = "Placeholder 1: " + str(becky.money[0])
 	resource2.text = "Placeholder 2: " + str(becky.money[1])
+	
+	losing_indicator.visible = lives < MAX_LIVES
+	losing_indicator_label.text = str(lives) + "/" + str(MAX_LIVES)
 
-func game_over():
+func game_over(text: String):
+	game_over_panel_label.text = text
 	game_over_panel.show()
 	becky.process_mode = Node.PROCESS_MODE_DISABLED
 	becky.hide()
@@ -61,12 +74,24 @@ func reset():
 	between_rounds = false
 	
 func on_round_ended():
+	if game_over_panel.visible: return
+	
 	next_round_site.enable()
 	between_rounds = true
 	current_round += 1
+	lives = MAX_LIVES
+	
+	restore_health_tween = Tween.new()
+	restore_health_tween.tween_property(becky, "health", Becky.MAX_HEALTH, 4.0)
 
 func start_next_round():
 	if between_rounds and current_round < rounds.get_child_count():
+		restore_health_tween.kill()
+		becky.health = Becky.MAX_HEALTH
 		spawner.set_round($Rounds.get_child(current_round))
 		next_round_site.disable()
 		
+func on_enemy_reached_end():
+	lives -= 1
+	if lives <= 0:
+		game_over("They stole all the prairie dogs :(")

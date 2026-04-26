@@ -16,6 +16,17 @@
 [ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="13_2o6r5"]
 [ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqwa"]
+bg_color = Color(0.79, 0.79, 0.79, 0.1254902)
+border_width_left = 1
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
 
@@ -189,6 +200,27 @@ theme_override_fonts/font = ExtResource("3_k3n1d")
 theme_override_font_sizes/font_size = 7
 text = "Placeholder 2: 0"
 
+[node name="LosingIndicator" type="PanelContainer" parent="CanvasLayer" unique_id=1984047269]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -20.0
+offset_right = -9.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hiqwa")
+
+[node name="Label" type="Label" parent="CanvasLayer/LosingIndicator" unique_id=1905090039]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.66543, 0.58220005, 1)
+text = "4/5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="GameOverPanel" type="PanelContainer" parent="CanvasLayer" unique_id=407970296]
 visible = false
 anchors_preset = 8
@@ -214,8 +246,11 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/GameOverPanel/Container/MarginContainer" unique_id=344090192]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-text = "You have died."
+text = "Game over screen"
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="Buttons" type="HBoxContainer" parent="CanvasLayer/GameOverPanel/Container" unique_id=1767961353]
 layout_mode = 2
@@ -285,20 +320,27 @@ curve = SubResource("Curve2D_70uel")
 
 [node name="Round1" type="Node" parent="Rounds" unique_id=1623087036]
 
-[node name="RoundSegment" type="Node" parent="Rounds/Round1" unique_id=1071763997 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment" type="Node" parent="Rounds/Round1" unique_id=1805493421 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("8_wse8f")
-amount = 5
+amount = 3
 seconds_between = 1.0
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="RoundSegment2" type="Node" parent="Rounds/Round1" unique_id=1248640915 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment2" type="Node" parent="Rounds/Round1" unique_id=1071763997 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 3
+seconds_between = 1.0
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment3" type="Node" parent="Rounds/Round1" unique_id=1248640915 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("5_036b0")
 amount = 5
 seconds_between = 3.0
-simultaneous = true
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
@@ -315,7 +357,7 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 [node name="RoundSegment2" type="Node" parent="Rounds/Round2" unique_id=1047106459 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("8_wse8f")
-amount = 20
+amount = 15
 seconds_between = 1.5
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"

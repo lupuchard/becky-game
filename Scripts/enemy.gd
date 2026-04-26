@@ -4,6 +4,7 @@ class_name Enemy
 const ARROW_MARGIN := 10
 
 signal died
+signal reached_end
 
 @onready var sprite: Sprite2D = $Sprite
 @onready var oob_arrow: Sprite2D = Sprite2D.new()
@@ -58,10 +59,11 @@ func _process(delta: float):
 	path_distance += speed * delta
 	if path_distance >= path_length:
 		if going_back:
-			die()
+			reach_end()
 		else:
 			speed = 0.0
 			going_back = true
+			oob_arrow.modulate = Color.ORANGE
 			pick_random_path()
 	else:
 		update_position()
@@ -175,6 +177,10 @@ func die():
 	died.emit()
 	
 	is_dead = true
+
+func reach_end():
+	reached_end.emit()
+	queue_free()
 
 func spawn_drop(drop_scene: PackedScene):
 	var drop = drop_scene.instantiate()
