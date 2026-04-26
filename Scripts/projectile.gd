@@ -1,6 +1,12 @@
 extends StaticBody2D
 class_name Projectile
 
+const player_bullet_sounds = [
+	preload("res://Assets/Sound/player_bullet_01.ogg"),
+	preload("res://Assets/Sound/player_bullet_02.ogg"),
+	preload("res://Assets/Sound/player_bullet_03.ogg"),
+]
+
 var enemy: bool = false
 var size: float
 var velocity: Vector2
@@ -21,6 +27,13 @@ func _ready():
 	sprite.scale = Vector2.ONE * size / 128.0
 	sprite.look_at(global_position + velocity)
 	add_child(sprite)
+	
+	if enemy == false:
+		var sound = AudioStreamPlayer2D.new()
+		sound.global_position = self.global_position
+		sound.stream = player_bullet_sounds.pick_random()
+		sound.autoplay = true
+		add_child(sound)
 
 func _process(delta: float):
 	lifespan -= delta
