@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="13_2o6r5"]
 [ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
 [ext_resource type="PackedScene" uid="uid://bca5med66pxed" path="res://Enemies/FlyingEnemy.tscn" id="16_2u3nc"]
+[ext_resource type="Script" uid="uid://c5kbnve4itdog" path="res://Scripts/upgrade_site.gd" id="17_udxuc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqwa"]
 bg_color = Color(0.79, 0.79, 0.79, 0.1254902)
@@ -63,6 +64,11 @@ point_count = 4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_70uel"]
 radius = 9.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2u3nc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udxuc"]
+bg_color = Color(0.6, 0.6, 0.6, 0.6117647)
 
 [node name="World" type="Node2D" unique_id=2120518854]
 script = ExtResource("1_gbfbk")
@@ -223,7 +229,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="GameOverPanel" type="PanelContainer" parent="CanvasLayer" unique_id=407970296]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -247,7 +252,7 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/GameOverPanel/Container/MarginContainer" unique_id=344090192]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(127, 0)
 layout_mode = 2
 text = "Game over screen"
 horizontal_alignment = 1
@@ -280,6 +285,7 @@ script = ExtResource("2_dwbse")
 becky = NodePath("../Becky")
 
 [node name="Fog" type="MeshInstance2D" parent="Camera2D" unique_id=899847312]
+visible = false
 modulate = Color(1, 1, 1, 0)
 mesh = SubResource("QuadMesh_036b0")
 
@@ -398,15 +404,129 @@ texture = ExtResource("13_2o6r5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextRound" unique_id=2037708612]
 shape = SubResource("CircleShape2D_70uel")
 
+[node name="ProgressBar" type="ProgressBar" parent="NextRound" unique_id=1743740660]
+offset_left = -36.0
+offset_top = -33.0
+offset_right = 38.0
+offset_bottom = -13.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+value = 1.0
+show_percentage = false
+
 [node name="Label" type="Label" parent="NextRound" unique_id=1621363490]
-visible = false
 offset_left = -39.0
 offset_top = -32.0
 offset_right = 42.0
 offset_bottom = -13.0
 theme_override_fonts/font = ExtResource("3_k3n1d")
 theme_override_font_sizes/font_size = 7
-text = "Press Enter to start
+text = "Hold E/Ⓑ to start
  the next round"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrades1" type="Area2D" parent="." unique_id=2132285256]
+position = Vector2(908, 436)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("17_udxuc")
+upgrade1 = 1
+upgrade2 = 3
+cost = 50
+cost_type = 1
+
+[node name="ProgressBarAlt" type="ProgressBar" parent="Upgrades1" unique_id=1657313069]
+offset_left = -53.0
+offset_top = -30.0
+offset_right = 51.0
+offset_bottom = -21.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="ProgressBar" type="ProgressBar" parent="Upgrades1" unique_id=468251802]
+offset_left = -53.0
+offset_top = -22.0
+offset_right = 51.0
+offset_bottom = -13.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Upgrades1" unique_id=308499737]
+texture = ExtResource("13_2o6r5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Upgrades1" unique_id=1596704242]
+shape = SubResource("CircleShape2D_70uel")
+
+[node name="Label" type="RichTextLabel" parent="Upgrades1" unique_id=260821978]
+offset_left = -60.0
+offset_top = -40.0
+offset_right = 60.0
+offset_bottom = -10.0
+theme_override_fonts/normal_font = ExtResource("3_k3n1d")
+theme_override_font_sizes/normal_font_size = 7
+bbcode_enabled = true
+text = "[color=orange]Cost 50[/color]
+Hold Q/Ⓐ for double shot
+Hold E/Ⓑ for bouncy shot"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrades2" type="Area2D" parent="." unique_id=434821614]
+position = Vector2(1007, 163)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("17_udxuc")
+upgrade2 = 2
+cost = 30
+cost_type = 1
+
+[node name="ProgressBarAlt" type="ProgressBar" parent="Upgrades2" unique_id=1241551629]
+offset_left = -53.0
+offset_top = -30.0
+offset_right = 51.0
+offset_bottom = -21.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="ProgressBar" type="ProgressBar" parent="Upgrades2" unique_id=212093188]
+offset_left = -53.0
+offset_top = -22.0
+offset_right = 51.0
+offset_bottom = -13.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Upgrades2" unique_id=250526198]
+texture = ExtResource("13_2o6r5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Upgrades2" unique_id=1716212822]
+shape = SubResource("CircleShape2D_70uel")
+
+[node name="Label" type="RichTextLabel" parent="Upgrades2" unique_id=2076098758]
+offset_left = -60.0
+offset_top = -40.0
+offset_right = 60.0
+offset_bottom = -10.0
+theme_override_fonts/normal_font = ExtResource("3_k3n1d")
+theme_override_font_sizes/normal_font_size = 7
+bbcode_enabled = true
+text = "[color=orange]Cost 30[/color]
+Hold Q/Ⓐ for rapid shot
+Hold E/Ⓑ for frost"
 horizontal_alignment = 1
 vertical_alignment = 1

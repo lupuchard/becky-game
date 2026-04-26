@@ -2,6 +2,8 @@ extends StaticBody2D
 class_name Enemy
 
 const ARROW_MARGIN := 10
+const COLD_DECAY := 0.1
+const MAX_COLD := 1.5
 
 signal died
 signal reached_end
@@ -33,6 +35,8 @@ var going_back: bool = false
 
 var cooldown: float = 0.0
 
+var cold := 0.0
+
 var damage_tween: Tween
 var is_dead := false
 
@@ -55,7 +59,7 @@ func _process(delta: float):
 	if is_dead: return
 	
 	if path0 != null:
-		speed = min(speed + accel * delta, max_speed)
+		speed = min(speed + accel * delta, max_speed) / (cold + 1.0)
 		path_distance += speed * delta
 		if path_distance >= path_length:
 			if going_back:
@@ -73,6 +77,9 @@ func _process(delta: float):
 		if cooldown <= 0.0:
 			cooldown += projectile_cooldown
 			shoot_projectile()
+	
+	cold = clamp(0, cold - COLD_DECAY * delta, MAX_COLD)
+	modulate = Color(1 / (cold + 1), 1 / (cold + 1), 1.0)
 	
 	var bounds: Rect2 = camera.get_bounds()
 	if global_position.x > bounds.end.x:
@@ -149,7 +156,7 @@ func update_position():
 	var point2 = path1.sample_baked(dist * path1.get_baked_length())
 	global_position = lerp(point1, point2, path_preference)
 
-func take_damage(damage: float):
+func take_damage(damage: float, cold_damage: float = 0.0):
 	health -= damage
 	if health <= 0:
 		die()
@@ -159,6 +166,8 @@ func take_damage(damage: float):
 			damage_tween.kill()
 		damage_tween = create_tween()
 		damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
+		
+		cold += cold_damage
 
 func die():
 	if is_dead: return

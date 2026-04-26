@@ -1,17 +1,35 @@
 extends Area2D
 class_name Site
 
-signal interacted
+signal interacted(alt: bool)
 
-const label_shown_pos := Vector2(-39, -40)
-const label_hidden_pos := Vector2(-39, -24)
+var label_shown_pos: Vector2
+var label_hidden_pos: Vector2
 
 @onready var label = $Label
+@onready var progress_bar = $ProgressBar
+@onready var progress_bar_alt = get_node_or_null("ProgressBarAlt")
 
 var tween: Tween
+var interact_wait := 0.0
+var interact_alt := false
 
 func _ready():
+	label_shown_pos = label.position
+	label_hidden_pos = label.position + Vector2(0, 16)
 	collision_layer = 3
+	label.hide()
+
+func _process(delta: float):
+	interact_wait = max(0.0, interact_wait - delta * 2.0)
+	
+	if interact_alt and progress_bar_alt != null:
+		progress_bar_alt.value = interact_wait
+		progress_bar.value = 0.0
+	elif !interact_alt:
+		progress_bar.value = interact_wait
+		if progress_bar_alt != null:
+			progress_bar_alt.value = 0.0
 
 func enable():
 	show()
@@ -46,5 +64,12 @@ func show_label():
 	tween.tween_property(label, "position", label_shown_pos, 0.3)
 	tween.parallel().tween_property(label, "modulate", Color.WHITE, 0.3)
 
-func interact():
-	interacted.emit()
+func pressing(delta: float, alt: bool):
+	if interact_alt != alt:
+		interact_alt = alt
+		interact_wait = 0.0
+	
+	interact_wait += delta * 3.0
+	if interact_wait >= 1.0:
+		interact_wait = 0.0
+		interacted.emit(interact_alt)

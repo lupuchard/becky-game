@@ -24,6 +24,7 @@ const MAX_LIVES := 5
 
 @onready var rounds: Node = $Rounds
 @onready var next_round_site: Site = $NextRound
+@onready var upgrades1_site: Site = $Upgrades1
 
 var current_round := 0
 var lives := 5
@@ -36,9 +37,11 @@ func _ready():
 	game_over_panel.hide()
 	
 	next_round_site.disable()
-	next_round_site.interacted.connect(start_next_round)
+	next_round_site.interacted.connect(func(alt): start_next_round())
 	spawner.round_ended.connect(on_round_ended)
 	spawner.enemy_reached_end.connect(on_enemy_reached_end)
+	
+	upgrades1_site.disable()
 
 func _process(_delta: float):
 	time_progress.value = spawner.round_current_time / spawner.round_total_time
@@ -70,6 +73,8 @@ func reset():
 	
 	becky.show()
 	becky.process_mode = Node.PROCESS_MODE_INHERIT
+	becky.reset()
+	
 	current_round = 0
 	between_rounds = false
 	
@@ -81,6 +86,8 @@ func on_round_ended():
 	current_round += 1
 	lives = MAX_LIVES
 	
+	upgrades1_site.enable()
+	
 	restore_health_tween = create_tween()
 	restore_health_tween.tween_property(becky, "health", Becky.MAX_HEALTH, 4.0)
 
@@ -90,8 +97,9 @@ func start_next_round():
 		becky.health = Becky.MAX_HEALTH
 		spawner.set_round($Rounds.get_child(current_round))
 		next_round_site.disable()
+		upgrades1_site.disable()
 		
 func on_enemy_reached_end():
 	lives -= 1
 	if lives <= 0:
-		game_over("They stole all the prairie dogs :(")
+		game_over("They took all the prairie dogs :(")

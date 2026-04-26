@@ -1,12 +1,22 @@
 extends Area2D
 class_name Becky
 
+enum Upgrade {
+	RAPID_SHOT,
+	DOUBLE_SHOT,
+	COLD_SHOT,
+	BOUNCE_SHOT,
+	TOTAL,
+}
+
 const MAX_HEALTH := 100.0
 const INV_COOLDOWN := 0.5
 
 const MAX_SPEED := 150.0
 const ACCEL := 700.0
 const SHOOT_COOLDOWN := 0.2
+const RAPID_SHOT_COOLDOWN := 0.15
+const DOUBLE_SHOT_COOLDOWN_MOD := 1.5
 const FLY_TRANSITION_TIME := 0.3
 const FLY_SPEEDUP := 2.0
 
@@ -22,8 +32,10 @@ var inv_cooldown := 0.0
 
 var flying = 0.0
 
-var money: Array[int] = [0, 0]
+var money: Array[int]
+var upgrades: Array[bool] = []
 
+var initial_position: Vector2
 var cur_site: Site = null
 
 func _ready():
@@ -31,10 +43,8 @@ func _ready():
 	collision_mask = 1 | 2 | 3
 	area_entered.connect(on_enter_area)
 	area_exited.connect(on_exit_area)
-	
-func _input(event: InputEvent):
-	if event.is_action_pressed("interact") and cur_site != null:
-		cur_site.interact()
+	initial_position = global_position
+	reset()
 
 func _process(delta: float):
 	if Input.is_action_pressed("fly"):
@@ -43,6 +53,11 @@ func _process(delta: float):
 		flying = move_toward(flying, 0.0, delta / FLY_TRANSITION_TIME)
 	scale = Vector2.ONE * lerp(1.0, 1.2, flying)
 	z_index = 3 if flying > 0.5 else 1
+	
+	if Input.is_action_pressed("interact") and cur_site != null:
+		cur_site.pressing(delta, false)
+	elif Input.is_action_pressed("interact_alt") and cur_site != null:
+		cur_site.pressing(delta, true)
 	
 	var shooting = false
 	if Input.is_action_pressed("shoot_right"):
@@ -66,8 +81,14 @@ func _process(delta: float):
 	if shoot_cooldown > 0.0:
 		shoot_cooldown -= delta
 	if shooting and shoot_cooldown <= 0 and flying < 0.2:
-		shoot_cooldown += SHOOT_COOLDOWN
-		shoot(shoot_dir.normalized())
+		shoot_cooldown += RAPID_SHOT_COOLDOWN if upgrades[Upgrade.RAPID_SHOT] else SHOOT_COOLDOWN
+		var dir = shoot_dir.normalized()
+		if upgrades[Upgrade.DOUBLE_SHOT]:
+			shoot(dir, dir.orthogonal() * 10.0)
+			shoot(dir, -dir.orthogonal() * 10.0)
+			shoot_cooldown *= DOUBLE_SHOT_COOLDOWN_MOD
+		else:
+			shoot(dir, Vector2.ZERO)
 	
 	inv_cooldown = max(inv_cooldown - delta, 0.0)
 
@@ -101,14 +122,20 @@ func _physics_process(delta: float):
 	for body in get_overlapping_bodies():
 		on_collision(body)
 	
-func shoot(direction: Vector2):
+func shoot(direction: Vector2, offset: Vector2):
 	var proj = Projectile.new()
 	proj.damage = 0.5
 	proj.velocity = direction * 500.0
 	proj.lifespan = 5.0
 	proj.size = 20
 	get_parent().add_child(proj)
-	proj.global_position = global_position
+	proj.global_position = global_position + offset
+	
+	if upgrades[Upgrade.COLD_SHOT]:
+		proj.cold += 0.2
+	
+	if upgrades[Upgrade.BOUNCE_SHOT]:
+		proj.bounces = 3
 	
 func on_collision(body: Node2D):
 	if flying >= 0.5: return
@@ -146,3 +173,15 @@ func be_thrown(dir: Vector2):
 	if inv_cooldown <= 0.0:
 		vel += dir * 500.0
 		inv_cooldown = INV_COOLDOWN
+
+func apply_upgrade(upgrade: Upgrade):
+	upgrades[upgrade] = true
+
+func reset():
+	money = [0, 0]
+	upgrades.resize(Upgrade.TOTAL)
+	upgrades.fill(false)
+	vel = Vector2.ZERO
+	global_position = initial_position
+	health = MAX_HEALTH
+	flying = 0
