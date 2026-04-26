@@ -81,7 +81,7 @@ func on_round_ended():
 	current_round += 1
 	lives = MAX_LIVES
 	
-	restore_health_tween = Tween.new()
+	restore_health_tween = create_tween()
 	restore_health_tween.tween_property(becky, "health", Becky.MAX_HEALTH, 4.0)
 
 func start_next_round():

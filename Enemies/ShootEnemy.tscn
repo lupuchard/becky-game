@@ -12,7 +12,7 @@ script = ExtResource("1_5xdy1")
 health = 3.0
 max_speed = 80.0
 accel = 800.0
-projectile_damage = 5.0
+projectile_damage = 10.0
 projectile_cooldown = 1.6
 drops = Dictionary[PackedScene, float]({
 ExtResource("2_f4uvp"): 3.0

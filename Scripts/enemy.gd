@@ -45,30 +45,30 @@ func _ready():
 	if possible_paths.size() > 0:
 		pick_random_path()
 	
-	if projectile_damage > 0.0 and projectile_cooldown > 0.0:
-		target = get_tree().get_first_node_in_group("becky")
+	target = get_tree().get_first_node_in_group("becky")
 	
 	oob_arrow.hide()
 	oob_arrow.texture = preload("res://Assets/arrow.png")
 	add_child(oob_arrow)
 
 func _process(delta: float):
-	if is_dead || path0 == null: return
+	if is_dead: return
 	
-	speed = min(speed + accel * delta, max_speed)
-	path_distance += speed * delta
-	if path_distance >= path_length:
-		if going_back:
-			reach_end()
+	if path0 != null:
+		speed = min(speed + accel * delta, max_speed)
+		path_distance += speed * delta
+		if path_distance >= path_length:
+			if going_back:
+				reach_end()
+			else:
+				speed = 0.0
+				going_back = true
+				oob_arrow.modulate = Color.ORANGE
+				pick_random_path()
 		else:
-			speed = 0.0
-			going_back = true
-			oob_arrow.modulate = Color.ORANGE
-			pick_random_path()
-	else:
-		update_position()
+			update_position()
 	
-	if target != null:
+	if projectile_cooldown > 0.0 and projectile_damage > 0.0:
 		cooldown -= delta
 		if cooldown <= 0.0:
 			cooldown += projectile_cooldown
@@ -103,12 +103,12 @@ func _process(delta: float):
 		oob_arrow.show()
 		oob_arrow.rotation = PI
 		oob_arrow.position.x = 0.0
-		oob_arrow.global_position.y = bounds.end.y - 20
+		oob_arrow.global_position.y = bounds.end.y - ARROW_MARGIN
 	elif global_position.y < bounds.position.y:
 		oob_arrow.rotation = 0
 		oob_arrow.show()
 		oob_arrow.position.x = 0.0
-		oob_arrow.global_position.y = bounds.position.y + 20
+		oob_arrow.global_position.y = bounds.position.y + ARROW_MARGIN
 	else:
 		oob_arrow.hide()
 
@@ -125,11 +125,18 @@ func shoot_projectile():
 	proj.global_position = global_position
 
 func pick_random_path():
-	path0 = possible_paths.pick_random().curve
-	for i in range(0, 3):
-		path1 = possible_paths.pick_random().curve
-		if path1 != path0:
-			break
+	if possible_paths.size() == 1:
+		path0 = possible_paths[0].curve
+		path1 = possible_paths[0].curve
+	elif possible_paths.size() == 2:
+		path0 = possible_paths[0].curve
+		path1 = possible_paths[1].curve
+	else:
+		path0 = possible_paths.pick_random().curve
+		for i in range(0, 3):
+			path1 = possible_paths.pick_random().curve
+			if path1 != path0:
+				break
 	path_preference = randf()
 	path_length = lerp(path0.get_baked_length(), path1.get_baked_length(), path_preference)
 	path_distance = 0.0

@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://ml5ey4n0wfht" path="res://Enemies/PulseEnemy.tscn" id="9_2u3nc"]
 [ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="13_2o6r5"]
 [ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
+[ext_resource type="PackedScene" uid="uid://bca5med66pxed" path="res://Enemies/FlyingEnemy.tscn" id="16_2u3nc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqwa"]
 bg_color = Color(0.79, 0.79, 0.79, 0.1254902)
@@ -359,6 +360,26 @@ script = ExtResource("7_pkg7o")
 enemy = ExtResource("8_wse8f")
 amount = 15
 seconds_between = 1.5
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Round3" type="Node" parent="Rounds" unique_id=1991491409]
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round3" unique_id=1828571381 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 10
+seconds_between = 3.0
+simultaneous = true
+paths = [NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round3" unique_id=1240062875 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("16_2u3nc")
+amount = 5
+seconds_between = 6.0
+simultaneous = true
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
