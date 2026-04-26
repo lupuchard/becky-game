@@ -6,6 +6,11 @@ const MAX_LIVES := 5
 @onready var becky: Becky = $Becky
 @onready var spawner: Spawner = $Spawner
 
+@onready var main_menu: Control = $CanvasLayer/MainMenu
+@onready var play_button: Button = %PlayButton
+@onready var settings_button: Button = %SettingsButton
+@onready var credits_button: Button = %CreditsButton
+
 @onready var round_label: Label = $CanvasLayer/RoundProgress/Label
 @onready var time_progress: ProgressBar = $CanvasLayer/RoundProgress/TimeProgress
 @onready var kill_progress: ProgressBar = $CanvasLayer/RoundProgress/KillProgress
@@ -14,7 +19,7 @@ const MAX_LIVES := 5
 
 @onready var game_over_panel: Control = $CanvasLayer/GameOverPanel
 @onready var game_over_panel_label: Label = $CanvasLayer/GameOverPanel/Container/MarginContainer/Label
-@onready var retry_button: Button = $CanvasLayer/GameOverPanel/Container/Buttons/RetryButton
+@onready var to_menu_button: Button = %ToMenuButton
 
 @onready var losing_indicator: Control = $CanvasLayer/LosingIndicator
 @onready var losing_indicator_label: Control = $CanvasLayer/LosingIndicator/Label
@@ -25,6 +30,8 @@ const MAX_LIVES := 5
 @onready var rounds: Node = $Rounds
 @onready var next_round_site: Site = $NextRound
 @onready var upgrades1_site: Site = $Upgrades1
+@onready var upgrades2_site: Site = $Upgrades2
+@onready var sites: Array[Site] = [next_round_site, upgrades1_site, upgrades2_site]
 
 var current_round := 0
 var lives := 5
@@ -32,16 +39,26 @@ var between_rounds := false
 var restore_health_tween: Tween
 
 func _ready():
-	spawner.set_round($Rounds/Round1)
-	retry_button.pressed.connect(reset)
+	becky.process_mode = Node.PROCESS_MODE_DISABLED
+	becky.hide()
+	
+	main_menu.show()
+	play_button.pressed.connect(func():
+		main_menu.hide()
+		spawner.set_round($Rounds/Round1)
+		becky.show()
+		becky.process_mode = Node.PROCESS_MODE_INHERIT
+	)
+	
+	to_menu_button.pressed.connect(reset)
 	game_over_panel.hide()
 	
-	next_round_site.disable()
-	next_round_site.interacted.connect(func(alt): start_next_round())
+	next_round_site.interacted.connect(func(_alt): start_next_round())
 	spawner.round_ended.connect(on_round_ended)
 	spawner.enemy_reached_end.connect(on_enemy_reached_end)
 	
-	upgrades1_site.disable()
+	for site in sites:
+		site.disable()
 
 func _process(_delta: float):
 	time_progress.value = spawner.round_current_time / spawner.round_total_time
@@ -64,6 +81,7 @@ func game_over(text: String):
 	becky.hide()
 
 func reset():
+	lives = MAX_LIVES
 	game_over_panel.hide()
 	becky.health = Becky.MAX_HEALTH
 	for child in get_children():
@@ -71,23 +89,22 @@ func reset():
 			child.queue_free()
 	spawner.set_round($Rounds/Round1)
 	
-	becky.show()
-	becky.process_mode = Node.PROCESS_MODE_INHERIT
 	becky.reset()
-	
 	current_round = 0
 	between_rounds = false
+	
+	main_menu.show()
 	
 func on_round_ended():
 	if game_over_panel.visible: return
 	
-	next_round_site.enable()
+	for site in sites:
+		site.enable()
+	
 	between_rounds = true
 	current_round += 1
 	lives = MAX_LIVES
-	
-	upgrades1_site.enable()
-	
+		
 	restore_health_tween = create_tween()
 	restore_health_tween.tween_property(becky, "health", Becky.MAX_HEALTH, 4.0)
 
@@ -96,8 +113,8 @@ func start_next_round():
 		restore_health_tween.kill()
 		becky.health = Becky.MAX_HEALTH
 		spawner.set_round($Rounds.get_child(current_round))
-		next_round_site.disable()
-		upgrades1_site.disable()
+		for site in sites:
+			site.disable()
 		
 func on_enemy_reached_end():
 	lives -= 1

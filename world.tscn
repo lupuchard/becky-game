@@ -9,6 +9,7 @@
 [ext_resource type="FontFile" uid="uid://5mk2307ho1x8" path="res://Assets/Fonts/tinypixel.otf" id="3_k3n1d"]
 [ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="3_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/ShootEnemy.tscn" id="5_036b0"]
+[ext_resource type="FontFile" uid="uid://c5l8d1d8cwfmo" path="res://Assets/Fonts/m5x7.ttf" id="5_ikiii"]
 [ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
 [ext_resource type="Script" uid="uid://bg3fuwbfsrid0" path="res://Scripts/round_segment.gd" id="7_pkg7o"]
 [ext_resource type="PackedScene" uid="uid://d2ewupfw2b3wr" path="res://Enemies/FastEnemy.tscn" id="8_wse8f"]
@@ -229,6 +230,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="GameOverPanel" type="PanelContainer" parent="CanvasLayer" unique_id=407970296]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -263,14 +265,72 @@ layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="RetryButton" type="Button" parent="CanvasLayer/GameOverPanel/Container/Buttons" unique_id=21093111]
+[node name="ToMenuButton" type="Button" parent="CanvasLayer/GameOverPanel/Container/Buttons" unique_id=21093111]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Retry"
+text = "Menu"
 
 [node name="ExitButton" type="Button" parent="CanvasLayer/GameOverPanel/Container/Buttons" unique_id=2024142376]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Exit"
 script = ExtResource("3_ic0uy")
+
+[node name="MainMenu" type="VBoxContainer" parent="CanvasLayer" unique_id=149280268]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu" unique_id=1724440434]
+layout_mode = 2
+text = "Untitled Game"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MainMenu" unique_id=1881439355]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MainMenu/PanelContainer" unique_id=898078501]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MainMenu/PanelContainer/HBoxContainer" unique_id=926045380]
+custom_minimum_size = Vector2(125, 100)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("5_ikiii")
+text = "Move with WASD or left joystick.
+
+Shoot with arrow keys or right joystick.
+
+Fly with space or RB."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/PanelContainer/HBoxContainer" unique_id=591297689]
+layout_mode = 2
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/HBoxContainer/VBoxContainer" unique_id=929639168]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Play"
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1327692878]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/HBoxContainer/VBoxContainer" unique_id=45406586]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Credits"
 
 [node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
 modulate = Color(0.62, 0.62, 0.62, 1)
