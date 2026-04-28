@@ -1,6 +1,7 @@
 extends StaticBody2D
 class_name Enemy
 
+const LIFESTEAL_DROP = preload("res://Drops/Drop3.tscn")
 const ARROW_MARGIN := 10
 const COLD_DECAY := 0.1
 const MAX_COLD := 1.5
@@ -156,10 +157,10 @@ func update_position():
 	var point2 = path1.sample_baked(dist * path1.get_baked_length())
 	global_position = lerp(point1, point2, path_preference)
 
-func take_damage(damage: float, cold_damage: float = 0.0):
+func take_damage(damage: float, cold_damage: float = 0.0, lifesteal: int = 0):
 	health -= damage
 	if health <= 0:
-		die()
+		die(lifesteal)
 	else:
 		sprite.modulate = Color(1.0, 0.5, 0.5)
 		if damage_tween != null:
@@ -169,7 +170,7 @@ func take_damage(damage: float, cold_damage: float = 0.0):
 		
 		cold += cold_damage
 
-func die():
+func die(lifesteal: int):
 	if is_dead: return
 	collision_layer = 0
 	collision_mask = 0
@@ -182,6 +183,10 @@ func die():
 		var remainder = fmod(amount, 1.0)
 		if remainder >= 0.01 and randf() < remainder:
 			spawn_drop(drop)
+	
+	if lifesteal > 0:
+		var lifesteal_drop = spawn_drop(LIFESTEAL_DROP)
+		lifesteal_drop.amount = lifesteal
 	
 	if damage_tween != null:
 		damage_tween.kill()
@@ -198,7 +203,8 @@ func reach_end():
 	reached_end.emit()
 	queue_free()
 
-func spawn_drop(drop_scene: PackedScene):
+func spawn_drop(drop_scene: PackedScene) -> Drop:
 	var drop = drop_scene.instantiate()
 	get_parent().add_child(drop)
 	drop.global_position = global_position
+	return drop

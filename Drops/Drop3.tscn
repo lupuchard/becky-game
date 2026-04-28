@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bfcf0hk8y6uqf"]
+
+[ext_resource type="Script" uid="uid://pcint0stiw8h" path="res://Scripts/drop.gd" id="1_jinv8"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xy7v5"]
+size = Vector2(4, 4)
+
+[node name="Drop3" type="Node2D" unique_id=1969628570]
+script = ExtResource("1_jinv8")
+money_type = -1
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1903196723]
+modulate = Color(0.81, 0, 0, 1)
+mesh = SubResource("QuadMesh_xy7v5")

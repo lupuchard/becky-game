@@ -6,10 +6,14 @@ enum Upgrade {
 	DOUBLE_SHOT,
 	COLD_SHOT,
 	BOUNCE_SHOT,
+	SHIELD,
+	LIFESTEAL,
 	TOTAL,
 }
 
 const MAX_HEALTH := 100.0
+const MAX_SHIELD_HEALTH := 25.0
+const SHIELD_REGEN := 5.0
 const INV_COOLDOWN := 0.5
 
 const MAX_SPEED := 150.0
@@ -20,12 +24,14 @@ const DOUBLE_SHOT_COOLDOWN_MOD := 1.5
 const FLY_TRANSITION_TIME := 0.3
 const FLY_SPEEDUP := 2.0
 
-@onready var sprite = $Sprite
-@onready var small_area = $SmallArea
+@onready var sprite: Sprite2D = $Sprite
+@onready var small_area: Area2D = $SmallArea
+@onready var shield: Area2D = $Shield
 
 var health := MAX_HEALTH
+var shield_health := MAX_SHIELD_HEALTH
 var vel := Vector2.ZERO
-var shoot_dir := Vector2.ZERO
+var last_shoot_dir := Vector2.ZERO
 var shoot_cooldown := 0.0
 var damage_tween: Tween
 var inv_cooldown := 0.0
@@ -44,6 +50,7 @@ func _ready():
 	area_entered.connect(on_enter_area)
 	area_exited.connect(on_exit_area)
 	initial_position = global_position
+	shield.collision_mask = 1
 	reset()
 
 func _process(delta: float):
@@ -59,7 +66,8 @@ func _process(delta: float):
 	elif Input.is_action_pressed("interact_alt") and cur_site != null:
 		cur_site.pressing(delta, true)
 	
-	var shooting = false
+	var shooting := false
+	var shoot_dir := Vector2.ZERO
 	if Input.is_action_pressed("shoot_right"):
 		shooting = true
 		shoot_dir.x = 1.0
@@ -78,6 +86,9 @@ func _process(delta: float):
 	else:
 		shoot_dir.y = 0.0
 	
+	if shooting:
+		last_shoot_dir = shoot_dir
+	
 	if shoot_cooldown > 0.0:
 		shoot_cooldown -= delta
 	if shooting and shoot_cooldown <= 0 and flying < 0.2:
@@ -91,6 +102,9 @@ func _process(delta: float):
 			shoot(dir, Vector2.ZERO)
 	
 	inv_cooldown = max(inv_cooldown - delta, 0.0)
+	
+	if upgrades[Upgrade.SHIELD]:
+		update_shield_direction(last_shoot_dir, delta)
 
 func _physics_process(delta: float):
 	var max_speed = lerp(MAX_SPEED, MAX_SPEED * FLY_SPEEDUP, flying)
@@ -119,8 +133,17 @@ func _physics_process(delta: float):
 	#	vel = vel.normalized() * max_speed
 	global_position += vel * delta
 	
-	for body in get_overlapping_bodies():
-		on_collision(body)
+	if upgrades[Upgrade.SHIELD]:
+		shield.modulate = Color(1.0, 1.0, 1.0, shield_health / MAX_SHIELD_HEALTH)
+		if shield_health > 0.0:
+			shield_health = min(shield_health + SHIELD_REGEN * delta, MAX_SHIELD_HEALTH)
+		if flying < 0.5:
+			for body in shield.get_overlapping_bodies():
+				on_shield_collision(body)
+	
+	if flying < 0.5:
+		for body in get_overlapping_bodies():
+			on_collision(body)
 	
 func shoot(direction: Vector2, offset: Vector2):
 	var proj = Projectile.new()
@@ -137,6 +160,9 @@ func shoot(direction: Vector2, offset: Vector2):
 	if upgrades[Upgrade.BOUNCE_SHOT]:
 		proj.bounces = 3
 	
+	if upgrades[Upgrade.LIFESTEAL]:
+		proj.lifesteal = 5
+	
 func on_collision(body: Node2D):
 	if flying >= 0.5: return
 	
@@ -145,6 +171,13 @@ func on_collision(body: Node2D):
 		inv_cooldown = INV_COOLDOWN
 	elif body is Projectile:
 		take_damage(body.damage)
+		body.die()
+
+func on_shield_collision(body: Node2D):
+	if flying >= 0.5: return
+	
+	if body is Projectile and shield_health >= 0:
+		shield_health -= body.damage
 		body.die()
 
 func take_damage(amount: float):
@@ -156,7 +189,10 @@ func take_damage(amount: float):
 	damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
 
 func collect(drop: Drop):
-	money[drop.money_type] += drop.amount
+	if drop.money_type == -1:
+		health = min(health + drop.amount, MAX_HEALTH)
+	else:
+		money[drop.money_type] += drop.amount
 
 func on_enter_area(area: Area2D):
 	if area is Site:
@@ -176,6 +212,10 @@ func be_thrown(dir: Vector2):
 
 func apply_upgrade(upgrade: Upgrade):
 	upgrades[upgrade] = true
+	
+	if upgrade == Upgrade.SHIELD:
+		shield.show()
+		shield.process_mode = Node.PROCESS_MODE_INHERIT
 
 func reset():
 	money = [0, 0]
@@ -185,3 +225,11 @@ func reset():
 	global_position = initial_position
 	health = MAX_HEALTH
 	flying = 0
+	
+	shield.hide()
+	shield.process_mode = Node.PROCESS_MODE_DISABLED
+
+func update_shield_direction(dir: Vector2, delta: float):
+	if dir == Vector2.ZERO: return
+	var target = Vector2.UP.angle_to(dir)
+	shield.rotation = lerp_angle(shield.rotation, target, 3.0 * delta)

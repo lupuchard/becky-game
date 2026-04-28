@@ -16,6 +16,7 @@ var lifespan: float
 var bounces := 0
 var already_hit: Array[Enemy]
 var cold := 0.0
+var lifesteal := 0
 
 func _ready():
 	collision_layer = 1 if enemy else 0
@@ -50,7 +51,7 @@ func _process(delta: float):
 
 func on_collide(collider: Object, normal: Vector2):
 	if !enemy and collider is Enemy and !already_hit.has(collider):
-		collider.take_damage(damage, cold)
+		collider.take_damage(damage, cold, lifesteal)
 		if bounces > 0:
 			var speed = velocity.length()
 			var ri = velocity.normalized()

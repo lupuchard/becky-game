@@ -29,9 +29,7 @@ const MAX_LIVES := 5
 
 @onready var rounds: Node = $Rounds
 @onready var next_round_site: Site = $NextRound
-@onready var upgrades1_site: Site = $Upgrades1
-@onready var upgrades2_site: Site = $Upgrades2
-@onready var sites: Array[Site] = [next_round_site, upgrades1_site, upgrades2_site]
+@onready var sites: Array[Site] = [next_round_site, $Upgrades1, $Upgrades2, $Upgrades3]
 
 var current_round := 0
 var lives := 5
@@ -107,6 +105,7 @@ func on_round_ended():
 		
 	restore_health_tween = create_tween()
 	restore_health_tween.tween_property(becky, "health", Becky.MAX_HEALTH, 4.0)
+	restore_health_tween.parallel().tween_property(becky, "shield_health", Becky.MAX_SHIELD_HEALTH, 2.0)
 
 func start_next_round():
 	if between_rounds and current_round < rounds.get_child_count():
