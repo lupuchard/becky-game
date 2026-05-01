@@ -7,7 +7,7 @@ const ACCEL2 := 1.0
 
 @export var money_type: int = 0
 @export var amount: int = 5
-var becky: Becky
+var becky: Node
 var starting_vel: Vector2
 var speed: float = 0.0
 
@@ -28,5 +28,5 @@ func _process(delta: float):
 		global_position += disp.normalized() * speed * delta
 
 func be_collected():
-	becky.collect(self)
+	becky.collect(money_type, amount)
 	queue_free()

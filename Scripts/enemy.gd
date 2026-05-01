@@ -1,6 +1,7 @@
 extends StaticBody2D
 class_name Enemy
 
+const PROJECTILE = preload("res://Projectiles/EnemyProjectile.tscn")
 const LIFESTEAL_DROP = preload("res://Drops/Drop3.tscn")
 const ARROW_MARGIN := 10
 const COLD_DECAY := 0.1
@@ -9,7 +10,7 @@ const MAX_COLD := 1.5
 signal died
 signal reached_end
 
-@onready var sprite: Sprite2D = $Sprite
+@onready var sprite: Node2D = $Sprite
 @onready var oob_arrow: Sprite2D = Sprite2D.new()
 @onready var camera: Camera2D = get_viewport().get_camera_2d()
 
@@ -68,6 +69,7 @@ func _process(delta: float):
 			else:
 				speed = 0.0
 				going_back = true
+				sprite.flip_h = true
 				oob_arrow.modulate = Color.ORANGE
 				pick_random_path()
 		else:
@@ -123,14 +125,12 @@ func _process(delta: float):
 func shoot_projectile():
 	if target.flying > 0.5:
 		return
-	var proj = Projectile.new()
+	var proj = PROJECTILE.instantiate()
 	proj.damage = projectile_damage
 	proj.velocity = (target.global_position - global_position).normalized() * 200.0
 	proj.lifespan = 60.0
-	proj.size = 10
-	proj.enemy = true
-	get_parent().add_child(proj)
 	proj.global_position = global_position
+	get_parent().add_child(proj)
 
 func pick_random_path():
 	if possible_paths.size() == 1:

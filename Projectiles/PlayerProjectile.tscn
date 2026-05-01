@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://6duwlnmiejkh"]
+
+[ext_resource type="Script" uid="uid://blktg48jib4p1" path="res://Scripts/player_projectile.gd" id="1_2pp81"]
+[ext_resource type="AudioStream" uid="uid://bq15mulkxfmn4" path="res://Assets/Sound/player_bullet_01.ogg" id="1_rva4n"]
+[ext_resource type="AudioStream" uid="uid://74l088fqgwe2" path="res://Assets/Sound/player_bullet_02.ogg" id="2_gmw43"]
+[ext_resource type="AudioStream" uid="uid://cy4mlx5idee2s" path="res://Assets/Sound/player_bullet_03.ogg" id="3_m0u6g"]
+[ext_resource type="AudioStream" uid="uid://b4u4588bnwbx3" path="res://Assets/Sound/enemy_hit_01.ogg" id="4_7lojg"]
+[ext_resource type="AudioStream" uid="uid://buohg87qj70oo" path="res://Assets/Sound/enemy_hit_02.ogg" id="5_vbysl"]
+[ext_resource type="AudioStream" uid="uid://bodx5r5orvlhe" path="res://Assets/Sound/enemy_hit_03.ogg" id="6_2pp81"]
+[ext_resource type="AudioStream" uid="uid://br4chga2cwhwa" path="res://Assets/Sound/enemy_hit_04.ogg" id="7_wx6nt"]
+[ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="8_vbysl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2pp81"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7htnw"]
+streams_count = 3
+stream_0/stream = ExtResource("1_rva4n")
+stream_1/stream = ExtResource("2_gmw43")
+stream_2/stream = ExtResource("3_m0u6g")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oc1yv"]
+streams_count = 4
+stream_0/stream = ExtResource("4_7lojg")
+stream_1/stream = ExtResource("5_vbysl")
+stream_2/stream = ExtResource("6_2pp81")
+stream_3/stream = ExtResource("7_wx6nt")
+
+[node name="Projectile" type="StaticBody2D" unique_id=1593731145]
+script = ExtResource("1_2pp81")
+damage = 0.5
+lifespan = 5.0
+metadata/_custom_type_script = "uid://b57b3qu6imds8"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1321776782]
+shape = SubResource("CircleShape2D_2pp81")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=1136798702]
+stream = SubResource("AudioStreamRandomizer_7htnw")
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=68471983]
+stream = SubResource("AudioStreamRandomizer_oc1yv")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1757909820]
+scale = Vector2(0.14784287, 0.14784287)
+texture = ExtResource("8_vbysl")

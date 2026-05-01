@@ -3,11 +3,29 @@
 [ext_resource type="Script" uid="uid://r6wflmh8dtf0" path="res://Scripts/enemy.gd" id="1_877iy"]
 [ext_resource type="PackedScene" uid="uid://byl0yy6wd3q73" path="res://Drops/Drop1.tscn" id="2_xuvi5"]
 [ext_resource type="PackedScene" uid="uid://ctese50tcriog" path="res://Drops/Drop2.tscn" id="3_xuvi5"]
-[ext_resource type="Texture2D" uid="uid://chqt5uhp3f5so" path="res://Assets/alien-02.png" id="4_xuvi5"]
+[ext_resource type="Texture2D" uid="uid://cj6adl87kted5" path="res://Assets/SB Alien Frame 1.png" id="4_t8lst"]
+[ext_resource type="Texture2D" uid="uid://b1feguev5foob" path="res://Assets/SB Alien Frame 2.png" id="5_tkq3r"]
+[ext_resource type="Texture2D" uid="uid://ccw5yisnbfxh1" path="res://Assets/SB Alien Frame 3.png" id="6_ynhjk"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eoctk"]
-radius = 23.0
-height = 78.0
+[sub_resource type="SpriteFrames" id="SpriteFrames_yyed3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_t8lst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_tkq3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ynhjk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t8lst"]
+radius = 42.0119
 
 [node name="FastEnemy" type="StaticBody2D" unique_id=1629057451]
 script = ExtResource("1_877iy")
@@ -19,11 +37,10 @@ ExtResource("3_xuvi5"): 0.5
 })
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1780194621]
-position = Vector2(1, 1)
-scale = Vector2(0.38792711, 0.38792711)
-texture = ExtResource("4_xuvi5")
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=691444086]
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_yyed3")
+autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1695961910]
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_eoctk")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1217793237]
+shape = SubResource("CircleShape2D_t8lst")

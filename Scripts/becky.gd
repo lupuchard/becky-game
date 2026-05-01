@@ -11,6 +11,8 @@ enum Upgrade {
 	TOTAL,
 }
 
+const PROJECTILE = preload("res://Projectiles/PlayerProjectile.tscn")
+
 const MAX_HEALTH := 100.0
 const MAX_SHIELD_HEALTH := 25.0
 const SHIELD_REGEN := 5.0
@@ -27,6 +29,7 @@ const FLY_SPEEDUP := 2.0
 @onready var sprite: Sprite2D = $Sprite
 @onready var small_area: Area2D = $SmallArea
 @onready var shield: Area2D = $Shield
+@onready var upgrade_sound: AudioStreamPlayer2D = $UpgradeSound
 
 var health := MAX_HEALTH
 var shield_health := MAX_SHIELD_HEALTH
@@ -129,9 +132,11 @@ func _physics_process(delta: float):
 	vel.x = move_toward(vel.x, target_vel.x, accel * delta)
 	vel.y = move_toward(vel.y, target_vel.y, accel * delta)
 	
-	#if vel.length() > max_speed:
-	#	vel = vel.normalized() * max_speed
-	global_position += vel * delta
+	if vel != Vector2.ZERO:
+		#if vel.length() > max_speed:
+		#	vel = vel.normalized() * max_speed
+		global_position += vel * delta
+		sprite.flip_h = vel.x < 0
 	
 	if upgrades[Upgrade.SHIELD]:
 		shield.modulate = Color(1.0, 1.0, 1.0, shield_health / MAX_SHIELD_HEALTH)
@@ -146,13 +151,10 @@ func _physics_process(delta: float):
 			on_collision(body)
 	
 func shoot(direction: Vector2, offset: Vector2):
-	var proj = Projectile.new()
-	proj.damage = 0.5
+	var proj = PROJECTILE.instantiate()
 	proj.velocity = direction * 500.0
-	proj.lifespan = 5.0
-	proj.size = 20
-	get_parent().add_child(proj)
 	proj.global_position = global_position + offset
+	get_parent().add_child(proj)
 	
 	if upgrades[Upgrade.COLD_SHOT]:
 		proj.cold += 0.2
@@ -188,11 +190,11 @@ func take_damage(amount: float):
 	damage_tween = create_tween()
 	damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
 
-func collect(drop: Drop):
-	if drop.money_type == -1:
-		health = min(health + drop.amount, MAX_HEALTH)
+func collect(money_type: int, amount: int):
+	if money_type == -1:
+		health = min(health + amount, MAX_HEALTH)
 	else:
-		money[drop.money_type] += drop.amount
+		money[money_type] += amount
 
 func on_enter_area(area: Area2D):
 	if area is Site:
@@ -212,6 +214,7 @@ func be_thrown(dir: Vector2):
 
 func apply_upgrade(upgrade: Upgrade):
 	upgrades[upgrade] = true
+	upgrade_sound.play()
 	
 	if upgrade == Upgrade.SHIELD:
 		shield.show()

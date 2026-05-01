@@ -6,6 +6,8 @@ const MAX_LIVES := 5
 @onready var becky: Becky = $Becky
 @onready var spawner: Spawner = $Spawner
 
+@onready var music: AudioStreamPlayer = $Music
+
 @onready var main_menu: Control = $CanvasLayer/MainMenu
 @onready var play_button: Button = %PlayButton
 @onready var settings_button: Button = %SettingsButton
@@ -46,6 +48,7 @@ func _ready():
 		spawner.set_round($Rounds/Round1)
 		becky.show()
 		becky.process_mode = Node.PROCESS_MODE_INHERIT
+		music.play()
 	)
 	
 	to_menu_button.pressed.connect(reset)
@@ -77,6 +80,7 @@ func game_over(text: String):
 	game_over_panel.show()
 	becky.process_mode = Node.PROCESS_MODE_DISABLED
 	becky.hide()
+	music.stop()
 
 func reset():
 	lives = MAX_LIVES

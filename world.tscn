@@ -14,11 +14,13 @@
 [ext_resource type="PackedScene" uid="uid://d2ewupfw2b3wr" path="res://Enemies/FastEnemy.tscn" id="8_wse8f"]
 [ext_resource type="PackedScene" uid="uid://ml5ey4n0wfht" path="res://Enemies/PulseEnemy.tscn" id="9_2u3nc"]
 [ext_resource type="Texture2D" uid="uid://ddulbsoycvjjf" path="res://Assets/shield.png" id="10_cbp6q"]
+[ext_resource type="AudioStream" uid="uid://bmqcuqkhcvhka" path="res://Assets/Sound/upgrade_get.ogg" id="11_bc84e"]
 [ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="13_2o6r5"]
 [ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
 [ext_resource type="PackedScene" uid="uid://bca5med66pxed" path="res://Enemies/FlyingEnemy.tscn" id="16_2u3nc"]
 [ext_resource type="Script" uid="uid://c5kbnve4itdog" path="res://Scripts/upgrade_site.gd" id="17_udxuc"]
 [ext_resource type="Texture2D" uid="uid://d0tkvelv0ig61" path="res://Assets/Becky-bigpx.png" id="20_26xuy"]
+[ext_resource type="AudioStream" uid="uid://c1u3y0chqwf0w" path="res://Assets/Sound/music.ogg" id="20_bc84e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqwa"]
 bg_color = Color(0.79, 0.79, 0.79, 0.1254902)
@@ -282,7 +284,6 @@ text = "Exit"
 script = ExtResource("3_ic0uy")
 
 [node name="MainMenu" type="VBoxContainer" parent="CanvasLayer" unique_id=149280268]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -341,9 +342,9 @@ text = "Credits"
 [node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
 modulate = Color(0.62, 0.62, 0.62, 1)
 z_index = -2
-position = Vector2(1027, 462)
-scale = Vector2(1.2, 1.2)
+scale = Vector2(1.4, 1.4)
 texture = ExtResource("1_036b0")
+centered = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky")]
 position = Vector2(717, 411)
@@ -356,7 +357,7 @@ modulate = Color(1, 1, 1, 0)
 mesh = SubResource("QuadMesh_036b0")
 
 [node name="Bound" type="Marker2D" parent="Camera2D" unique_id=51245580]
-position = Vector2(1336, 512)
+position = Vector2(1680, 668)
 
 [node name="Becky" type="Area2D" parent="." unique_id=2046443451]
 z_index = 1
@@ -387,8 +388,11 @@ position = Vector2(0, -19)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_cbp6q")
 
+[node name="UpgradeSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=195617808]
+stream = ExtResource("11_bc84e")
+
 [node name="Paths" type="Node2D" parent="." unique_id=1384284802]
-scale = Vector2(1.5077518, 1.4618659)
+scale = Vector2(1.7356573, 1.7142735)
 
 [node name="HighPath" type="Path2D" parent="Paths" unique_id=70440228]
 curve = SubResource("Curve2D_036b0")
@@ -472,7 +476,7 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 script = ExtResource("6_dwbse")
 
 [node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
-position = Vector2(1697, 483)
+position = Vector2(1978, 567)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("13_70uel")
@@ -485,9 +489,9 @@ shape = SubResource("CircleShape2D_70uel")
 
 [node name="ProgressBar" type="ProgressBar" parent="NextRound" unique_id=1743740660]
 offset_left = -36.0
-offset_top = -33.0
+offset_top = -53.0
 offset_right = 38.0
-offset_bottom = -13.0
+offset_bottom = -33.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
 max_value = 1.0
@@ -497,9 +501,9 @@ show_percentage = false
 
 [node name="Label" type="Label" parent="NextRound" unique_id=1621363490]
 offset_left = -39.0
-offset_top = -32.0
+offset_top = -52.0
 offset_right = 42.0
-offset_bottom = -13.0
+offset_bottom = -33.0
 theme_override_fonts/font = ExtResource("3_k3n1d")
 theme_override_font_sizes/font_size = 7
 text = "Hold E/Ⓑ to start
@@ -508,7 +512,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Upgrades1" type="Area2D" parent="." unique_id=2132285256]
-position = Vector2(1362, 656)
+position = Vector2(1590, 762)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("17_udxuc")
@@ -519,9 +523,9 @@ cost_type = 1
 
 [node name="ProgressBarAlt" type="ProgressBar" parent="Upgrades1" unique_id=1657313069]
 offset_left = -53.0
-offset_top = -30.0
+offset_top = -53.0
 offset_right = 51.0
-offset_bottom = -21.0
+offset_bottom = -44.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
 max_value = 1.0
@@ -530,9 +534,9 @@ show_percentage = false
 
 [node name="ProgressBar" type="ProgressBar" parent="Upgrades1" unique_id=468251802]
 offset_left = -53.0
-offset_top = -22.0
+offset_top = -45.0
 offset_right = 51.0
-offset_bottom = -13.0
+offset_bottom = -36.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
 max_value = 1.0
@@ -547,9 +551,9 @@ shape = SubResource("CircleShape2D_70uel")
 
 [node name="Label" type="RichTextLabel" parent="Upgrades1" unique_id=260821978]
 offset_left = -60.0
-offset_top = -40.0
+offset_top = -63.0
 offset_right = 60.0
-offset_bottom = -10.0
+offset_bottom = -33.0
 theme_override_fonts/normal_font = ExtResource("3_k3n1d")
 theme_override_font_sizes/normal_font_size = 7
 bbcode_enabled = true
@@ -560,7 +564,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Upgrades2" type="Area2D" parent="." unique_id=434821614]
-position = Vector2(1474, 199)
+position = Vector2(1762, 234)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("17_udxuc")
@@ -570,9 +574,9 @@ cost_type = 1
 
 [node name="ProgressBarAlt" type="ProgressBar" parent="Upgrades2" unique_id=1241551629]
 offset_left = -53.0
-offset_top = -30.0
+offset_top = -61.0
 offset_right = 51.0
-offset_bottom = -21.0
+offset_bottom = -52.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
 max_value = 1.0
@@ -581,9 +585,9 @@ show_percentage = false
 
 [node name="ProgressBar" type="ProgressBar" parent="Upgrades2" unique_id=212093188]
 offset_left = -53.0
-offset_top = -22.0
+offset_top = -53.0
 offset_right = 51.0
-offset_bottom = -13.0
+offset_bottom = -44.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
 max_value = 1.0
@@ -598,9 +602,9 @@ shape = SubResource("CircleShape2D_70uel")
 
 [node name="Label" type="RichTextLabel" parent="Upgrades2" unique_id=2076098758]
 offset_left = -60.0
-offset_top = -40.0
+offset_top = -71.0
 offset_right = 60.0
-offset_bottom = -10.0
+offset_bottom = -41.0
 theme_override_fonts/normal_font = ExtResource("3_k3n1d")
 theme_override_font_sizes/normal_font_size = 7
 bbcode_enabled = true
@@ -611,20 +615,19 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Upgrades3" type="Area2D" parent="." unique_id=520321402]
-position = Vector2(477, 673)
+position = Vector2(561, 781)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("17_udxuc")
 upgrade1 = 4
 upgrade2 = 5
 cost = 50
-cost_type = 2
 
 [node name="ProgressBarAlt" type="ProgressBar" parent="Upgrades3" unique_id=892432946]
 offset_left = -53.0
-offset_top = -30.0
+offset_top = -57.0
 offset_right = 51.0
-offset_bottom = -21.0
+offset_bottom = -48.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
 max_value = 1.0
@@ -633,9 +636,9 @@ show_percentage = false
 
 [node name="ProgressBar" type="ProgressBar" parent="Upgrades3" unique_id=1171699297]
 offset_left = -53.0
-offset_top = -22.0
+offset_top = -49.0
 offset_right = 51.0
-offset_bottom = -13.0
+offset_bottom = -40.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
 max_value = 1.0
@@ -650,9 +653,9 @@ shape = SubResource("CircleShape2D_70uel")
 
 [node name="Label" type="RichTextLabel" parent="Upgrades3" unique_id=586223009]
 offset_left = -60.0
-offset_top = -40.0
+offset_top = -67.0
 offset_right = 60.0
-offset_bottom = -10.0
+offset_bottom = -37.0
 theme_override_fonts/normal_font = ExtResource("3_k3n1d")
 theme_override_font_sizes/normal_font_size = 7
 bbcode_enabled = true
@@ -661,3 +664,6 @@ Hold Q/Ⓐ for shield
 Hold E/Ⓑ for lifesteal"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=28732745]
+stream = ExtResource("20_bc84e")

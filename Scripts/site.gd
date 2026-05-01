@@ -16,7 +16,7 @@ var interact_alt := false
 
 func _ready():
 	label_shown_pos = label.position
-	label_hidden_pos = label.position + Vector2(0, 16)
+	label_hidden_pos = label.position + Vector2(0, 32)
 	collision_layer = 3
 	label.hide()
 
