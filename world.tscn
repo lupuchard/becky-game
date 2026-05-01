@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://c0eti6l0haml2" path="res://Scripts/becky.gd" id="2_tlwt5"]
 [ext_resource type="Script" uid="uid://b4s1wjwo5qmr7" path="res://Scripts/exit_button.gd" id="3_ic0uy"]
 [ext_resource type="FontFile" uid="uid://5mk2307ho1x8" path="res://Assets/Fonts/tinypixel.otf" id="3_k3n1d"]
-[ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="3_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/ShootEnemy.tscn" id="5_036b0"]
 [ext_resource type="FontFile" uid="uid://c5l8d1d8cwfmo" path="res://Assets/Fonts/m5x7.ttf" id="5_ikiii"]
 [ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
@@ -19,6 +18,7 @@
 [ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
 [ext_resource type="PackedScene" uid="uid://bca5med66pxed" path="res://Enemies/FlyingEnemy.tscn" id="16_2u3nc"]
 [ext_resource type="Script" uid="uid://c5kbnve4itdog" path="res://Scripts/upgrade_site.gd" id="17_udxuc"]
+[ext_resource type="Texture2D" uid="uid://d0tkvelv0ig61" path="res://Assets/Becky-bigpx.png" id="20_26xuy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqwa"]
 bg_color = Color(0.79, 0.79, 0.79, 0.1254902)
@@ -35,7 +35,7 @@ corner_radius_bottom_left = 18
 size = Vector2(2000, 1000)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ioo17"]
-radius = 16.0
+radius = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hiqwa"]
 radius = 0.1
@@ -341,12 +341,12 @@ text = "Credits"
 [node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
 modulate = Color(0.62, 0.62, 0.62, 1)
 z_index = -2
-position = Vector2(684, 308)
-scale = Vector2(0.8, 0.8)
+position = Vector2(1027, 462)
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("1_036b0")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky")]
-position = Vector2(419, 243)
+position = Vector2(717, 411)
 script = ExtResource("2_dwbse")
 becky = NodePath("../Becky")
 
@@ -356,16 +356,17 @@ modulate = Color(1, 1, 1, 0)
 mesh = SubResource("QuadMesh_036b0")
 
 [node name="Bound" type="Marker2D" parent="Camera2D" unique_id=51245580]
-position = Vector2(949, 375)
+position = Vector2(1336, 512)
 
 [node name="Becky" type="Area2D" parent="." unique_id=2046443451]
 z_index = 1
-position = Vector2(305, 179)
+position = Vector2(603, 347)
 script = ExtResource("2_tlwt5")
 
-[node name="Sprite" type="Sprite2D" parent="Becky" unique_id=2141613476]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_tlwt5")
+[node name="Sprite" type="Sprite2D" parent="Becky" unique_id=569265625]
+position = Vector2(0.99999905, 5)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("20_26xuy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
 shape = SubResource("CircleShape2D_ioo17")
@@ -387,6 +388,7 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_cbp6q")
 
 [node name="Paths" type="Node2D" parent="." unique_id=1384284802]
+scale = Vector2(1.5077518, 1.4618659)
 
 [node name="HighPath" type="Path2D" parent="Paths" unique_id=70440228]
 curve = SubResource("Curve2D_036b0")
@@ -470,7 +472,7 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 script = ExtResource("6_dwbse")
 
 [node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
-position = Vector2(1132, 323)
+position = Vector2(1697, 483)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("13_70uel")
@@ -506,7 +508,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Upgrades1" type="Area2D" parent="." unique_id=2132285256]
-position = Vector2(908, 436)
+position = Vector2(1362, 656)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("17_udxuc")
@@ -558,7 +560,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Upgrades2" type="Area2D" parent="." unique_id=434821614]
-position = Vector2(1007, 163)
+position = Vector2(1474, 199)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("17_udxuc")
@@ -609,7 +611,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Upgrades3" type="Area2D" parent="." unique_id=520321402]
-position = Vector2(317, 445)
+position = Vector2(477, 673)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("17_udxuc")

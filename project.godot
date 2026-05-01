@@ -19,8 +19,6 @@ config/icon="res://Assets/icon.svg"
 
 window/size/viewport_width=1400
 window/size/viewport_height=800
-window/stretch/mode="viewport"
-window/stretch/scale=2.0
 window/stretch/scale_mode="integer"
 
 [gui]
@@ -102,7 +100,6 @@ interact_alt={
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://c11e4oti6gie5"]
 
 [ext_resource type="Script" uid="uid://r6wflmh8dtf0" path="res://Scripts/enemy.gd" id="1_5xdy1"]
-[ext_resource type="Texture2D" uid="uid://dp30yb0f2h37u" path="res://Assets/bnuy.png" id="2_83x8t"]
 [ext_resource type="PackedScene" uid="uid://byl0yy6wd3q73" path="res://Drops/Drop1.tscn" id="2_f4uvp"]
+[ext_resource type="Texture2D" uid="uid://chqt5uhp3f5so" path="res://Assets/alien-02.png" id="3_f4uvp"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2l8sk"]
-radius = 29.017237
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcftp"]
+radius = 60.0
+height = 202.0
 
 [node name="ShootEnemy" type="StaticBody2D" unique_id=1629057451]
 script = ExtResource("1_5xdy1")
@@ -19,10 +20,10 @@ ExtResource("2_f4uvp"): 3.0
 })
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1715504409]
-position = Vector2(-1, -4)
-scale = Vector2(2, 2)
-texture = ExtResource("2_83x8t")
+[node name="Sprite" type="Sprite2D" parent="." unique_id=458062618]
+position = Vector2(1, 1)
+texture = ExtResource("3_f4uvp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1695961910]
-shape = SubResource("CircleShape2D_2l8sk")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1760866192]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_bcftp")

@@ -1,10 +1,17 @@
 extends StaticBody2D
 class_name Projectile
 
-const player_bullet_sounds = [
+const player_bullet_sounds := [
 	preload("res://Assets/Sound/player_bullet_01.ogg"),
 	preload("res://Assets/Sound/player_bullet_02.ogg"),
 	preload("res://Assets/Sound/player_bullet_03.ogg"),
+]
+
+const enemy_hit_sounds := [
+	preload("res://Assets/Sound/enemy_hit_01.ogg"),
+	preload("res://Assets/Sound/enemy_hit_02.ogg"),
+	preload("res://Assets/Sound/enemy_hit_03.ogg"),
+	preload("res://Assets/Sound/enemy_hit_04.ogg")
 ]
 
 var enemy: bool = false
@@ -34,11 +41,7 @@ func _ready():
 	add_child(sprite)
 	
 	if enemy == false:
-		var sound = AudioStreamPlayer2D.new()
-		sound.global_position = self.global_position
-		sound.stream = player_bullet_sounds.pick_random()
-		sound.autoplay = true
-		add_child(sound)
+		play_sound(player_bullet_sounds.pick_random())
 
 func _process(delta: float):
 	lifespan -= delta
@@ -52,6 +55,7 @@ func _process(delta: float):
 func on_collide(collider: Object, normal: Vector2):
 	if !enemy and collider is Enemy and !already_hit.has(collider):
 		collider.take_damage(damage, cold, lifesteal)
+		play_sound(enemy_hit_sounds.pick_random())
 		if bounces > 0:
 			var speed = velocity.length()
 			var ri = velocity.normalized()
@@ -61,6 +65,16 @@ func on_collide(collider: Object, normal: Vector2):
 			already_hit.push_back(collider)
 		else:
 			die()
+
+func play_sound(sound: AudioStream):
+	var player := AudioStreamPlayer2D.new()
+	player.global_position = self.global_position
+	player.stream = sound
+	player.autoplay = true
+	get_parent().add_child(player)
+	player.finished.connect(func():
+		player.queue_free()
+	)
 
 func die():
 	queue_free()

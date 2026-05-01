@@ -26,8 +26,8 @@ signal reached_end
 
 var target: Node2D
 
-var path0: Curve2D
-var path1: Curve2D
+var path0: Path2D
+var path1: Path2D
 var path_preference: float = 0.0
 var path_distance: float = 0.0
 var path_length: float = 0.0
@@ -134,28 +134,28 @@ func shoot_projectile():
 
 func pick_random_path():
 	if possible_paths.size() == 1:
-		path0 = possible_paths[0].curve
-		path1 = possible_paths[0].curve
+		path0 = possible_paths[0]
+		path1 = possible_paths[0]
 	elif possible_paths.size() == 2:
-		path0 = possible_paths[0].curve
-		path1 = possible_paths[1].curve
+		path0 = possible_paths[0]
+		path1 = possible_paths[1]
 	else:
-		path0 = possible_paths.pick_random().curve
+		path0 = possible_paths.pick_random()
 		for i in range(0, 3):
-			path1 = possible_paths.pick_random().curve
+			path1 = possible_paths.pick_random()
 			if path1 != path0:
 				break
 	path_preference = randf()
-	path_length = lerp(path0.get_baked_length(), path1.get_baked_length(), path_preference)
+	path_length = lerp(path0.curve.get_baked_length(), path1.curve.get_baked_length(), path_preference)
 	path_distance = 0.0
 	update_position()
 
 func update_position():
 	var dist = path_distance / path_length
 	if going_back: dist = 1.0 - dist
-	var point1 = path0.sample_baked(dist * path0.get_baked_length())
-	var point2 = path1.sample_baked(dist * path1.get_baked_length())
-	global_position = lerp(point1, point2, path_preference)
+	var point1: Vector2 = path0.curve.sample_baked(dist * path0.curve.get_baked_length())
+	var point2: Vector2 = path1.curve.sample_baked(dist * path1.curve.get_baked_length())
+	global_position = lerp(path0.global_transform * point1, path1.global_transform * point2, path_preference)
 
 func take_damage(damage: float, cold_damage: float = 0.0, lifesteal: int = 0):
 	health -= damage
