@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c11e4oti6gie5"]
 
 [ext_resource type="Script" uid="uid://r6wflmh8dtf0" path="res://Scripts/enemy.gd" id="1_5xdy1"]
+[ext_resource type="PackedScene" uid="uid://ctese50tcriog" path="res://Drops/Drop2.tscn" id="2_bcftp"]
 [ext_resource type="PackedScene" uid="uid://byl0yy6wd3q73" path="res://Drops/Drop1.tscn" id="2_f4uvp"]
 [ext_resource type="Texture2D" uid="uid://chqt5uhp3f5so" path="res://Assets/alien-02.png" id="3_f4uvp"]
 
@@ -16,7 +17,8 @@ accel = 800.0
 projectile_damage = 10.0
 projectile_cooldown = 1.6
 drops = Dictionary[PackedScene, float]({
-ExtResource("2_f4uvp"): 3.0
+ExtResource("2_bcftp"): 2.0,
+ExtResource("2_f4uvp"): 0.5
 })
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 

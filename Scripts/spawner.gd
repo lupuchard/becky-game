@@ -4,6 +4,7 @@ class_name Spawner
 signal round_ended
 signal enemy_reached_end
 
+var current_round: Round
 var round_segments: Array[RoundSegment]
 var next_segment: int = 0
 
@@ -19,7 +20,8 @@ var round_current_time: float = 0.0
 func _ready():
 	pass
 
-func set_round(new_round: Node):
+func set_round(new_round: Round):
+	current_round = new_round
 	round_segments.clear()
 	current_segments.clear()
 	current_segment_spawned.clear()
@@ -87,6 +89,8 @@ func spawn_from(segment: RoundSegment):
 	if segment.enemy == null: return
 	var new_enemy: Enemy = segment.enemy.instantiate()
 	new_enemy.possible_paths = segment.paths
+	new_enemy.health *= current_round.health_scaling
+	new_enemy.projectile_damage *= current_round.damage_scaling
 	get_parent().add_child(new_enemy)
 	new_enemy.died.connect(enemy_died)
 	new_enemy.reached_end.connect(func():
@@ -101,3 +105,4 @@ func enemy_died():
 
 func end_round():
 	round_segments.clear()
+	current_round = null

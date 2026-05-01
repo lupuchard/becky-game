@@ -37,6 +37,7 @@ var current_round := 0
 var lives := 5
 var between_rounds := false
 var restore_health_tween: Tween
+var volume_tween: Tween
 
 func _ready():
 	becky.process_mode = Node.PROCESS_MODE_DISABLED
@@ -110,15 +111,26 @@ func on_round_ended():
 	restore_health_tween = create_tween()
 	restore_health_tween.tween_property(becky, "health", Becky.MAX_HEALTH, 4.0)
 	restore_health_tween.parallel().tween_property(becky, "shield_health", Becky.MAX_SHIELD_HEALTH, 2.0)
+	
+	if volume_tween != null:
+		volume_tween.kill()
+	volume_tween = create_tween()
+	volume_tween.tween_property(music, "volume_db", -10.0, 2.0)
 
 func start_next_round():
-	if between_rounds and current_round < rounds.get_child_count():
-		restore_health_tween.kill()
-		becky.health = Becky.MAX_HEALTH
-		spawner.set_round($Rounds.get_child(current_round))
-		for site in sites:
-			site.disable()
+	if !(between_rounds and current_round < rounds.get_child_count()):
+		return
 		
+	restore_health_tween.kill()
+	becky.health = Becky.MAX_HEALTH
+	spawner.set_round($Rounds.get_child(current_round))
+	for site in sites:
+		site.disable()
+	
+	if volume_tween != null:
+		volume_tween.kill()
+	volume_tween = create_tween()
+	volume_tween.tween_property(music, "volume_db", 0.0, 2.0)
 func on_enemy_reached_end():
 	lives -= 1
 	if lives <= 0:

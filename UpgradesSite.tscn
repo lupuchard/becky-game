@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://psgswiqegx1j"]
+
+[ext_resource type="Script" uid="uid://c5kbnve4itdog" path="res://Scripts/upgrade_site.gd" id="1_20v6y"]
+[ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="2_dxb2v"]
+[ext_resource type="FontFile" uid="uid://c5l8d1d8cwfmo" path="res://Assets/Fonts/m5x7.ttf" id="3_50c6f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2u3nc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udxuc"]
+bg_color = Color(0.6, 0.6, 0.6, 0.6117647)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_70uel"]
+radius = 9.0
+
+[node name="Upgrades3" type="Area2D" unique_id=497442609]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_20v6y")
+upgrade1 = 4
+upgrade2 = 5
+cost = 50
+
+[node name="ProgressBarAlt" type="ProgressBar" parent="." unique_id=690732232]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -73.0
+offset_top = -72.0
+offset_right = 74.0
+offset_bottom = -59.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1801436740]
+offset_left = -71.0
+offset_top = -59.0
+offset_right = 70.0
+offset_bottom = -45.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1473027366]
+texture = ExtResource("2_dxb2v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1466352714]
+shape = SubResource("CircleShape2D_70uel")
+
+[node name="Label" type="RichTextLabel" parent="." unique_id=1957576244]
+offset_left = -100.0
+offset_top = -86.0
+offset_right = 100.0
+offset_bottom = -36.0
+theme_override_fonts/normal_font = ExtResource("3_50c6f")
+bbcode_enabled = true
+text = "[color=darkturquoise]Cost 50[/color]
+Hold Q or (A) for shield
+Hold E or (B) for lifesteal"
+horizontal_alignment = 1
+
+[node name="CantAffordLabel" type="Label" parent="." unique_id=429109647]
+offset_left = -64.0
+offset_top = -108.0
+offset_right = 67.0
+offset_bottom = -90.0
+text = "Can't afford!"
+horizontal_alignment = 1

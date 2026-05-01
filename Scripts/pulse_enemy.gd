@@ -15,4 +15,5 @@ func _process(delta: float):
 func create_pulse():
 	var pulse = PULSE.instantiate()
 	pulse.global_position = global_position
+	pulse.scale = Vector2.ONE * 2.0
 	get_parent().add_child(pulse)

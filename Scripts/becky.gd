@@ -18,8 +18,8 @@ const MAX_SHIELD_HEALTH := 25.0
 const SHIELD_REGEN := 5.0
 const INV_COOLDOWN := 0.5
 
-const MAX_SPEED := 150.0
-const ACCEL := 700.0
+const MAX_SPEED := 200.0
+const ACCEL := 800.0
 const SHOOT_COOLDOWN := 0.2
 const RAPID_SHOT_COOLDOWN := 0.15
 const DOUBLE_SHOT_COOLDOWN_MOD := 1.5

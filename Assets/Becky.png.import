@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0tkvelv0ig61"
-path="res://.godot/imported/Becky-bigpx.png-674909a3fa47e1877b21a55ec78ad761.ctex"
+uid="uid://bjds16psrhnfj"
+path="res://.godot/imported/Becky.png-e8dd78a62ef617ee67ed83a2931449d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Becky-bigpx.png"
-dest_files=["res://.godot/imported/Becky-bigpx.png-674909a3fa47e1877b21a55ec78ad761.ctex"]
+source_file="res://Assets/Becky.png"
+dest_files=["res://.godot/imported/Becky.png-e8dd78a62ef617ee67ed83a2931449d2.ctex"]
 
 [params]
 
