@@ -163,7 +163,7 @@ position = Vector2(1, 5)
 scale = Vector2(0.42, 0.42)
 sprite_frames = SubResource("SpriteFrames_1ew0l")
 autoplay = "default"
-frame_progress = 0.64396
+frame_progress = 0.8107697
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
 shape = SubResource("CircleShape2D_ioo17")
@@ -933,7 +933,7 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/MainMenu" unique_id=1724440434]
 layout_mode = 2
-text = "Untitled Becky Game"
+text = "Becky vs. The Invasion"
 horizontal_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MainMenu" unique_id=1881439355]
@@ -975,7 +975,6 @@ layout_mode = 2
 text = "Credits"
 
 [node name="Credits" type="PanelContainer" parent="CanvasLayer" unique_id=2133066720]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1010,6 +1009,7 @@ Fonts:
 Made for the 2026 STLGameDev Spring Jam"
 
 [node name="Settings" type="PanelContainer" parent="CanvasLayer" unique_id=990263177]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

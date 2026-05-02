@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://k3716upwjvbv"]
+
+[ext_resource type="Script" uid="uid://blktg48jib4p1" path="res://Scripts/player_projectile.gd" id="1_8fvwq"]
+[ext_resource type="Texture2D" uid="uid://co6l2yolkwyjj" path="res://Assets/T-rav.png" id="2_8fvwq"]
+[ext_resource type="AudioStream" uid="uid://bq15mulkxfmn4" path="res://Assets/Sound/player_bullet_01.ogg" id="2_vrpfl"]
+[ext_resource type="AudioStream" uid="uid://74l088fqgwe2" path="res://Assets/Sound/player_bullet_02.ogg" id="3_7546c"]
+[ext_resource type="AudioStream" uid="uid://cy4mlx5idee2s" path="res://Assets/Sound/player_bullet_03.ogg" id="4_qt4bv"]
+[ext_resource type="AudioStream" uid="uid://b4u4588bnwbx3" path="res://Assets/Sound/enemy_hit_01.ogg" id="5_b67hj"]
+[ext_resource type="AudioStream" uid="uid://buohg87qj70oo" path="res://Assets/Sound/enemy_hit_02.ogg" id="6_wbpjd"]
+[ext_resource type="AudioStream" uid="uid://bodx5r5orvlhe" path="res://Assets/Sound/enemy_hit_03.ogg" id="7_s12io"]
+[ext_resource type="AudioStream" uid="uid://br4chga2cwhwa" path="res://Assets/Sound/enemy_hit_04.ogg" id="8_ytxyb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2pp81"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7htnw"]
+streams_count = 3
+stream_0/stream = ExtResource("2_vrpfl")
+stream_1/stream = ExtResource("3_7546c")
+stream_2/stream = ExtResource("4_qt4bv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oc1yv"]
+streams_count = 4
+stream_0/stream = ExtResource("5_b67hj")
+stream_1/stream = ExtResource("6_wbpjd")
+stream_2/stream = ExtResource("7_s12io")
+stream_3/stream = ExtResource("8_ytxyb")
+
+[node name="Projectile" type="StaticBody2D" unique_id=1593731145]
+script = ExtResource("1_8fvwq")
+damage = 0.5
+lifespan = 5.0
+metadata/_custom_type_script = "uid://b57b3qu6imds8"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=202360237]
+rotation = 1.5707964
+scale = Vector2(0.6392128, 0.6392128)
+texture = ExtResource("2_8fvwq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1321776782]
+shape = SubResource("CircleShape2D_2pp81")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=1136798702]
+stream = SubResource("AudioStreamRandomizer_7htnw")
+bus = &"Effects"
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=68471983]
+stream = SubResource("AudioStreamRandomizer_oc1yv")
+volume_db = -4.0
+bus = &"Effects"

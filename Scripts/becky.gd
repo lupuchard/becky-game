@@ -12,6 +12,7 @@ enum Upgrade {
 }
 
 const PROJECTILE = preload("res://Projectiles/PlayerProjectile.tscn")
+const RAV_PROJECTILE = preload("res://Projectiles/PlayerRavProjectile.tscn")
 
 const MAX_HEALTH := 100.0
 const MAX_SHIELD_HEALTH := 25.0
@@ -162,7 +163,7 @@ func _physics_process(delta: float):
 			on_collision(body)
 	
 func shoot(direction: Vector2, offset: Vector2):
-	var proj = PROJECTILE.instantiate()
+	var proj = (RAV_PROJECTILE if upgrades[Upgrade.RAPID_SHOT] else PROJECTILE).instantiate()
 	proj.velocity = direction * 500.0
 	proj.global_position = global_position + offset
 	get_parent().add_child(proj)

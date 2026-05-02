@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://buohg87qj70oo" path="res://Assets/Sound/enemy_hit_02.ogg" id="5_vbysl"]
 [ext_resource type="AudioStream" uid="uid://bodx5r5orvlhe" path="res://Assets/Sound/enemy_hit_03.ogg" id="6_2pp81"]
 [ext_resource type="AudioStream" uid="uid://br4chga2cwhwa" path="res://Assets/Sound/enemy_hit_04.ogg" id="7_wx6nt"]
-[ext_resource type="Texture2D" uid="uid://djeihwbdro4fr" path="res://Assets/projectile.png" id="9_2pp81"]
+[ext_resource type="Texture2D" uid="uid://os4ykhdo0fnx" path="res://Assets/tile-red.png" id="9_2pp81"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2pp81"]
 
@@ -44,7 +44,6 @@ volume_db = -4.0
 bus = &"Effects"
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1757909820]
-position = Vector2(0, -0.99999994)
 rotation = 1.5707964
-scale = Vector2(0.85495895, 0.85495895)
+scale = Vector2(0.70697993, 0.70697993)
 texture = ExtResource("9_2pp81")
