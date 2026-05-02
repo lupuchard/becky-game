@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://pcint0stiw8h" path="res://Scripts/drop.gd" id="1_jinv8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_xy7v5"]
-size = Vector2(4, 4)
+size = Vector2(6, 6)
 
 [node name="Drop3" type="Node2D" unique_id=1969628570]
 script = ExtResource("1_jinv8")

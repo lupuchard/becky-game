@@ -54,7 +54,7 @@ func update():
 	if upgrade1_got and upgrade2_got:
 		disable()
 	else:
-		label.text = "[color=%s]Cost %s[/color]\n" % [money_colors[cost_type], get_cost()]
+		label.text = "[color=%s]Cost %s/%s[/color]\n" % [money_colors[cost_type], get_cost(), becky.money[cost_type]]
 		if !upgrade1_got: label.text += "Hold Q or (A) for %s" % upgrade1_name
 		if !upgrade2_got: label.text += "\nHold E or (B) for %s" % upgrade2_name
 

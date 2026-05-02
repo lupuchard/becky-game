@@ -90,7 +90,7 @@ func spawn_from(segment: RoundSegment):
 	var new_enemy: Enemy = segment.enemy.instantiate()
 	new_enemy.possible_paths = segment.paths
 	new_enemy.health *= current_round.health_scaling
-	new_enemy.projectile_damage *= current_round.damage_scaling
+	new_enemy.damage *= current_round.damage_scaling
 	get_parent().add_child(new_enemy)
 	new_enemy.died.connect(enemy_died)
 	new_enemy.reached_end.connect(func():

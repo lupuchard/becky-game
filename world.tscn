@@ -6,7 +6,6 @@
 [ext_resource type="FontFile" uid="uid://c3456ef513ov" path="res://Assets/Fonts/Abaddon Bold.ttf" id="2_ioo17"]
 [ext_resource type="Script" uid="uid://c0eti6l0haml2" path="res://Scripts/becky.gd" id="2_tlwt5"]
 [ext_resource type="Script" uid="uid://b4s1wjwo5qmr7" path="res://Scripts/exit_button.gd" id="3_ic0uy"]
-[ext_resource type="FontFile" uid="uid://5mk2307ho1x8" path="res://Assets/Fonts/tinypixel.otf" id="3_k3n1d"]
 [ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/ShootEnemy.tscn" id="5_036b0"]
 [ext_resource type="FontFile" uid="uid://c5l8d1d8cwfmo" path="res://Assets/Fonts/m5x7.ttf" id="5_ikiii"]
 [ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
@@ -195,26 +194,25 @@ offset_right = 146.0
 offset_bottom = 51.0
 grow_horizontal = 2
 
-[node name="Container" type="VBoxContainer" parent="CanvasLayer/Resources" unique_id=509027080]
+[node name="Container" type="HBoxContainer" parent="CanvasLayer/Resources" unique_id=1761650271]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 1.0
-offset_right = 66.0
-offset_bottom = 41.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 79.0
+offset_bottom = 16.0
+theme_override_constants/separation = 12
+alignment = 1
 
 [node name="Resource1" type="Label" parent="CanvasLayer/Resources/Container" unique_id=625136031]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.53333336, 1, 1)
-theme_override_fonts/font = ExtResource("3_k3n1d")
-theme_override_font_sizes/font_size = 7
-text = "Placeholder 1: 0"
+text = "0"
+horizontal_alignment = 1
 
 [node name="Resource2" type="Label" parent="CanvasLayer/Resources/Container" unique_id=2056895715]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
-theme_override_fonts/font = ExtResource("3_k3n1d")
-theme_override_font_sizes/font_size = 7
-text = "Placeholder 2: 0"
+text = "0"
 
 [node name="LosingIndicator" type="PanelContainer" parent="CanvasLayer" unique_id=1984047269]
 anchors_preset = 6
@@ -339,6 +337,40 @@ text = "Settings"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Credits"
+
+[node name="Credits" type="PanelContainer" parent="CanvasLayer" unique_id=2133066720]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 115.0
+offset_top = -91.0
+offset_right = 426.0
+offset_bottom = 118.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Credits" unique_id=924185570]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Credits/MarginContainer" unique_id=1212639209]
+layout_mode = 2
+theme_override_constants/line_separation = 2
+text = "CREDITS
+Programming: Luke Puchner-Hardman
+Art: Star Biscuit & Tim Conceivable
+Music, Sound: Laz the Composer
+
+Fonts:
+    Abbadon (caffinate.itch.io/abaddon)
+    m5x7 (managore.itch.io/m5x7)
+
+Made for the 2026 STLGameDev Spring Jam"
 
 [node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
 modulate = Color(0.62, 0.62, 0.62, 1)

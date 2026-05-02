@@ -11,7 +11,9 @@ const MAX_LIVES := 5
 @onready var main_menu: Control = $CanvasLayer/MainMenu
 @onready var play_button: Button = %PlayButton
 @onready var settings_button: Button = %SettingsButton
+
 @onready var credits_button: Button = %CreditsButton
+@onready var credits: Control = $CanvasLayer/Credits
 
 @onready var round_label: Label = $CanvasLayer/RoundProgress/Label
 @onready var time_progress: ProgressBar = $CanvasLayer/RoundProgress/TimeProgress
@@ -38,19 +40,15 @@ var lives := 5
 var between_rounds := false
 var restore_health_tween: Tween
 var volume_tween: Tween
+var initial_music_volume: float
 
 func _ready():
 	becky.process_mode = Node.PROCESS_MODE_DISABLED
 	becky.hide()
 	
 	main_menu.show()
-	play_button.pressed.connect(func():
-		main_menu.hide()
-		spawner.set_round($Rounds/Round1)
-		becky.show()
-		becky.process_mode = Node.PROCESS_MODE_INHERIT
-		music.play()
-	)
+	play_button.grab_focus()
+	play_button.pressed.connect(play_pressed)
 	
 	to_menu_button.pressed.connect(reset)
 	game_over_panel.hide()
@@ -59,8 +57,24 @@ func _ready():
 	spawner.round_ended.connect(on_round_ended)
 	spawner.enemy_reached_end.connect(on_enemy_reached_end)
 	
+	credits.hide()
+	credits_button.pressed.connect(func():
+		credits.visible = !credits.visible
+	)
+	
+	initial_music_volume = music.volume_db
+	
 	for site in sites:
 		site.disable()
+
+func play_pressed():
+	if !main_menu.visible: return
+	main_menu.hide()
+	credits.hide()
+	spawner.set_round($Rounds/Round1)
+	becky.show()
+	becky.process_mode = Node.PROCESS_MODE_INHERIT
+	music.play()
 
 func _process(_delta: float):
 	time_progress.value = spawner.round_current_time / spawner.round_total_time
@@ -70,8 +84,8 @@ func _process(_delta: float):
 	if becky.health <= 0.0:
 		game_over("You have died :(")
 	
-	resource1.text = "Placeholder 1: " + str(becky.money[0])
-	resource2.text = "Placeholder 2: " + str(becky.money[1])
+	resource1.text = str(becky.money[0])
+	resource2.text = str(becky.money[1])
 	
 	losing_indicator.visible = lives < MAX_LIVES
 	losing_indicator_label.text = str(lives) + "/" + str(MAX_LIVES)
@@ -79,6 +93,7 @@ func _process(_delta: float):
 func game_over(text: String):
 	game_over_panel_label.text = text
 	game_over_panel.show()
+	to_menu_button.grab_focus()
 	becky.process_mode = Node.PROCESS_MODE_DISABLED
 	becky.hide()
 	music.stop()
@@ -97,6 +112,7 @@ func reset():
 	between_rounds = false
 	
 	main_menu.show()
+	play_button.grab_focus()
 	
 func on_round_ended():
 	if game_over_panel.visible: return
@@ -115,7 +131,7 @@ func on_round_ended():
 	if volume_tween != null:
 		volume_tween.kill()
 	volume_tween = create_tween()
-	volume_tween.tween_property(music, "volume_db", -10.0, 2.0)
+	volume_tween.tween_property(music, "volume_db", initial_music_volume - 10.0, 2.0)
 
 func start_next_round():
 	if !(between_rounds and current_round < rounds.get_child_count()):
@@ -130,7 +146,7 @@ func start_next_round():
 	if volume_tween != null:
 		volume_tween.kill()
 	volume_tween = create_tween()
-	volume_tween.tween_property(music, "volume_db", 0.0, 2.0)
+	volume_tween.tween_property(music, "volume_db", initial_music_volume, 2.0)
 func on_enemy_reached_end():
 	lives -= 1
 	if lives <= 0:

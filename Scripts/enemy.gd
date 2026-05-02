@@ -19,7 +19,7 @@ signal reached_end
 @export var accel: float = 10.0
 @export var contact_damage: float = 10.0
 
-@export var projectile_damage: float = 0.0
+@export var damage: float = 0.0
 @export var projectile_cooldown: float = 0.0
 
 @export var possible_paths: Array[Path2D]
@@ -75,7 +75,7 @@ func _process(delta: float):
 		else:
 			update_position()
 	
-	if projectile_cooldown > 0.0 and projectile_damage > 0.0:
+	if projectile_cooldown > 0.0 and damage > 0.0:
 		cooldown -= delta
 		if cooldown <= 0.0:
 			cooldown += projectile_cooldown
@@ -126,7 +126,7 @@ func shoot_projectile():
 	if target.flying > 0.5:
 		return
 	var proj = PROJECTILE.instantiate()
-	proj.damage = projectile_damage
+	proj.damage = damage
 	proj.velocity = (target.global_position - global_position).normalized() * 200.0
 	proj.lifespan = 60.0
 	proj.global_position = global_position
@@ -157,8 +157,8 @@ func update_position():
 	var point2: Vector2 = path1.curve.sample_baked(dist * path1.curve.get_baked_length())
 	global_position = lerp(path0.global_transform * point1, path1.global_transform * point2, path_preference)
 
-func take_damage(damage: float, cold_damage: float = 0.0, lifesteal: int = 0):
-	health -= damage
+func take_damage(amount: float, cold_damage: float = 0.0, lifesteal: int = 0):
+	health -= amount
 	if health <= 0:
 		die(lifesteal)
 	else:
