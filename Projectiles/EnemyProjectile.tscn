@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cxd7ph7p6f8m1"]
 
 [ext_resource type="Script" uid="uid://b57b3qu6imds8" path="res://Scripts/projectile.gd" id="1_xkxu8"]
+[ext_resource type="Texture2D" uid="uid://djeihwbdro4fr" path="res://Assets/projectile.png" id="2_sxehw"]
 [ext_resource type="AudioStream" uid="uid://b7f0ghr1ucvos" path="res://Assets/Sound/enemy_bullet_01.ogg" id="3_sxehw"]
 [ext_resource type="AudioStream" uid="uid://5sdwcfpym6f" path="res://Assets/Sound/enemy_bullet_02.ogg" id="4_nk8hs"]
 [ext_resource type="AudioStream" uid="uid://bgksahnidu6yd" path="res://Assets/Sound/enemy_bullet_03.ogg" id="5_bxdgo"]
-[ext_resource type="Texture2D" uid="uid://citqc3djyupwv" path="res://Assets/icon.svg" id="8_gnf0v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2pp81"]
 radius = 6.0
@@ -20,12 +20,15 @@ script = ExtResource("1_xkxu8")
 enemy = true
 metadata/_custom_type_script = "uid://b57b3qu6imds8"
 
+[node name="Sprite" type="Sprite2D" parent="." unique_id=925266517]
+modulate = Color(0, 1, 0.2, 1)
+position = Vector2(0, -0.99999994)
+rotation = 1.5707964
+scale = Vector2(0.56665516, 0.56665516)
+texture = ExtResource("2_sxehw")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1321776782]
 shape = SubResource("CircleShape2D_2pp81")
-
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1757909820]
-scale = Vector2(0.091648914, 0.091648914)
-texture = ExtResource("8_gnf0v")
 
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=989842678]
 stream = SubResource("AudioStreamRandomizer_uiftp")

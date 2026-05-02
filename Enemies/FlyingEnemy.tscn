@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://6l6lxvvvyb6n" path="res://Scripts/flying_enemy.gd" id="1_cq7wj"]
 [ext_resource type="PackedScene" uid="uid://byl0yy6wd3q73" path="res://Drops/Drop1.tscn" id="2_breaw"]
 [ext_resource type="PackedScene" uid="uid://ctese50tcriog" path="res://Drops/Drop2.tscn" id="3_73r2s"]
-[ext_resource type="Texture2D" uid="uid://dp30yb0f2h37u" path="res://Assets/bnuy.png" id="4_dg0li"]
+[ext_resource type="Texture2D" uid="uid://chqt5uhp3f5so" path="res://Assets/alien-02.png" id="4_cq7wj"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2l8sk"]
-radius = 20.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_breaw"]
+radius = 19.0
+height = 70.0
 
 [node name="FlyingEnemy" type="StaticBody2D" unique_id=1629057451]
+modulate = Color(1, 1, 0.5176471, 1)
 script = ExtResource("1_cq7wj")
 fly_cooldown = 3.1
 health = 2.0
@@ -22,10 +24,11 @@ ExtResource("3_73r2s"): 0.5
 })
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1715504409]
-position = Vector2(-1, -4)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("4_dg0li")
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1342280958]
+position = Vector2(0, -2.9999998)
+scale = Vector2(0.3605236, 0.3605236)
+texture = ExtResource("4_cq7wj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1695961910]
-shape = SubResource("CircleShape2D_2l8sk")
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_breaw")

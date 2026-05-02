@@ -20,6 +20,8 @@ func _ready():
 	
 	if shoot_sound != null:
 		shoot_sound.play()
+	
+	rotation = Vector2.RIGHT.angle_to(velocity)
 
 func _process(delta: float):
 	lifespan -= delta
