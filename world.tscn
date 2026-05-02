@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://cgi6mhs4sfn1l" path="res://Assets/healthsite.png" id="18_wukud"]
 [ext_resource type="AudioStream" uid="uid://c1u3y0chqwf0w" path="res://Assets/Sound/music.ogg" id="20_bc84e"]
 [ext_resource type="PackedScene" uid="uid://psgswiqegx1j" path="res://UpgradesSite.tscn" id="20_wukud"]
+[ext_resource type="Script" uid="uid://buh6n16b26ckc" path="res://Scripts/settings.gd" id="23_il2jm"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
@@ -134,6 +135,7 @@ shape = SubResource("CapsuleShape2D_cbp6q")
 
 [node name="UpgradeSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=195617808]
 stream = ExtResource("11_bc84e")
+bus = &"Effects"
 
 [node name="Paths" type="Node2D" parent="." unique_id=1384284802]
 scale = Vector2(1.7356573, 1.7142735)
@@ -363,6 +365,7 @@ cost = 60
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=28732745]
 stream = ExtResource("20_bc84e")
+bus = &"Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=825859611]
 
@@ -622,6 +625,7 @@ layout_mode = 2
 text = "Credits"
 
 [node name="Credits" type="PanelContainer" parent="CanvasLayer" unique_id=2133066720]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -654,3 +658,55 @@ Fonts:
     m5x7 (managore.itch.io/m5x7)
 
 Made for the 2026 STLGameDev Spring Jam"
+
+[node name="Settings" type="PanelContainer" parent="CanvasLayer" unique_id=990263177]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 115.0
+offset_top = -38.0
+offset_right = 221.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("23_il2jm")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Settings" unique_id=802587455]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Settings/MarginContainer" unique_id=1473756022]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="CanvasLayer/Settings/MarginContainer/VBoxContainer" unique_id=871351961]
+layout_mode = 2
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="MasterVolumeSlider" type="HSlider" parent="CanvasLayer/Settings/MarginContainer/VBoxContainer" unique_id=812194839]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Settings/MarginContainer/VBoxContainer" unique_id=1206950563]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MusicVolumeLabel" type="Label" parent="CanvasLayer/Settings/MarginContainer/VBoxContainer" unique_id=255428451]
+layout_mode = 2
+text = "Music Volume"
+horizontal_alignment = 1
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer/Settings/MarginContainer/VBoxContainer" unique_id=1149986576]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0

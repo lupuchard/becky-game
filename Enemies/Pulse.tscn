@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dmo0tp3fwu3dt" path="res://Scripts/pulse.gd" id="1_oku4y"]
 [ext_resource type="Material" uid="uid://duifxv5u5h4mo" path="res://Assets/ripple.tres" id="2_mry8q"]
+[ext_resource type="AudioStream" uid="uid://bs0xyu5um8v55" path="res://Assets/Sound/pulse_blast.ogg" id="3_mry8q"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_qfur8"]
 size = Vector2(1000, 1000)
@@ -30,3 +31,7 @@ shape = SubResource("CircleShape2D_8f3ql")
 [node name="Shape" type="CollisionShape2D" parent="Outer" unique_id=1043490955]
 scale = Vector2(0.1, 0.1)
 shape = SubResource("CircleShape2D_av37a")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=383568405]
+stream = ExtResource("3_mry8q")
+autoplay = true

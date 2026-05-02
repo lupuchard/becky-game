@@ -36,9 +36,12 @@ shape = SubResource("CircleShape2D_2pp81")
 
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=1136798702]
 stream = SubResource("AudioStreamRandomizer_7htnw")
+bus = &"Effects"
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=68471983]
 stream = SubResource("AudioStreamRandomizer_oc1yv")
+volume_db = -4.0
+bus = &"Effects"
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1757909820]
 scale = Vector2(0.14784287, 0.14784287)

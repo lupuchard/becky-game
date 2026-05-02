@@ -9,6 +9,8 @@ var collision_done = false
 @onready var outer: Area2D = $Outer
 @onready var outer_circle: CollisionShape2D = $Outer/Shape
 
+@onready var sound: AudioStreamPlayer2D = $Sound
+
 var becky: Becky
 var damage: float
 var time := 0.0
@@ -32,6 +34,8 @@ func _process(delta: float):
 		elif time < 4.0:
 			inner_circle.scale = Vector2.ONE * lerp(7.6, 18.5, (time - 2.0) / 2.0)
 			outer_circle.scale = Vector2.ONE * lerp(10.2, 21.0, (time - 2.0) / 2.0)
+			var tween = create_tween()
+			tween.tween_property(sound, "volume_linear", 0.0, 4.0)
 		elif time < 8.0:
 			inner_circle.scale = Vector2.ONE * lerp(18.5, 40.0, (time - 4.0) / 4.0)
 			outer_circle.scale = Vector2.ONE * lerp(21.0, 41.0, (time - 4.0) / 4.0)

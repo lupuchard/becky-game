@@ -10,7 +10,9 @@ const MAX_LIVES := 5
 
 @onready var main_menu: Control = $CanvasLayer/MainMenu
 @onready var play_button: Button = %PlayButton
+
 @onready var settings_button: Button = %SettingsButton
+@onready var settings: Control = $CanvasLayer/Settings
 
 @onready var credits_button: Button = %CreditsButton
 @onready var credits: Control = $CanvasLayer/Credits
@@ -60,9 +62,21 @@ func _ready():
 	
 	healer_site.interacted.connect(func(_alt): heal_becky())
 	
+	settings.hide()
+	settings_button.pressed.connect(func():
+		if settings.visible:
+			settings.hide()
+			music.stop()
+		else:
+			settings.show()
+			credits.hide()
+			music.play()
+	)
+	
 	credits.hide()
 	credits_button.pressed.connect(func():
 		credits.visible = !credits.visible
+		settings.hide()
 	)
 	
 	initial_music_volume = music.volume_db
@@ -75,10 +89,12 @@ func play_pressed():
 	if !main_menu.visible: return
 	main_menu.hide()
 	credits.hide()
+	settings.hide()
 	spawner.set_round($Rounds/Round1)
 	becky.show()
 	becky.process_mode = Node.PROCESS_MODE_INHERIT
-	music.play()
+	if !music.playing:
+		music.play()
 
 func _process(_delta: float):
 	time_progress.value = spawner.round_current_time / spawner.round_total_time
