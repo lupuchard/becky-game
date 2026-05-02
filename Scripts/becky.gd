@@ -30,6 +30,7 @@ const FLY_SPEEDUP := 2.0
 @onready var small_area: Area2D = $SmallArea
 @onready var shield: Area2D = $Shield
 @onready var upgrade_sound: AudioStreamPlayer2D = $UpgradeSound
+@onready var hurt_sound: AudioStreamPlayer2D = $HurtSound
 
 var health := MAX_HEALTH
 var shield_health := MAX_SHIELD_HEALTH
@@ -184,11 +185,14 @@ func on_shield_collision(body: Node2D):
 
 func take_damage(amount: float):
 	health -= amount
-	sprite.modulate = Color(1.0, 0.5, 0.5)
 	if damage_tween != null:
 		damage_tween.kill()
-	damage_tween = create_tween()
-	damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
+	
+	if health > 0.0:
+		sprite.modulate = Color(1.0, 0.5, 0.5)
+		damage_tween = create_tween()
+		damage_tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
+		hurt_sound.play()
 
 func collect(money_type: int, amount: int):
 	if money_type == -1:
