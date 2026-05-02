@@ -34,5 +34,5 @@ shape = SubResource("CircleShape2D_av37a")
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=383568405]
 stream = ExtResource("3_mry8q")
-volume_db = 4.0
+volume_db = 5.944
 autoplay = true

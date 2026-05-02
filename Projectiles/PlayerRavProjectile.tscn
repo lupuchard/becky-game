@@ -45,5 +45,5 @@ bus = &"Effects"
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=68471983]
 stream = SubResource("AudioStreamRandomizer_oc1yv")
-volume_db = -4.0
+volume_db = -0.112
 bus = &"Effects"

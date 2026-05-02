@@ -105,7 +105,7 @@ _data = {
 point_count = 4
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o3ebs"]
-random_pitch = 1.122462
+random_pitch = 1.1892071
 streams_count = 1
 stream_0/stream = ExtResource("18_o3ebs")
 
@@ -187,11 +187,13 @@ shape = SubResource("CapsuleShape2D_cbp6q")
 
 [node name="UpgradeSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=195617808]
 stream = ExtResource("11_bc84e")
-volume_db = 4.0
+volume_db = 5.944
 bus = &"Effects"
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=162298553]
 stream = SubResource("AudioStreamRandomizer_k83mh")
+volume_db = 2.916
+bus = &"Effects"
 
 [node name="Paths" type="Node2D" parent="." unique_id=1384284802]
 scale = Vector2(1.7356573, 1.7142735)
@@ -570,10 +572,13 @@ script = ExtResource("6_dwbse")
 
 [node name="EnemyDiedSound" type="AudioStreamPlayer2D" parent="Spawner" unique_id=911528467]
 stream = SubResource("AudioStreamRandomizer_o3ebs")
+volume_db = 8.748
+bus = &"Effects"
 
 [node name="RoundEndSound" type="AudioStreamPlayer" parent="Spawner" unique_id=494627559]
 stream = ExtResource("18_4h6ng")
-volume_db = 5.0
+volume_db = 6.825
+bus = &"Effects"
 
 [node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
 position = Vector2(1431, 394)
