@@ -19,19 +19,9 @@
 [ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="13_2o6r5"]
 [ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
 [ext_resource type="PackedScene" uid="uid://bca5med66pxed" path="res://Enemies/FlyingEnemy.tscn" id="16_2u3nc"]
+[ext_resource type="Texture2D" uid="uid://cgi6mhs4sfn1l" path="res://Assets/healthsite.png" id="18_wukud"]
 [ext_resource type="AudioStream" uid="uid://c1u3y0chqwf0w" path="res://Assets/Sound/music.ogg" id="20_bc84e"]
 [ext_resource type="PackedScene" uid="uid://psgswiqegx1j" path="res://UpgradesSite.tscn" id="20_wukud"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqwa"]
-bg_color = Color(0.79, 0.79, 0.79, 0.1254902)
-border_width_left = 1
-border_width_top = 3
-border_width_right = 1
-border_width_bottom = 1
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 18
 
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
@@ -78,8 +68,301 @@ radius = 9.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udxuc"]
 bg_color = Color(0.6, 0.6, 0.6, 0.6117647)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqwa"]
+bg_color = Color(0.79, 0.79, 0.79, 0.1254902)
+border_width_left = 1
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
 [node name="World" type="Node2D" unique_id=2120518854]
 script = ExtResource("1_gbfbk")
+
+[node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
+modulate = Color(0.62, 0.62, 0.62, 1)
+z_index = -2
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("1_036b0")
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky")]
+position = Vector2(717, 411)
+script = ExtResource("2_dwbse")
+becky = NodePath("../Becky")
+
+[node name="Fog" type="MeshInstance2D" parent="Camera2D" unique_id=899847312]
+visible = false
+modulate = Color(1, 1, 1, 0)
+mesh = SubResource("QuadMesh_036b0")
+
+[node name="Bound" type="Marker2D" parent="Camera2D" unique_id=51245580]
+position = Vector2(1680, 668)
+
+[node name="Becky" type="Area2D" parent="." unique_id=2046443451]
+z_index = 1
+position = Vector2(603, 347)
+script = ExtResource("2_tlwt5")
+
+[node name="Sprite" type="Sprite2D" parent="Becky" unique_id=569265625]
+position = Vector2(0.99999905, 5)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("9_bc84e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
+shape = SubResource("CircleShape2D_ioo17")
+
+[node name="SmallArea" type="Area2D" parent="Becky" unique_id=1702542664]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky/SmallArea" unique_id=1831621821]
+shape = SubResource("CircleShape2D_hiqwa")
+
+[node name="Shield" type="Area2D" parent="Becky" unique_id=564449617]
+
+[node name="Sprite" type="Sprite2D" parent="Becky/Shield" unique_id=935343649]
+position = Vector2(0.4000244, -31.600006)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_bc84e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky/Shield" unique_id=84553203]
+position = Vector2(0.4000244, -42.600006)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_cbp6q")
+
+[node name="UpgradeSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=195617808]
+stream = ExtResource("11_bc84e")
+
+[node name="Paths" type="Node2D" parent="." unique_id=1384284802]
+scale = Vector2(1.7356573, 1.7142735)
+
+[node name="HighPath" type="Path2D" parent="Paths" unique_id=70440228]
+curve = SubResource("Curve2D_036b0")
+
+[node name="LowPath" type="Path2D" parent="Paths" unique_id=1451626691]
+curve = SubResource("Curve2D_dwbse")
+
+[node name="WavyPath" type="Path2D" parent="Paths" unique_id=1245087611]
+curve = SubResource("Curve2D_pkg7o")
+
+[node name="ToCenterPath" type="Path2D" parent="Paths" unique_id=456466687]
+curve = SubResource("Curve2D_70uel")
+
+[node name="Rounds" type="Node" parent="." unique_id=261985347]
+
+[node name="Round1" type="Node" parent="Rounds" unique_id=1623087036]
+script = ExtResource("12_wukud")
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round1" unique_id=1805493421 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 3
+seconds_between = 1.0
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round1" unique_id=1071763997 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 2
+seconds_between = 1.5
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment3" type="Node" parent="Rounds/Round1" unique_id=1248640915 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 4
+seconds_between = 3.0
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment4" type="Node" parent="Rounds/Round1" unique_id=1530390947 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 3
+seconds_between = 4.0
+simultaneous = true
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment5" type="Node" parent="Rounds/Round1" unique_id=2105119229 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 2.0
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Round2" type="Node" parent="Rounds" unique_id=113479319]
+script = ExtResource("12_wukud")
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round2" unique_id=978029227 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 2.0
+simultaneous = true
+paths = [NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round2" unique_id=1047106459 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 15
+seconds_between = 1.5
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment3" type="Node" parent="Rounds/Round2" unique_id=1196219408 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 3
+seconds_between = 4.0
+simultaneous = true
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment4" type="Node" parent="Rounds/Round2" unique_id=1569526942 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 2.0
+simultaneous = true
+paths = [NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment5" type="Node" parent="Rounds/Round2" unique_id=2092043613 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 3
+seconds_between = 3.0
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Round3" type="Node" parent="Rounds" unique_id=1991491409]
+script = ExtResource("12_wukud")
+health_scaling = 1.2
+damage_scaling = 1.2
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round3" unique_id=1828571381 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 10
+seconds_between = 3.0
+simultaneous = true
+paths = [NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round3" unique_id=1240062875 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("16_2u3nc")
+amount = 5
+seconds_between = 6.0
+simultaneous = true
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Spawner" type="Node2D" parent="." unique_id=610224940]
+script = ExtResource("6_dwbse")
+
+[node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
+position = Vector2(1978, 567)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("13_70uel")
+
+[node name="Sprite2D" type="Sprite2D" parent="NextRound" unique_id=316956143]
+texture = ExtResource("13_2o6r5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextRound" unique_id=2037708612]
+shape = SubResource("CircleShape2D_70uel")
+
+[node name="ProgressBar" type="ProgressBar" parent="NextRound" unique_id=1743740660]
+offset_left = -53.0
+offset_top = -63.0
+offset_right = 54.0
+offset_bottom = -32.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+value = 1.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="NextRound" unique_id=1621363490]
+offset_left = -49.0
+offset_top = -66.0
+offset_right = 51.0
+offset_bottom = -33.0
+theme_override_fonts/font = ExtResource("5_ikiii")
+text = "Hold E or (B) to start
+the next round"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Healer" type="Area2D" parent="." unique_id=1003010181]
+position = Vector2(1766, 224)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("13_70uel")
+
+[node name="Sprite2D" type="Sprite2D" parent="Healer" unique_id=1231438662]
+texture = ExtResource("18_wukud")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Healer" unique_id=327051479]
+shape = SubResource("CircleShape2D_70uel")
+
+[node name="ProgressBar" type="ProgressBar" parent="Healer" unique_id=675669925]
+offset_left = -53.0
+offset_top = -64.0
+offset_right = 54.0
+offset_bottom = -36.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+max_value = 1.0
+step = 0.001
+value = 1.0
+show_percentage = false
+
+[node name="Label" type="RichTextLabel" parent="Healer" unique_id=684637386]
+offset_left = -71.0
+offset_top = -78.0
+offset_right = 69.0
+offset_bottom = -38.0
+theme_override_fonts/normal_font = ExtResource("5_ikiii")
+bbcode_enabled = true
+text = "[color=darkturquoise]Cost 10[/color]
+Hold E or (B) to
+heal to full"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrades1" parent="." unique_id=497442609 instance=ExtResource("20_wukud")]
+position = Vector2(1590, 766)
+upgrade1 = 1
+upgrade1_name = "double shot"
+upgrade2 = 3
+upgrade2_name = "bouncy shot"
+cost_type = 1
+
+[node name="Upgrades2" parent="." unique_id=1685848106 instance=ExtResource("20_wukud")]
+position = Vector2(1094, 168)
+upgrade1 = 0
+upgrade1_name = "rapid shot"
+upgrade2 = 2
+upgrade2_name = "frost"
+cost = 30
+cost_type = 1
+
+[node name="Upgrades3" parent="." unique_id=972009733 instance=ExtResource("20_wukud")]
+position = Vector2(561, 781)
+upgrade1_name = "shield"
+upgrade2_name = "lifesteal"
+cost = 60
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=28732745]
+stream = ExtResource("20_bc84e")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=825859611]
 
@@ -371,248 +654,3 @@ Fonts:
     m5x7 (managore.itch.io/m5x7)
 
 Made for the 2026 STLGameDev Spring Jam"
-
-[node name="Stlouis" type="Sprite2D" parent="." unique_id=1409619830]
-modulate = Color(0.62, 0.62, 0.62, 1)
-z_index = -2
-scale = Vector2(1.4, 1.4)
-texture = ExtResource("1_036b0")
-centered = false
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky")]
-position = Vector2(717, 411)
-script = ExtResource("2_dwbse")
-becky = NodePath("../Becky")
-
-[node name="Fog" type="MeshInstance2D" parent="Camera2D" unique_id=899847312]
-visible = false
-modulate = Color(1, 1, 1, 0)
-mesh = SubResource("QuadMesh_036b0")
-
-[node name="Bound" type="Marker2D" parent="Camera2D" unique_id=51245580]
-position = Vector2(1680, 668)
-
-[node name="Becky" type="Area2D" parent="." unique_id=2046443451]
-z_index = 1
-position = Vector2(603, 347)
-script = ExtResource("2_tlwt5")
-
-[node name="Sprite" type="Sprite2D" parent="Becky" unique_id=569265625]
-position = Vector2(0.99999905, 5)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("9_bc84e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
-shape = SubResource("CircleShape2D_ioo17")
-
-[node name="SmallArea" type="Area2D" parent="Becky" unique_id=1702542664]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky/SmallArea" unique_id=1831621821]
-shape = SubResource("CircleShape2D_hiqwa")
-
-[node name="Shield" type="Area2D" parent="Becky" unique_id=564449617]
-
-[node name="Sprite" type="Sprite2D" parent="Becky/Shield" unique_id=935343649]
-position = Vector2(0.4000244, -31.600006)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("10_bc84e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Becky/Shield" unique_id=84553203]
-position = Vector2(0.4000244, -42.600006)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_cbp6q")
-
-[node name="UpgradeSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=195617808]
-stream = ExtResource("11_bc84e")
-
-[node name="Paths" type="Node2D" parent="." unique_id=1384284802]
-scale = Vector2(1.7356573, 1.7142735)
-
-[node name="HighPath" type="Path2D" parent="Paths" unique_id=70440228]
-curve = SubResource("Curve2D_036b0")
-
-[node name="LowPath" type="Path2D" parent="Paths" unique_id=1451626691]
-curve = SubResource("Curve2D_dwbse")
-
-[node name="WavyPath" type="Path2D" parent="Paths" unique_id=1245087611]
-curve = SubResource("Curve2D_pkg7o")
-
-[node name="ToCenterPath" type="Path2D" parent="Paths" unique_id=456466687]
-curve = SubResource("Curve2D_70uel")
-
-[node name="Rounds" type="Node" parent="." unique_id=261985347]
-
-[node name="Round1" type="Node" parent="Rounds" unique_id=1623087036]
-script = ExtResource("12_wukud")
-
-[node name="RoundSegment" type="Node" parent="Rounds/Round1" unique_id=1805493421 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("8_wse8f")
-amount = 3
-seconds_between = 1.0
-paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment2" type="Node" parent="Rounds/Round1" unique_id=1071763997 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("8_wse8f")
-amount = 2
-seconds_between = 1.5
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/WavyPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment3" type="Node" parent="Rounds/Round1" unique_id=1248640915 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("5_036b0")
-amount = 4
-seconds_between = 3.0
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment4" type="Node" parent="Rounds/Round1" unique_id=1530390947 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("5_036b0")
-amount = 3
-seconds_between = 4.0
-simultaneous = true
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment5" type="Node" parent="Rounds/Round1" unique_id=2105119229 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("8_wse8f")
-amount = 5
-seconds_between = 2.0
-paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="Round2" type="Node" parent="Rounds" unique_id=113479319]
-script = ExtResource("12_wukud")
-
-[node name="RoundSegment" type="Node" parent="Rounds/Round2" unique_id=978029227 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("9_2u3nc")
-seconds_between = 2.0
-simultaneous = true
-paths = [NodePath("../../../Paths/ToCenterPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment2" type="Node" parent="Rounds/Round2" unique_id=1047106459 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("8_wse8f")
-amount = 15
-seconds_between = 1.5
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment3" type="Node" parent="Rounds/Round2" unique_id=1196219408 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("5_036b0")
-amount = 3
-seconds_between = 4.0
-simultaneous = true
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment4" type="Node" parent="Rounds/Round2" unique_id=1569526942 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("9_2u3nc")
-seconds_between = 2.0
-simultaneous = true
-paths = [NodePath("../../../Paths/ToCenterPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment5" type="Node" parent="Rounds/Round2" unique_id=2092043613 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("8_wse8f")
-amount = 3
-seconds_between = 3.0
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="Round3" type="Node" parent="Rounds" unique_id=1991491409]
-script = ExtResource("12_wukud")
-health_scaling = 1.2
-damage_scaling = 1.2
-
-[node name="RoundSegment" type="Node" parent="Rounds/Round3" unique_id=1828571381 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("5_036b0")
-amount = 10
-seconds_between = 3.0
-simultaneous = true
-paths = [NodePath("../../../Paths/ToCenterPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="RoundSegment2" type="Node" parent="Rounds/Round3" unique_id=1240062875 node_paths=PackedStringArray("paths")]
-script = ExtResource("7_pkg7o")
-enemy = ExtResource("16_2u3nc")
-amount = 5
-seconds_between = 6.0
-simultaneous = true
-paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
-metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
-
-[node name="Spawner" type="Node2D" parent="." unique_id=610224940]
-script = ExtResource("6_dwbse")
-
-[node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
-position = Vector2(1978, 567)
-collision_layer = 4
-collision_mask = 4
-script = ExtResource("13_70uel")
-
-[node name="Sprite2D" type="Sprite2D" parent="NextRound" unique_id=316956143]
-texture = ExtResource("13_2o6r5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NextRound" unique_id=2037708612]
-shape = SubResource("CircleShape2D_70uel")
-
-[node name="ProgressBar" type="ProgressBar" parent="NextRound" unique_id=1743740660]
-offset_left = -53.0
-offset_top = -63.0
-offset_right = 54.0
-offset_bottom = -32.0
-theme_override_styles/background = SubResource("StyleBoxEmpty_2u3nc")
-theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
-max_value = 1.0
-step = 0.001
-value = 1.0
-show_percentage = false
-
-[node name="Label" type="Label" parent="NextRound" unique_id=1621363490]
-offset_left = -49.0
-offset_top = -66.0
-offset_right = 51.0
-offset_bottom = -33.0
-theme_override_fonts/font = ExtResource("5_ikiii")
-text = "Hold E/Ⓑ to start
-the next round"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Upgrades1" parent="." unique_id=497442609 instance=ExtResource("20_wukud")]
-position = Vector2(1590, 766)
-upgrade1 = 1
-upgrade1_name = "double shot"
-upgrade2 = 3
-upgrade2_name = "bouncy shot"
-cost_type = 1
-
-[node name="Upgrades2" parent="." unique_id=1685848106 instance=ExtResource("20_wukud")]
-position = Vector2(1762, 220)
-upgrade1 = 0
-upgrade1_name = "rapid shot"
-upgrade2 = 2
-upgrade2_name = "frost"
-cost = 30
-cost_type = 1
-
-[node name="Upgrades3" parent="." unique_id=972009733 instance=ExtResource("20_wukud")]
-position = Vector2(561, 781)
-upgrade1_name = "shield"
-upgrade2_name = "lifesteal"
-cost = 60
-
-[node name="Music" type="AudioStreamPlayer" parent="." unique_id=28732745]
-stream = ExtResource("20_bc84e")

@@ -10,6 +10,7 @@ var collision_done = false
 @onready var outer_circle: CollisionShape2D = $Outer/Shape
 
 var becky: Becky
+var damage: float
 var time := 0.0
 
 func _ready():
@@ -50,4 +51,4 @@ func _process(delta: float):
 		queue_free()
 
 func throw_becky():
-	becky.be_thrown((becky.global_position - global_position).normalized())
+	becky.be_thrown((becky.global_position - global_position).normalized(), damage)

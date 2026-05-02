@@ -207,10 +207,10 @@ func on_exit_area(area: Area2D):
 		if cur_site == area:
 			cur_site = null
 
-func be_thrown(dir: Vector2):
+func be_thrown(dir: Vector2, damage: float):
 	if inv_cooldown <= 0.0:
 		vel += dir * 500.0
-		inv_cooldown = INV_COOLDOWN
+		take_damage(damage)
 
 func apply_upgrade(upgrade: Upgrade):
 	upgrades[upgrade] = true

@@ -12,6 +12,7 @@ health = 10.0
 max_speed = 60.0
 accel = 600.0
 contact_damage = 20.0
+damage = 5.0
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1171308333]

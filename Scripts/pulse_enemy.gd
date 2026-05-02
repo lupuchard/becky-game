@@ -13,7 +13,8 @@ func _process(delta: float):
 	super._process(delta)
 	
 func create_pulse():
-	var pulse = PULSE.instantiate()
+	var pulse: Pulse = PULSE.instantiate()
 	pulse.global_position = global_position
 	pulse.scale = Vector2.ONE * 2.0
+	pulse.damage = damage
 	get_parent().add_child(pulse)

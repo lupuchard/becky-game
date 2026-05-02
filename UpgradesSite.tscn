@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://psgswiqegx1j"]
 
 [ext_resource type="Script" uid="uid://c5kbnve4itdog" path="res://Scripts/upgrade_site.gd" id="1_20v6y"]
-[ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="2_dxb2v"]
+[ext_resource type="Texture2D" uid="uid://bvd0nual5jb3s" path="res://Assets/questionmark.png" id="2_20v6y"]
 [ext_resource type="FontFile" uid="uid://c5l8d1d8cwfmo" path="res://Assets/Fonts/m5x7.ttf" id="3_50c6f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2u3nc"]
@@ -47,7 +47,7 @@ step = 0.001
 show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1473027366]
-texture = ExtResource("2_dxb2v")
+texture = ExtResource("2_20v6y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1466352714]
 shape = SubResource("CircleShape2D_70uel")

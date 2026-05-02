@@ -34,6 +34,7 @@ const MAX_LIVES := 5
 @onready var rounds: Node = $Rounds
 @onready var next_round_site: Site = $NextRound
 @onready var sites: Array[Site] = [next_round_site, $Upgrades1, $Upgrades2, $Upgrades3]
+@onready var healer_site: Site = $Healer
 
 var current_round := 0
 var lives := 5
@@ -57,6 +58,8 @@ func _ready():
 	spawner.round_ended.connect(on_round_ended)
 	spawner.enemy_reached_end.connect(on_enemy_reached_end)
 	
+	healer_site.interacted.connect(func(_alt): heal_becky())
+	
 	credits.hide()
 	credits_button.pressed.connect(func():
 		credits.visible = !credits.visible
@@ -66,6 +69,7 @@ func _ready():
 	
 	for site in sites:
 		site.disable()
+	healer_site.disable()
 
 func play_pressed():
 	if !main_menu.visible: return
@@ -98,6 +102,12 @@ func game_over(text: String):
 	becky.hide()
 	music.stop()
 
+func heal_becky():
+	becky.health = becky.MAX_HEALTH
+	becky.money[0] -= 10
+	healer_site.disable()
+	becky.upgrade_sound.play()
+
 func reset():
 	lives = MAX_LIVES
 	game_over_panel.hide()
@@ -119,14 +129,15 @@ func on_round_ended():
 	
 	for site in sites:
 		site.enable()
+	if becky.health < becky.MAX_HEALTH and becky.money[0] >= 10:
+		healer_site.enable()
 	
 	between_rounds = true
 	current_round += 1
 	lives = MAX_LIVES
 		
 	restore_health_tween = create_tween()
-	restore_health_tween.tween_property(becky, "health", Becky.MAX_HEALTH, 4.0)
-	restore_health_tween.parallel().tween_property(becky, "shield_health", Becky.MAX_SHIELD_HEALTH, 2.0)
+	restore_health_tween.tween_property(becky, "shield_health", Becky.MAX_SHIELD_HEALTH, 2.0)
 	
 	if volume_tween != null:
 		volume_tween.kill()
@@ -138,7 +149,7 @@ func start_next_round():
 		return
 		
 	restore_health_tween.kill()
-	becky.health = Becky.MAX_HEALTH
+	becky.shield_health = Becky.MAX_SHIELD_HEALTH
 	spawner.set_round($Rounds.get_child(current_round))
 	for site in sites:
 		site.disable()
@@ -147,6 +158,7 @@ func start_next_round():
 		volume_tween.kill()
 	volume_tween = create_tween()
 	volume_tween.tween_property(music, "volume_db", initial_music_volume, 2.0)
+
 func on_enemy_reached_end():
 	lives -= 1
 	if lives <= 0:
