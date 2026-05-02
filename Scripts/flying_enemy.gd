@@ -8,6 +8,7 @@ var fly_tween: Tween
 var flying = 0.0
 
 func _ready():
+	target = get_tree().get_first_node_in_group("becky")
 	super._ready()
 	fly_cooldown_remaining = fly_cooldown
 

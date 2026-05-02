@@ -31,6 +31,7 @@ const FLY_SPEEDUP := 2.0
 @onready var shield: Area2D = $Shield
 @onready var upgrade_sound: AudioStreamPlayer2D = $UpgradeSound
 @onready var hurt_sound: AudioStreamPlayer2D = $HurtSound
+@export var bounds: Marker2D
 
 var health := MAX_HEALTH
 var shield_health := MAX_SHIELD_HEALTH
@@ -138,6 +139,15 @@ func _physics_process(delta: float):
 		#	vel = vel.normalized() * max_speed
 		global_position += vel * delta
 		sprite.flip_h = vel.x < 0
+	
+	if global_position.x < 0 and vel.x < 0:
+		vel.x *= -1
+	elif global_position.x > bounds.global_position.x and vel.x > 0:
+		vel.x *= -1
+	if global_position.y < 0 and vel.y < 0:
+		vel.y *= -1
+	elif global_position.y > bounds.global_position.y and vel.y > 0:
+		vel.y *= -1
 	
 	if upgrades[Upgrade.SHIELD]:
 		shield.modulate = Color(1.0, 1.0, 1.0, shield_health / MAX_SHIELD_HEALTH)

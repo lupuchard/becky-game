@@ -6,11 +6,12 @@ const FLYING_FOG_DENSITY = 0.1
 @onready var fog = $Fog
 
 @export var becky: Becky
+@export var bounds_node: Marker2D
 var bounds: Vector2
 
 func _ready():
 	add_to_group("camera")
-	bounds = $Bound.global_position
+	bounds = bounds_node.global_position
 	fog.visible = true
 
 func _process(_delta: float):

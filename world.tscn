@@ -138,30 +138,32 @@ scale = Vector2(1.4, 1.4)
 texture = ExtResource("1_036b0")
 centered = false
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky")]
+[node name="Bound" type="Marker2D" parent="." unique_id=51245580]
+position = Vector2(2397, 1079)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1493798746 node_paths=PackedStringArray("becky", "bounds_node")]
 position = Vector2(717, 411)
 script = ExtResource("2_dwbse")
 becky = NodePath("../Becky")
+bounds_node = NodePath("../Bound")
 
 [node name="Fog" type="MeshInstance2D" parent="Camera2D" unique_id=899847312]
 visible = false
 modulate = Color(1, 1, 1, 0)
 mesh = SubResource("QuadMesh_036b0")
 
-[node name="Bound" type="Marker2D" parent="Camera2D" unique_id=51245580]
-position = Vector2(1680, 668)
-
-[node name="Becky" type="Area2D" parent="." unique_id=2046443451]
+[node name="Becky" type="Area2D" parent="." unique_id=2046443451 node_paths=PackedStringArray("bounds")]
 z_index = 1
 position = Vector2(603, 347)
 script = ExtResource("2_tlwt5")
+bounds = NodePath("../Bound")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Becky" unique_id=832884522]
 position = Vector2(1, 5)
 scale = Vector2(0.42, 0.42)
 sprite_frames = SubResource("SpriteFrames_1ew0l")
 autoplay = "default"
-frame_progress = 0.116482444
+frame_progress = 0.64396
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
 shape = SubResource("CircleShape2D_ioo17")
@@ -427,8 +429,8 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
 [node name="Round6" type="Node" parent="Rounds" unique_id=712949445]
 script = ExtResource("12_wukud")
-health_scaling = 1.4
-damage_scaling = 1.4
+health_scaling = 1.6
+damage_scaling = 1.6
 
 [node name="RoundSegment" type="Node" parent="Rounds/Round6" unique_id=1435247790 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
@@ -471,14 +473,23 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 [node name="RoundSegment5" type="Node" parent="Rounds/Round6" unique_id=395021200 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("5_036b0")
+amount = 3
 seconds_between = 0.2
 paths = [NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
+[node name="RoundSegment7" type="Node" parent="Rounds/Round6" unique_id=1506979983 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 0.5
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
 [node name="Round7" type="Node" parent="Rounds" unique_id=1987951635]
 script = ExtResource("12_wukud")
-health_scaling = 1.4
-damage_scaling = 1.4
+health_scaling = 1.6
+damage_scaling = 1.6
 
 [node name="RoundSegment6" type="Node" parent="Rounds/Round7" unique_id=1826179056 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
@@ -523,7 +534,16 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("9_2u3nc")
 seconds_between = 0.2
+simultaneous = true
 paths = [NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round7" unique_id=550038536 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
 [node name="Round8" type="Node" parent="Rounds" unique_id=636285478]

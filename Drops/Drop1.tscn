@@ -7,7 +7,7 @@ size = Vector2(6, 6)
 
 [node name="Drop1" type="Node2D" unique_id=1969628570]
 script = ExtResource("1_xy7v5")
-amount = 2
+amount = 3
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1903196723]
 modulate = Color(0, 0, 1, 1)

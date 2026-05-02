@@ -208,6 +208,10 @@ func on_boss_spawned(new_boss: Enemy):
 	boss.died.connect(func():
 		game_over("You win!")
 		boss = null
+		spawner.end_round()
+		for child in get_children():
+			if child is Enemy:
+				child.queue_free()
 	)
 	
 	boss_health.show()

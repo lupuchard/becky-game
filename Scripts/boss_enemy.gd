@@ -23,6 +23,8 @@ func _process(delta: float):
 	if cardinal_cooldown <= 0:
 		do_cardinal()
 		cardinal_cooldown += CARDINAL_COOLDOWN
+	
+	cold = clamp(0, cold - COLD_DECAY * delta * 10.0, MAX_COLD / 4.0)
 
 func do_spray():
 	var tween = create_tween()

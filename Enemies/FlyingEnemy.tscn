@@ -5,9 +5,19 @@
 [ext_resource type="PackedScene" uid="uid://ctese50tcriog" path="res://Drops/Drop2.tscn" id="3_73r2s"]
 [ext_resource type="Texture2D" uid="uid://chqt5uhp3f5so" path="res://Assets/alien-02.png" id="4_cq7wj"]
 
+[sub_resource type="Gradient" id="Gradient_cq7wj"]
+offsets = PackedFloat32Array(0.63228697, 0.98206276)
+colors = PackedColorArray(0, 0, 0, 0.49411765, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_breaw"]
+gradient = SubResource("Gradient_cq7wj")
+fill = 1
+fill_from = Vector2(0.525641, 0.517094)
+fill_to = Vector2(0.5641026, 1)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_breaw"]
-radius = 19.0
-height = 70.0
+radius = 27.0
+height = 100.0
 
 [node name="FlyingEnemy" type="StaticBody2D" unique_id=1629057451]
 modulate = Color(1, 1, 0.5176471, 1)
@@ -24,9 +34,13 @@ ExtResource("3_73r2s"): 0.5
 })
 metadata/_custom_type_script = "uid://r6wflmh8dtf0"
 
+[node name="Shadow" type="Sprite2D" parent="." unique_id=2006038335]
+scale = Vector2(1.8247948, 1.1550055)
+texture = SubResource("GradientTexture2D_breaw")
+
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1342280958]
 position = Vector2(0, -2.9999998)
-scale = Vector2(0.3605236, 0.3605236)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_cq7wj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1695961910]
