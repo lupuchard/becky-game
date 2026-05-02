@@ -1,6 +1,10 @@
 extends Node2D
 class_name Spawner
 
+@onready var enemy_died_sound = $EnemyDiedSound
+@onready var round_end_sound = $RoundEndSound
+
+signal last_enemy
 signal round_ended
 signal enemy_reached_end
 
@@ -92,16 +96,24 @@ func spawn_from(segment: RoundSegment):
 	new_enemy.health *= current_round.health_scaling
 	new_enemy.damage *= current_round.damage_scaling
 	get_parent().add_child(new_enemy)
-	new_enemy.died.connect(enemy_died)
+	new_enemy.died.connect(func():
+		enemy_died(new_enemy, true)
+	)
 	new_enemy.reached_end.connect(func():
-		enemy_died()
+		enemy_died(new_enemy, false)
 		enemy_reached_end.emit()
 	)
 
-func enemy_died():
+func enemy_died(enemy: Enemy, play_sound: bool):
 	round_dead_enemies += 1
+	if round_dead_enemies == round_total_enemies - 1:
+		last_enemy.emit()
 	if round_dead_enemies >= round_total_enemies:
 		round_ended.emit()
+		round_end_sound.play()
+	elif play_sound:
+		enemy_died_sound.global_position = enemy.global_position
+		enemy_died_sound.play()
 
 func end_round():
 	round_segments.clear()

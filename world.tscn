@@ -7,21 +7,28 @@
 [ext_resource type="Script" uid="uid://c0eti6l0haml2" path="res://Scripts/becky.gd" id="2_tlwt5"]
 [ext_resource type="Script" uid="uid://b4s1wjwo5qmr7" path="res://Scripts/exit_button.gd" id="3_ic0uy"]
 [ext_resource type="PackedScene" uid="uid://c11e4oti6gie5" path="res://Enemies/ShootEnemy.tscn" id="5_036b0"]
+[ext_resource type="Texture2D" uid="uid://cdtrfklfbtm0a" path="res://Assets/SB Becky Frame 1.png" id="5_gggvi"]
 [ext_resource type="FontFile" uid="uid://c5l8d1d8cwfmo" path="res://Assets/Fonts/m5x7.ttf" id="5_ikiii"]
 [ext_resource type="Script" uid="uid://b7ensqc5ji3bt" path="res://Scripts/spawner.gd" id="6_dwbse"]
+[ext_resource type="Texture2D" uid="uid://dc5n6id8ombx5" path="res://Assets/SB Becky Frame 2.png" id="6_w44yn"]
+[ext_resource type="Texture2D" uid="uid://dktfh8vrv5fwj" path="res://Assets/SB Becky Frame 3.png" id="7_6ah6f"]
 [ext_resource type="Script" uid="uid://bg3fuwbfsrid0" path="res://Scripts/round_segment.gd" id="7_pkg7o"]
 [ext_resource type="AudioStream" uid="uid://b08nuom2eu4jf" path="res://Assets/Sound/beck_hurt_01.ogg" id="8_bo7i5"]
+[ext_resource type="Texture2D" uid="uid://xq2rci3sbgn8" path="res://Assets/SB Becky Frame 4.png" id="8_g1i3r"]
 [ext_resource type="PackedScene" uid="uid://d2ewupfw2b3wr" path="res://Enemies/FastEnemy.tscn" id="8_wse8f"]
 [ext_resource type="PackedScene" uid="uid://ml5ey4n0wfht" path="res://Enemies/PulseEnemy.tscn" id="9_2u3nc"]
 [ext_resource type="AudioStream" uid="uid://dakybbw85aatc" path="res://Assets/Sound/beck_hurt_02.ogg" id="9_4h6ng"]
-[ext_resource type="Texture2D" uid="uid://bjds16psrhnfj" path="res://Assets/Becky.png" id="9_bc84e"]
+[ext_resource type="Texture2D" uid="uid://c6e8ocst2us4l" path="res://Assets/SB Becky Frame 5.png" id="9_my276"]
 [ext_resource type="Texture2D" uid="uid://b2sn51s7iyff2" path="res://Assets/shield2.png" id="10_bc84e"]
 [ext_resource type="AudioStream" uid="uid://c51hq15s6ess5" path="res://Assets/Sound/beck_hurt_03.ogg" id="10_o3ebs"]
+[ext_resource type="Texture2D" uid="uid://bgf7dhuyqcdp" path="res://Assets/SB Becky Frame 6.png" id="10_yx0jh"]
 [ext_resource type="AudioStream" uid="uid://bmqcuqkhcvhka" path="res://Assets/Sound/upgrade_get.ogg" id="11_bc84e"]
 [ext_resource type="Script" uid="uid://1hapm3gqm6xq" path="res://Scripts/round.gd" id="12_wukud"]
 [ext_resource type="Texture2D" uid="uid://cjfntwy60mo6o" path="res://Assets/info.png" id="13_2o6r5"]
 [ext_resource type="Script" uid="uid://djfnhf7ah2rn3" path="res://Scripts/site.gd" id="13_70uel"]
 [ext_resource type="PackedScene" uid="uid://bca5med66pxed" path="res://Enemies/FlyingEnemy.tscn" id="16_2u3nc"]
+[ext_resource type="AudioStream" uid="uid://rbthlia067wq" path="res://Assets/Sound/last_enemy_destroyed_.ogg" id="18_4h6ng"]
+[ext_resource type="AudioStream" uid="uid://bbhwxnf42sikp" path="res://Assets/Sound/enemy_destroyed.ogg" id="18_o3ebs"]
 [ext_resource type="Texture2D" uid="uid://cgi6mhs4sfn1l" path="res://Assets/healthsite.png" id="18_wukud"]
 [ext_resource type="AudioStream" uid="uid://c1u3y0chqwf0w" path="res://Assets/Sound/music.ogg" id="20_bc84e"]
 [ext_resource type="PackedScene" uid="uid://psgswiqegx1j" path="res://UpgradesSite.tscn" id="20_wukud"]
@@ -29,6 +36,32 @@
 
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1ew0l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_gggvi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_w44yn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_6ah6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_g1i3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_my276")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_yx0jh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ioo17"]
 radius = 32.0
@@ -69,6 +102,11 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 1194, 342, 133.4335, -54.47032, -133.4335, 54.47032, 818, 355, 136.58902, 56.42374, -136.58902, -56.42374, 359, 321, 0, 0, 0, 0, 52, 318)
 }
 point_count = 4
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o3ebs"]
+random_pitch = 1.122462
+streams_count = 1
+stream_0/stream = ExtResource("18_o3ebs")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_70uel"]
 radius = 9.0
@@ -117,10 +155,12 @@ z_index = 1
 position = Vector2(603, 347)
 script = ExtResource("2_tlwt5")
 
-[node name="Sprite" type="Sprite2D" parent="Becky" unique_id=569265625]
-position = Vector2(0.99999905, 5)
+[node name="Sprite" type="AnimatedSprite2D" parent="Becky" unique_id=832884522]
+position = Vector2(1, 5)
 scale = Vector2(0.42, 0.42)
-texture = ExtResource("9_bc84e")
+sprite_frames = SubResource("SpriteFrames_1ew0l")
+autoplay = "default"
+frame_progress = 0.968123
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
 shape = SubResource("CircleShape2D_ioo17")
@@ -144,6 +184,7 @@ shape = SubResource("CapsuleShape2D_cbp6q")
 
 [node name="UpgradeSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=195617808]
 stream = ExtResource("11_bc84e")
+volume_db = 4.0
 bus = &"Effects"
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="Becky" unique_id=162298553]
@@ -486,6 +527,13 @@ metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
 [node name="Spawner" type="Node2D" parent="." unique_id=610224940]
 script = ExtResource("6_dwbse")
+
+[node name="EnemyDiedSound" type="AudioStreamPlayer2D" parent="Spawner" unique_id=911528467]
+stream = SubResource("AudioStreamRandomizer_o3ebs")
+
+[node name="RoundEndSound" type="AudioStreamPlayer" parent="Spawner" unique_id=494627559]
+stream = ExtResource("18_4h6ng")
+volume_db = 5.0
 
 [node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
 position = Vector2(1431, 394)

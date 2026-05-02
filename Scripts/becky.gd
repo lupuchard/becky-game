@@ -26,7 +26,7 @@ const DOUBLE_SHOT_COOLDOWN_MOD := 1.5
 const FLY_TRANSITION_TIME := 0.3
 const FLY_SPEEDUP := 2.0
 
-@onready var sprite: Sprite2D = $Sprite
+@onready var sprite: AnimatedSprite2D = $Sprite
 @onready var small_area: Area2D = $SmallArea
 @onready var shield: Area2D = $Shield
 @onready var upgrade_sound: AudioStreamPlayer2D = $UpgradeSound

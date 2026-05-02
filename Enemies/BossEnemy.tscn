@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cr384252sfyn"]
+
+[ext_resource type="Script" uid="uid://d18ifl3cgo51t" path="res://Scripts/boss_enemy.gd" id="1_4166y"]
+[ext_resource type="PackedScene" uid="uid://ctese50tcriog" path="res://Drops/Drop2.tscn" id="2_jnrnu"]
+[ext_resource type="PackedScene" uid="uid://byl0yy6wd3q73" path="res://Drops/Drop1.tscn" id="3_4166y"]
+[ext_resource type="Texture2D" uid="uid://cj6adl87kted5" path="res://Assets/SB Alien Frame 1.png" id="4_4166y"]
+[ext_resource type="Texture2D" uid="uid://b1feguev5foob" path="res://Assets/SB Alien Frame 2.png" id="5_1mx0w"]
+[ext_resource type="Texture2D" uid="uid://ccw5yisnbfxh1" path="res://Assets/SB Alien Frame 3.png" id="6_3fv4e"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ks10"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4166y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1mx0w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3fv4e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_grg68"]
+radius = 105.68349
+
+[node name="BossEnemy" type="StaticBody2D" unique_id=1629057451]
+modulate = Color(0.5137255, 0.7647059, 1, 1)
+script = ExtResource("1_4166y")
+health = 50.0
+max_speed = 40.0
+accel = 100.0
+contact_damage = null
+damage = 10.0
+projectile_cooldown = null
+drops = Dictionary[PackedScene, float]({
+ExtResource("2_jnrnu"): 2.0,
+ExtResource("3_4166y"): 0.5
+})
+metadata/_custom_type_script = "uid://r6wflmh8dtf0"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=406023239]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_4ks10")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1760866192]
+rotation = 1.5707964
+shape = SubResource("CircleShape2D_grg68")

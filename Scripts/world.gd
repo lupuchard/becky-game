@@ -59,6 +59,7 @@ func _ready():
 	next_round_site.interacted.connect(func(_alt): start_next_round())
 	spawner.round_ended.connect(on_round_ended)
 	spawner.enemy_reached_end.connect(on_enemy_reached_end)
+	spawner.last_enemy.connect(on_last_enemy)
 	
 	healer_site.interacted.connect(func(_alt): heal_becky())
 	
@@ -159,11 +160,16 @@ func on_round_ended():
 		
 	restore_health_tween = create_tween()
 	restore_health_tween.tween_property(becky, "shield_health", Becky.MAX_SHIELD_HEALTH, 2.0)
-	
+	change_music_volume(initial_music_volume - 20.0, 1.0)
+
+func on_last_enemy():
+	change_music_volume(initial_music_volume - 10.0, 1.0)
+
+func change_music_volume(volume_db: float, time: float):
 	if volume_tween != null:
 		volume_tween.kill()
 	volume_tween = create_tween()
-	volume_tween.tween_property(music, "volume_db", initial_music_volume - 10.0, 2.0)
+	volume_tween.tween_property(music, "volume_db", initial_music_volume - 10.0, 1.0)
 
 func start_next_round():
 	if !(between_rounds and current_round < rounds.get_child_count()):
@@ -178,10 +184,7 @@ func start_next_round():
 		site.disable()
 	healer_site.disable()
 	
-	if volume_tween != null:
-		volume_tween.kill()
-	volume_tween = create_tween()
-	volume_tween.tween_property(music, "volume_db", initial_music_volume, 2.0)
+	change_music_volume(initial_music_volume, 2.0)
 
 func on_enemy_reached_end():
 	lives -= 1
