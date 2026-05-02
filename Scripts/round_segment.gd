@@ -6,3 +6,4 @@ class_name RoundSegment
 @export var seconds_between: float
 @export var simultaneous: bool = false
 @export var paths: Array[Path2D]
+@export var boss: bool = false

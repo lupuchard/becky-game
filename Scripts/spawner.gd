@@ -7,6 +7,7 @@ class_name Spawner
 signal last_enemy
 signal round_ended
 signal enemy_reached_end
+signal boss_spawned(boss: Enemy)
 
 var current_round: Round
 var round_segments: Array[RoundSegment]
@@ -103,6 +104,9 @@ func spawn_from(segment: RoundSegment):
 		enemy_died(new_enemy, false)
 		enemy_reached_end.emit()
 	)
+	
+	if segment.boss:
+		boss_spawned.emit(new_enemy)
 
 func enemy_died(enemy: Enemy, play_sound: bool):
 	round_dead_enemies += 1

@@ -39,6 +39,7 @@ var cooldown: float = 0.0
 
 var cold := 0.0
 
+var initial_health: float
 var damage_tween: Tween
 var is_dead := false
 
@@ -46,6 +47,7 @@ func _ready():
 	collision_layer = 2
 	collision_mask = 1
 	
+	initial_health = health
 	cooldown = projectile_cooldown
 	
 	if possible_paths.size() > 0:

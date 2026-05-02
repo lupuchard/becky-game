@@ -22,6 +22,8 @@ const MAX_LIVES := 5
 @onready var kill_progress: ProgressBar = $CanvasLayer/RoundProgress/KillProgress
 
 @onready var health_bar: ProgressBar = $CanvasLayer/Status/HealthBar
+@onready var boss_health: Control = $CanvasLayer/BossHealth
+@onready var boss_health_bar: ProgressBar = $CanvasLayer/BossHealth/ProgressBar
 
 @onready var game_over_panel: Control = $CanvasLayer/GameOverPanel
 @onready var game_over_panel_label: Label = $CanvasLayer/GameOverPanel/Container/MarginContainer/Label
@@ -44,6 +46,7 @@ var between_rounds := false
 var restore_health_tween: Tween
 var volume_tween: Tween
 var initial_music_volume: float
+var boss: Enemy
 
 func _ready():
 	becky.process_mode = Node.PROCESS_MODE_DISABLED
@@ -55,11 +58,13 @@ func _ready():
 	
 	to_menu_button.pressed.connect(reset)
 	game_over_panel.hide()
+	boss_health.hide()
 	
 	next_round_site.interacted.connect(func(_alt): start_next_round())
 	spawner.round_ended.connect(on_round_ended)
 	spawner.enemy_reached_end.connect(on_enemy_reached_end)
 	spawner.last_enemy.connect(on_last_enemy)
+	spawner.boss_spawned.connect(on_boss_spawned)
 	
 	healer_site.interacted.connect(func(_alt): heal_becky())
 	
@@ -106,6 +111,9 @@ func _process(_delta: float):
 	if becky.health <= 0.0:
 		game_over("You have died :(")
 	
+	if boss != null:
+		boss_health_bar.value = boss.health / boss.initial_health
+	
 	resource1.text = str(becky.money[0])
 	resource2.text = str(becky.money[1])
 	
@@ -140,6 +148,7 @@ func reset():
 	becky.reset()
 	current_round = 0
 	between_rounds = false
+	boss_health.hide()
 	
 	main_menu.show()
 	play_button.grab_focus()
@@ -147,16 +156,19 @@ func reset():
 func on_round_ended():
 	if game_over_panel.visible: return
 	
+	round_label.text = "Round %s Complete" % (current_round + 1)
+	between_rounds = true
+	current_round += 1
+	lives = MAX_LIVES
+	
+	if current_round >= rounds.get_child_count():
+		game_over("You win!")
+		return
+	
 	for site in sites:
 		site.enable()
 	if becky.health < becky.MAX_HEALTH and becky.money[0] >= 10:
 		healer_site.enable()
-	
-	round_label.text = "Round %s Complete" % (current_round + 1)
-	
-	between_rounds = true
-	current_round += 1
-	lives = MAX_LIVES
 		
 	restore_health_tween = create_tween()
 	restore_health_tween.tween_property(becky, "shield_health", Becky.MAX_SHIELD_HEALTH, 2.0)
@@ -169,7 +181,7 @@ func change_music_volume(volume_db: float, time: float):
 	if volume_tween != null:
 		volume_tween.kill()
 	volume_tween = create_tween()
-	volume_tween.tween_property(music, "volume_db", initial_music_volume - 10.0, 1.0)
+	volume_tween.tween_property(music, "volume_db", volume_db, time)
 
 func start_next_round():
 	if !(between_rounds and current_round < rounds.get_child_count()):
@@ -190,3 +202,12 @@ func on_enemy_reached_end():
 	lives -= 1
 	if lives <= 0:
 		game_over("They took all the prairie dogs :(")
+
+func on_boss_spawned(new_boss: Enemy):
+	boss = new_boss
+	boss.died.connect(func():
+		game_over("You win!")
+		boss = null
+	)
+	
+	boss_health.show()

@@ -30,12 +30,10 @@ radius = 105.68349
 [node name="BossEnemy" type="StaticBody2D" unique_id=1629057451]
 modulate = Color(0.5137255, 0.7647059, 1, 1)
 script = ExtResource("1_4166y")
-health = 50.0
+health = 100.0
 max_speed = 40.0
 accel = 100.0
-contact_damage = null
 damage = 10.0
-projectile_cooldown = null
 drops = Dictionary[PackedScene, float]({
 ExtResource("2_jnrnu"): 2.0,
 ExtResource("3_4166y"): 0.5

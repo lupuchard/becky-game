@@ -33,6 +33,7 @@
 [ext_resource type="AudioStream" uid="uid://c1u3y0chqwf0w" path="res://Assets/Sound/music.ogg" id="20_bc84e"]
 [ext_resource type="PackedScene" uid="uid://psgswiqegx1j" path="res://UpgradesSite.tscn" id="20_wukud"]
 [ext_resource type="Script" uid="uid://buh6n16b26ckc" path="res://Scripts/settings.gd" id="23_il2jm"]
+[ext_resource type="PackedScene" uid="uid://cr384252sfyn" path="res://Enemies/BossEnemy.tscn" id="34_w44yn"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_036b0"]
 size = Vector2(2000, 1000)
@@ -160,7 +161,7 @@ position = Vector2(1, 5)
 scale = Vector2(0.42, 0.42)
 sprite_frames = SubResource("SpriteFrames_1ew0l")
 autoplay = "default"
-frame_progress = 0.968123
+frame_progress = 0.34388313
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Becky" unique_id=795749735]
 shape = SubResource("CircleShape2D_ioo17")
@@ -525,6 +526,25 @@ seconds_between = 0.2
 paths = [NodePath("../../../Paths/LowPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
+[node name="Round8" type="Node" parent="Rounds" unique_id=636285478]
+script = ExtResource("12_wukud")
+
+[node name="RoundSegment6" type="Node" parent="Rounds/Round8" unique_id=1874881664 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("34_w44yn")
+simultaneous = true
+paths = [NodePath("../../../Paths/ToCenterPath")]
+boss = true
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round8" unique_id=1806484676 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 100
+seconds_between = 2.0
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
 [node name="Spawner" type="Node2D" parent="." unique_id=610224940]
 script = ExtResource("6_dwbse")
 
@@ -690,6 +710,49 @@ offset_bottom = 32.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_ioo17")
 text = "Aliens are coming"
+horizontal_alignment = 1
+
+[node name="BossHealth" type="Control" parent="CanvasLayer" unique_id=211943640]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 29.0
+offset_right = 20.0
+offset_bottom = 69.0
+grow_horizontal = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/BossHealth" unique_id=1246992062]
+modulate = Color(1, 0, 0.6039216, 1)
+custom_minimum_size = Vector2(300, 10)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 7.0
+offset_right = 100.0
+offset_bottom = 27.0
+grow_horizontal = 2
+max_value = 1.0
+step = 0.001
+value = 0.79
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/BossHealth" unique_id=1044345084]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 9.0
+offset_right = 100.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_ioo17")
+text = "Boss health"
 horizontal_alignment = 1
 
 [node name="Status" type="Control" parent="CanvasLayer" unique_id=1962127259]

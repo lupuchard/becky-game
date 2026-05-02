@@ -1,6 +1,7 @@
 extends Enemy
+class_name PulseEnemy
 
-const PULSE_COOLDOWN := 5.0
+var PULSE_COOLDOWN := 5.0
 const PULSE = preload("res://Enemies/Pulse.tscn")
 
 var pulse_cooldown = 2.0
