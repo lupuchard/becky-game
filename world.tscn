@@ -198,10 +198,59 @@ seconds_between = 2.0
 paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="Round2" type="Node" parent="Rounds" unique_id=113479319]
+[node name="Round2" type="Node" parent="Rounds" unique_id=1357088545]
 script = ExtResource("12_wukud")
 
-[node name="RoundSegment" type="Node" parent="Rounds/Round2" unique_id=978029227 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment" type="Node" parent="Rounds/Round2" unique_id=373087205 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round2" unique_id=108065371 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+seconds_between = 5.0
+paths = [NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment3" type="Node" parent="Rounds/Round2" unique_id=342473012 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment4" type="Node" parent="Rounds/Round2" unique_id=449105808 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+seconds_between = 5.0
+paths = [NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment6" type="Node" parent="Rounds/Round2" unique_id=573108703 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment5" type="Node" parent="Rounds/Round2" unique_id=1591289887 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+seconds_between = 0.2
+simultaneous = true
+paths = [NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Round3" type="Node" parent="Rounds" unique_id=113479319]
+script = ExtResource("12_wukud")
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round3" unique_id=978029227 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("9_2u3nc")
 seconds_between = 2.0
@@ -209,7 +258,7 @@ simultaneous = true
 paths = [NodePath("../../../Paths/ToCenterPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="RoundSegment2" type="Node" parent="Rounds/Round2" unique_id=1047106459 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment2" type="Node" parent="Rounds/Round3" unique_id=1047106459 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("8_wse8f")
 amount = 15
@@ -217,7 +266,7 @@ seconds_between = 1.5
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="RoundSegment3" type="Node" parent="Rounds/Round2" unique_id=1196219408 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment3" type="Node" parent="Rounds/Round3" unique_id=1196219408 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("5_036b0")
 amount = 3
@@ -226,7 +275,7 @@ simultaneous = true
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="RoundSegment4" type="Node" parent="Rounds/Round2" unique_id=1569526942 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment4" type="Node" parent="Rounds/Round3" unique_id=1569526942 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("9_2u3nc")
 seconds_between = 2.0
@@ -234,7 +283,7 @@ simultaneous = true
 paths = [NodePath("../../../Paths/ToCenterPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="RoundSegment5" type="Node" parent="Rounds/Round2" unique_id=2092043613 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment5" type="Node" parent="Rounds/Round3" unique_id=2092043613 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("8_wse8f")
 amount = 3
@@ -242,34 +291,192 @@ seconds_between = 3.0
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="Round3" type="Node" parent="Rounds" unique_id=1991491409]
+[node name="Round4" type="Node" parent="Rounds" unique_id=2023498375]
 script = ExtResource("12_wukud")
 health_scaling = 1.2
 damage_scaling = 1.2
 
-[node name="RoundSegment" type="Node" parent="Rounds/Round3" unique_id=1828571381 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment6" type="Node" parent="Rounds/Round4" unique_id=2091459889 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 10
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment4" type="Node" parent="Rounds/Round4" unique_id=1316768630 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 2.0
+paths = [NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment5" type="Node" parent="Rounds/Round4" unique_id=496229210 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 5
+seconds_between = 1.0
+simultaneous = true
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment7" type="Node" parent="Rounds/Round4" unique_id=952882803 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 10
+seconds_between = 0.5
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment8" type="Node" parent="Rounds/Round4" unique_id=336286398 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 5.0
+paths = [NodePath("../../../Paths/HighPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment9" type="Node" parent="Rounds/Round4" unique_id=1636567554 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Round5" type="Node" parent="Rounds" unique_id=1991491409]
+script = ExtResource("12_wukud")
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round5" unique_id=1828571381 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("5_036b0")
 amount = 10
-seconds_between = 3.0
+seconds_between = 5.0
 simultaneous = true
 paths = [NodePath("../../../Paths/ToCenterPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
-[node name="RoundSegment2" type="Node" parent="Rounds/Round3" unique_id=1240062875 node_paths=PackedStringArray("paths")]
+[node name="RoundSegment2" type="Node" parent="Rounds/Round5" unique_id=1240062875 node_paths=PackedStringArray("paths")]
 script = ExtResource("7_pkg7o")
 enemy = ExtResource("16_2u3nc")
 amount = 5
-seconds_between = 6.0
+seconds_between = 10.0
 simultaneous = true
 paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment6" type="Node" parent="Rounds/Round5" unique_id=998027375 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 20
+seconds_between = 2.5
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Round6" type="Node" parent="Rounds" unique_id=712949445]
+script = ExtResource("12_wukud")
+health_scaling = 1.4
+damage_scaling = 1.4
+
+[node name="RoundSegment" type="Node" parent="Rounds/Round6" unique_id=1435247790 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/LowPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment2" type="Node" parent="Rounds/Round6" unique_id=1207252920 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+seconds_between = 5.0
+paths = [NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment3" type="Node" parent="Rounds/Round6" unique_id=374214167 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 5
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment4" type="Node" parent="Rounds/Round6" unique_id=177487300 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+seconds_between = 5.0
+paths = [NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment6" type="Node" parent="Rounds/Round6" unique_id=2082003286 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("16_2u3nc")
+amount = 5
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment5" type="Node" parent="Rounds/Round6" unique_id=395021200 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/WavyPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="Round7" type="Node" parent="Rounds" unique_id=1987951635]
+script = ExtResource("12_wukud")
+health_scaling = 1.4
+damage_scaling = 1.4
+
+[node name="RoundSegment6" type="Node" parent="Rounds/Round7" unique_id=1826179056 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("8_wse8f")
+amount = 10
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment4" type="Node" parent="Rounds/Round7" unique_id=1031727388 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 2.0
+paths = [NodePath("../../../Paths/ToCenterPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment5" type="Node" parent="Rounds/Round7" unique_id=917215618 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("5_036b0")
+amount = 5
+seconds_between = 1.0
+simultaneous = true
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment7" type="Node" parent="Rounds/Round7" unique_id=1366809304 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("16_2u3nc")
+amount = 5
+seconds_between = 10.0
+paths = [NodePath("../../../Paths/HighPath"), NodePath("../../../Paths/LowPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment8" type="Node" parent="Rounds/Round7" unique_id=217495321 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 5.0
+paths = [NodePath("../../../Paths/HighPath")]
+metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
+
+[node name="RoundSegment9" type="Node" parent="Rounds/Round7" unique_id=1893761775 node_paths=PackedStringArray("paths")]
+script = ExtResource("7_pkg7o")
+enemy = ExtResource("9_2u3nc")
+seconds_between = 0.2
+paths = [NodePath("../../../Paths/LowPath")]
 metadata/_custom_type_script = "uid://bg3fuwbfsrid0"
 
 [node name="Spawner" type="Node2D" parent="." unique_id=610224940]
 script = ExtResource("6_dwbse")
 
 [node name="NextRound" type="Area2D" parent="." unique_id=1165826953]
-position = Vector2(1978, 567)
+position = Vector2(1431, 394)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("13_70uel")
@@ -422,7 +629,7 @@ offset_right = 100.0
 offset_bottom = 32.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_ioo17")
-text = "Round 1"
+text = "Aliens are coming"
 horizontal_alignment = 1
 
 [node name="Status" type="Control" parent="CanvasLayer" unique_id=1962127259]

@@ -91,6 +91,7 @@ func play_pressed():
 	credits.hide()
 	settings.hide()
 	spawner.set_round($Rounds/Round1)
+	round_label.text = "Round 1"
 	becky.show()
 	becky.process_mode = Node.PROCESS_MODE_INHERIT
 	if !music.playing:
@@ -133,6 +134,8 @@ func reset():
 			child.queue_free()
 	spawner.set_round($Rounds/Round1)
 	
+	round_label.text = "Aliens are coming"
+	
 	becky.reset()
 	current_round = 0
 	between_rounds = false
@@ -147,6 +150,8 @@ func on_round_ended():
 		site.enable()
 	if becky.health < becky.MAX_HEALTH and becky.money[0] >= 10:
 		healer_site.enable()
+	
+	round_label.text = "Round %s Complete" % (current_round + 1)
 	
 	between_rounds = true
 	current_round += 1
@@ -163,12 +168,15 @@ func on_round_ended():
 func start_next_round():
 	if !(between_rounds and current_round < rounds.get_child_count()):
 		return
-		
+	
+	round_label.text = "Round %s" % (current_round + 1)
+	
 	restore_health_tween.kill()
 	becky.shield_health = Becky.MAX_SHIELD_HEALTH
 	spawner.set_round($Rounds.get_child(current_round))
 	for site in sites:
 		site.disable()
+	healer_site.disable()
 	
 	if volume_tween != null:
 		volume_tween.kill()

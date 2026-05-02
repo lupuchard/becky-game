@@ -11,10 +11,9 @@ radius = 20.0
 [node name="FlyingEnemy" type="StaticBody2D" unique_id=1629057451]
 script = ExtResource("1_cq7wj")
 fly_cooldown = 3.1
-health = 3.0
+health = 2.0
 max_speed = 100.0
 accel = 1000.0
-projectile_damage = 10.0
 projectile_cooldown = 1.0
 drops = Dictionary[PackedScene, float]({
 ExtResource("2_breaw"): 0.5,
